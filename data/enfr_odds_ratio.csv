@@ -1,0 +1,11 @@
+factor,variable,odds_ratio,ic_bajo,ic_alto,significativo
+Obesidad (IMC≥30),obesidad,2.48,2.238,2.748,1
+Diabetes,diabetes,2.92,2.574,3.313,1
+Colesterol alto,colesterol_alto,2.736,2.454,3.051,1
+Sobrepeso (IMC≥25),sobrepeso,2.427,2.192,2.687,1
+Tener 50 años o más,mayor_50,3.87,3.523,4.25,1
+Fumador actual,fumador,0.77,0.689,0.86,1
+Baja actividad física,sedentario,0.576,0.507,0.653,1
+Ser mujer,mujer,1.118,1.023,1.222,1
+Sin cobertura de salud,sin_cob,0.714,0.646,0.789,1
+Quintil de ingreso 1 o 2,q1_q2,1.148,1.048,1.257,1
