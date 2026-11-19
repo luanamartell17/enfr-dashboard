@@ -526,8 +526,7 @@ with tab_feat:
                          color_discrete_map={"Sí": "#2563eb", "No": "#cbd5e1"}, hover_data={"r": ":.3f"},
                          category_orders={"nombre": g["nombre"].tolist()},
                          labels={"score": "|r|", "nombre": ""})
-            fig.update_yaxes(autorange="reversed")   # el puntaje más alto arriba
-            fig.update_layout(height=380, showlegend=False)
+            fig.update_layout(height=380, showlegend=False)   # px ya pone la primera categoría arriba
             st.plotly_chart(fig, use_container_width=True)
         with c2:
             st.markdown("**No lineales: información mutua**")
@@ -538,8 +537,7 @@ with tab_feat:
                          color_discrete_map={"Sí": "#7c3aed", "No": "#cbd5e1"},
                          category_orders={"nombre": g["nombre"].tolist()},
                          labels={"score": "Información mutua", "nombre": ""})
-            fig.update_yaxes(autorange="reversed")   # el puntaje más alto arriba
-            fig.update_layout(height=380, showlegend=False)
+            fig.update_layout(height=380, showlegend=False)   # px ya pone la primera categoría arriba
             st.caption("En gris: variables que ya entraron como lineales o que quedaron con menor puntaje.")
             st.plotly_chart(fig, use_container_width=True)
 
