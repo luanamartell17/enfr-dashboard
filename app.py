@@ -522,9 +522,11 @@ with tab_feat:
             g = lin.head(10).copy()
             g["Seleccionada"] = g["feature"].isin(top_lin).map({True: "Sí", False: "No"})
             g["nombre"] = g["feature"].map(lambda c: ETIQUETAS.get(c, c))
-            fig = px.bar(g.iloc[::-1], x="score", y="nombre", orientation="h", color="Seleccionada",
+            fig = px.bar(g, x="score", y="nombre", orientation="h", color="Seleccionada",
                          color_discrete_map={"Sí": "#2563eb", "No": "#cbd5e1"}, hover_data={"r": ":.3f"},
+                         category_orders={"nombre": g["nombre"].tolist()},
                          labels={"score": "|r|", "nombre": ""})
+            fig.update_yaxes(autorange="reversed")   # el puntaje más alto arriba
             fig.update_layout(height=380, showlegend=False)
             st.plotly_chart(fig, use_container_width=True)
         with c2:
@@ -532,10 +534,13 @@ with tab_feat:
             g = nl.head(12).copy()
             g["Seleccionada"] = g["feature"].isin(top_nl).map({True: "Sí", False: "No"})
             g["nombre"] = g["feature"].map(lambda c: ETIQUETAS.get(c, c))
-            fig = px.bar(g.iloc[::-1], x="score", y="nombre", orientation="h", color="Seleccionada",
+            fig = px.bar(g, x="score", y="nombre", orientation="h", color="Seleccionada",
                          color_discrete_map={"Sí": "#7c3aed", "No": "#cbd5e1"},
+                         category_orders={"nombre": g["nombre"].tolist()},
                          labels={"score": "Información mutua", "nombre": ""})
+            fig.update_yaxes(autorange="reversed")   # el puntaje más alto arriba
             fig.update_layout(height=380, showlegend=False)
+            st.caption("En gris: variables que ya entraron como lineales o que quedaron con menor puntaje.")
             st.plotly_chart(fig, use_container_width=True)
 
         tabla_fs = pd.DataFrame({
