@@ -377,10 +377,14 @@ LEAKAGE = {
 
 @st.cache_data(show_spinner="Cargando microdatos...")
 def cargar_micro():
-    archivos = sorted(f for f in os.listdir(MICRO_DIR) if f.endswith(".csv")) if os.path.isdir(MICRO_DIR) else []
-    if not archivos:
+    import glob
+    # Busca enfr_AAAA_limpio.csv en cualquier subcarpeta de data/ (un archivo por año, sin duplicados)
+    por_nombre = {}
+    for ruta in sorted(glob.glob(os.path.join(DATA_DIR, "**", "*_limpio.csv"), recursive=True)):
+        por_nombre.setdefault(os.path.basename(ruta), ruta)
+    if not por_nombre:
         return None
-    return pd.concat([pd.read_csv(os.path.join(MICRO_DIR, f)) for f in archivos], ignore_index=True)
+    return pd.concat([pd.read_csv(r) for r in por_nombre.values()], ignore_index=True)
 
 
 @st.cache_data(show_spinner="Calculando la selección de features...")
