@@ -13,6 +13,21 @@ cobertura, tabaco, región y provincia.
   → Streamlit (este repo) lee esos datos y los muestra
 ```
 
+## Estructura
+
+```
+app.py                     dashboard de Streamlit
+data/
+  enfr_eda.csv             prevalencias por indicador, año y corte (salida del EDA)
+  enfr_descriptivas.csv    media, varianza, desvío y cuartiles de edad, IMC, peso y talla
+  enfr_correlacion.csv     matriz de correlación
+  enfr_odds_ratio.csv      odds ratio crudos y ajustados por edad (target: hipertensión)
+  enfr_estandarizada.csv   hipertensión por provincia, cruda y estandarizada por edad
+  micro/                   dataset limpio (salida del ETL): una fila por persona, un archivo por año
+notebooks/
+  ENFR_EDA_estadistica.ipynb  cálculo de descriptivas, correlación, odds ratio y estandarización
+```
+
 ## Datos
 
 - Por defecto lee `data/enfr_eda.csv`.
