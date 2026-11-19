@@ -205,16 +205,17 @@ with tab_stats:
     )
 
     # --- media y varianza
-    st.subheader("Media y dispersión")
+    st.subheader("Media y varianza")
+    anio_mv = st.selectbox("Año", anios, index=len(anios) - 1, key="anio_mv")
     m1, m2 = st.columns([1, 1])
     with m1:
-        st.markdown("**Variables binarias: la media es la prevalencia**")
-        t18 = total[total["anio"] == ultimo].copy()
-        t18["Media (prevalencia)"] = t18["prevalencia"].round(3)
-        t18["Varianza p(1-p)"] = (t18["prevalencia"] * (1 - t18["prevalencia"])).round(3)
-        t18["Desvío"] = (t18["Varianza p(1-p)"] ** 0.5).round(3)
+        st.markdown("**Condiciones (variables 0/1): la media es la prevalencia**")
+        tb = total[total["anio"] == anio_mv].copy()
+        tb["Media (prevalencia)"] = tb["prevalencia"].round(3)
+        tb["Varianza p(1-p)"] = (tb["prevalencia"] * (1 - tb["prevalencia"])).round(3)
+        tb["Desvío"] = (tb["Varianza p(1-p)"] ** 0.5).round(3)
         st.dataframe(
-            t18[["indicador_nombre", "Media (prevalencia)", "Varianza p(1-p)", "Desvío"]]
+            tb[["indicador_nombre", "Media (prevalencia)", "Varianza p(1-p)", "Desvío"]]
             .rename(columns={"indicador_nombre": "Condición"}),
             hide_index=True, use_container_width=True,
         )
@@ -223,52 +224,89 @@ with tab_stats:
         st.markdown("**Variables continuas: edad e IMC**")
         desc = leer_csv("enfr_descriptivas.csv")
         if desc is not None:
-            st.dataframe(desc, hide_index=True, use_container_width=True)
+            nombres_var = {"edad": "Edad (años)", "imc": "IMC (kg/m²)", "peso_kg": "Peso (kg)", "talla_cm": "Talla (cm)"}
+            dv = desc[(desc["anio"] == anio_mv) & desc["variable"].isin(["edad", "imc"])].copy()
+            dv["variable"] = dv["variable"].map(nombres_var)
+            st.dataframe(
+                dv[["variable", "media", "varianza", "desvio", "mediana", "q1", "q3"]].rename(columns={
+                    "variable": "Variable", "media": "Media", "varianza": "Varianza", "desvio": "Desvío",
+                    "mediana": "Mediana", "q1": "Q1", "q3": "Q3"}),
+                hide_index=True, use_container_width=True,
+            )
+            st.caption("Q1 y Q3: cuartiles (el 50% central de la población está entre ambos).")
         else:
-            st.info("Falta `data/enfr_descriptivas.csv` (media, desvío, varianza, mediana y cuartiles de edad e IMC). "
-                    "Se genera en la sección 10 del notebook del EDA.")
+            st.info("Falta `data/enfr_descriptivas.csv`.")
+
+    if desc is not None:
+        imc = desc[desc["variable"] == "imc"].sort_values("anio")
+        fig = px.line(imc, x="anio", y="media", markers=True,
+                      labels={"anio": "Año", "media": "IMC medio (kg/m²)"})
+        fig.add_scatter(x=imc["anio"], y=imc["q3"], mode="lines", line=dict(dash="dot", color="#94a3b8"), name="Q3")
+        fig.add_scatter(x=imc["anio"], y=imc["q1"], mode="lines", line=dict(dash="dot", color="#94a3b8"), name="Q1")
+        fig.add_hline(y=30, line_dash="dash", line_color="#dc2626", annotation_text="Obesidad (IMC 30)")
+        fig.update_xaxes(tickvals=anios)
+        fig.update_layout(height=340, title="IMC: media y cuartiles por año", showlegend=False)
+        st.plotly_chart(fig, use_container_width=True)
+        i0, i1 = imc.iloc[0], imc.iloc[-1]
+        st.markdown(
+            f"El IMC medio subió de **{i0['media']:.1f}** a **{i1['media']:.1f}** y su varianza de "
+            f"**{i0['varianza']:.1f}** a **{i1['varianza']:.1f}**: no solo aumenta el promedio, también se dispersa. "
+            f"En {int(i1['anio'])}, el 25% de la población ya supera un IMC de **{i1['q3']:.1f}**, por encima del umbral de obesidad."
+        )
 
     # --- correlación
     st.subheader("Matriz de correlación")
     corr = leer_csv("enfr_correlacion.csv", index_col=0)
     if corr is not None:
-        corr.index = corr.index.str.replace("imc", "IMC").str.replace("edad", "Edad")
-        corr.columns = corr.columns.str.replace("imc", "IMC").str.replace("edad", "Edad")
-        fig = px.imshow(corr, text_auto=".2f", color_continuous_scale="RdBu_r", zmin=-1, zmax=1, aspect="auto")
-        fig.update_layout(height=470, coloraxis_colorbar_title="r")
+        # Se saca el IMC: la obesidad se define como IMC >= 30 y su correlación (0,78) es por construcción.
+        quitar = [c for c in corr.columns if c.lower() == "imc"]
+        corr = corr.drop(index=quitar, columns=quitar)
+        corr.index = corr.index.str.replace("edad", "Edad")
+        corr.columns = corr.columns.str.replace("edad", "Edad")
+        fig = px.imshow(corr, text_auto=".2f", color_continuous_scale="Blues", zmin=0, zmax=0.4, aspect="auto")
+        fig.update_layout(height=440, coloraxis_colorbar_title="r")
         st.plotly_chart(fig, use_container_width=True)
         st.markdown(
             "- Las cuatro condiciones se correlacionan **en forma positiva y baja (0,11 a 0,21)**: tienden a darse "
             "en las mismas personas, lo que respalda el hallazgo de la **acumulación de condiciones**.\n"
             "- La **edad** es la variable más asociada a la hipertensión (r = 0,34).\n"
-            "- Obesidad e IMC (r = 0,78) están correlacionados **por construcción**: la obesidad se define como IMC ≥ 30."
+            "- La escala va de 0 a 0,4 para que se vean las diferencias; la diagonal (r = 1) queda fuera de escala. "
+            "Se dejó afuera el IMC porque la obesidad se calcula a partir de él."
         )
 
     # --- odds ratio
     st.subheader("Factores asociados a la hipertensión (odds ratio)")
     orr = leer_csv("enfr_odds_ratio.csv")
     if orr is not None:
-        orr = orr.sort_values("odds_ratio")
-        orr["sentido"] = orr["odds_ratio"].apply(lambda v: "Aumenta las chances" if v > 1 else "Reduce las chances")
+        if "or_ajustado_edad" in orr.columns:
+            crudo = orr[["factor", "or_crudo", "crudo_ic_bajo", "crudo_ic_alto"]].set_axis(["factor", "or", "lo", "hi"], axis=1)
+            ajust = orr[["factor", "or_ajustado_edad", "ajust_ic_bajo", "ajust_ic_alto"]].set_axis(["factor", "or", "lo", "hi"], axis=1)
+            crudo["tipo"], ajust["tipo"] = "Crudo", "Ajustado por edad"
+            largo = pd.concat([crudo, ajust], ignore_index=True)
+        else:
+            largo = orr[["factor", "odds_ratio", "ic_bajo", "ic_alto"]].set_axis(["factor", "or", "lo", "hi"], axis=1)
+            largo["tipo"] = "Crudo"
+        orden_f = largo[largo["tipo"] == largo["tipo"].iloc[-1]].sort_values("or")["factor"].tolist()
         fig = px.scatter(
-            orr, x="odds_ratio", y="factor", color="sentido",
-            error_x=orr["ic_alto"] - orr["odds_ratio"], error_x_minus=orr["odds_ratio"] - orr["ic_bajo"],
-            color_discrete_map={"Aumenta las chances": "#dc2626", "Reduce las chances": "#2563eb"},
-            labels={"odds_ratio": "Odds ratio (IC 95%)", "factor": "", "sentido": ""},
-            hover_data={"ic_bajo": ":.2f", "ic_alto": ":.2f", "sentido": False},
+            largo, x="or", y="factor", color="tipo",
+            error_x=largo["hi"] - largo["or"], error_x_minus=largo["or"] - largo["lo"],
+            color_discrete_map={"Crudo": "#94a3b8", "Ajustado por edad": "#2563eb"},
+            category_orders={"factor": orden_f},
+            labels={"or": "Odds ratio (IC 95%)", "factor": "", "tipo": ""},
+            hover_data={"lo": ":.2f", "hi": ":.2f"},
         )
         fig.add_vline(x=1, line_dash="dash", line_color="gray")
-        fig.update_traces(marker_size=11)
-        fig.update_layout(height=430, xaxis_type="log")
+        fig.update_traces(marker_size=10)
+        fig.update_layout(height=480, xaxis_type="log", legend=dict(orientation="h", y=1.08))
         st.plotly_chart(fig, use_container_width=True)
         st.markdown(
-            "**Cómo leerlo:** OR = 1 es la línea punteada, sin asociación. Si todo el intervalo queda a la derecha, el factor "
-            "se asocia con **más** hipertensión diagnosticada; si queda a la izquierda, con **menos**. "
-            "Tener 50 años o más (OR 3,9), diabetes (2,9) y colesterol alto (2,7) son los factores más fuertes.\n\n"
-            "**Ojo con los OR menores a 1** (fumar, baja actividad física, no tener cobertura): no significan que "
-            "protejan. Con datos transversales y diagnósticos autorreportados reflejan **causalidad inversa** "
-            "(quien recibe el diagnóstico deja de fumar) o **sesgo de diagnóstico** (quien no tiene cobertura se "
-            "controla menos y no sabe que es hipertenso)."
+            "**Cómo leerlo:** OR = 1 es la línea punteada (sin asociación). A la derecha, el factor se asocia con **más** "
+            "hipertensión diagnosticada; a la izquierda, con **menos**. Los puntos grises son el OR crudo y los azules el "
+            "**ajustado por edad**, que es el que hay que mirar: la edad empuja casi todo hacia arriba.\n\n"
+            "- Diabetes, obesidad y colesterol alto siguen duplicando las chances aun después de ajustar por edad.\n"
+            "- **Sin cobertura** pasa de 0,71 (crudo) a 1,14 (ajustado): el efecto 'protector' era un artefacto de la edad.\n"
+            "- **Fumador actual** sigue debajo de 1 mientras que **ex fumador** queda arriba: es consistente con "
+            "**causalidad inversa** (quien recibe el diagnóstico deja de fumar). No significa que fumar proteja."
         )
 
     # --- estandarizada
