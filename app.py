@@ -102,8 +102,8 @@ for col, (cod, nombre) in zip(cols, INDICADORES.items()):
         delta = serie[ultimo] - serie[primero]
         col.metric(nombre, f"{serie[ultimo]:.1f}%", f"{delta:+.1f} pp vs {primero}", delta_color="inverse")
 
-tab_evol, tab_cortes, tab_prov, tab_stats, tab_datos = st.tabs(
-    ["📈 Evolución", "👥 Por grupo", "🗺️ Provincias", "📊 Estadística", "📄 Datos"]
+tab_evol, tab_cortes, tab_prov, tab_stats, tab_feat, tab_datos = st.tabs(
+    ["📈 Evolución", "👥 Por grupo", "🗺️ Provincias", "📊 Estadística", "🔬 Distribuciones y features", "📄 Datos"]
 )
 
 # ---------------------------------------------------------------- evolución
@@ -191,7 +191,7 @@ with tab_prov:
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, ttl=600)
 def leer_csv(nombre, **kw):
     ruta = os.path.join(DATA_DIR, nombre)
     return pd.read_csv(ruta, **kw) if os.path.exists(ruta) else None
@@ -334,6 +334,232 @@ with tab_stats:
             "Formosa sigue primera aun después de ajustar: su prevalencia alta no se explica por la edad."
         )
         st.dataframe(est.sort_values("estandarizada_pct", ascending=False), hide_index=True, use_container_width=True)
+
+# ---------------------------------------------------------------- distribuciones y features
+MICRO_DIR = os.path.join(DATA_DIR, "micro")
+
+ETIQUETAS = {
+    "edad": "Edad", "imc": "IMC", "peso_kg": "Peso (kg)", "talla_cm": "Talla (cm)",
+    "fv_promedio_diario": "Frutas y verduras (porciones/día)", "cant_componentes": "Integrantes del hogar",
+    "mujer": "Ser mujer", "grupo_etario": "Grupo de edad", "nivel_instruccion": "Nivel de instrucción",
+    "tiene_cobertura": "Tiene cobertura de salud", "condicion_actividad": "Condición de actividad",
+    "quintil_ingreso": "Quintil de ingreso", "salud_autopercibida": "Salud autopercibida",
+    "tabaco": "Consumo de tabaco", "actividad_fisica": "Nivel de actividad física",
+    "alcohol_regular_riesgo": "Alcohol: consumo regular de riesgo", "alcohol_episodico": "Alcohol: consumo episódico excesivo",
+    "cumple_5_fyv": "Come 5 porciones de frutas y verduras", "colesterol_medido": "Se midió el colesterol",
+    "hta": "Hipertensión", "diabetes": "Diabetes", "colesterol_alto": "Colesterol alto", "obesidad": "Obesidad",
+    "sobrepeso": "Sobrepeso", "provincia": "Provincia", "region": "Región", "hta_medida": "Se midió la presión",
+}
+CONTINUAS = ["edad", "imc", "peso_kg", "talla_cm", "fv_promedio_diario"]
+CATEGORICAS_FREC = {
+    "grupo_etario": {1: "18-24", 2: "25-34", 3: "35-49", 4: "50-64", 5: "65+"},
+    "mujer": {0: "Varón", 1: "Mujer"},
+    "quintil_ingreso": {1: "Q1", 2: "Q2", 3: "Q3", 4: "Q4", 5: "Q5"},
+    "tiene_cobertura": {0: "Sin cobertura", 1: "Con cobertura"},
+    "tabaco": {1: "Fumador actual", 2: "Ex fumador", 3: "Nunca fumó"},
+    "salud_autopercibida": {1: "Excelente", 2: "Muy buena", 3: "Buena", 4: "Regular", 5: "Mala"},
+    "nivel_instruccion": None,
+    "actividad_fisica": None,
+    "region": {1: "GBA", 2: "Pampeana", 3: "NOA", 4: "NEA", 5: "Cuyo", 6: "Patagonia"},
+}
+# Variables nominales: el número del código no tiene orden, así que no se evalúan con correlación lineal
+NOMINALES = ["provincia", "region", "condicion_actividad", "tabaco"]
+# Variables que nunca son features (identificadores, pesos) o que delatan a cada target (leakage)
+NO_FEATURES = ["id_unico", "id_original", "anio", "peso_muestral", "peso_rel", "n_condiciones",
+               "riesgo_cardiometabolico", "salud_regular_mala"]
+LEAKAGE = {
+    "hta": ["hta", "hta_medida"],
+    "diabetes": ["diabetes"],
+    "colesterol_alto": ["colesterol_alto", "colesterol_medido"],
+    "obesidad": ["obesidad", "sobrepeso", "imc", "peso_kg"],
+}
+
+
+@st.cache_data(show_spinner="Cargando microdatos...")
+def cargar_micro():
+    archivos = sorted(f for f in os.listdir(MICRO_DIR) if f.endswith(".csv")) if os.path.isdir(MICRO_DIR) else []
+    if not archivos:
+        return None
+    return pd.concat([pd.read_csv(os.path.join(MICRO_DIR, f)) for f in archivos], ignore_index=True)
+
+
+@st.cache_data(show_spinner="Calculando la selección de features...")
+def seleccionar_features(anio, target):
+    import numpy as np
+    from sklearn.feature_selection import mutual_info_classif
+
+    m = cargar_micro()
+    d = m[(m["anio"] == anio) & m[target].notna()].copy()
+    excluir = set(NO_FEATURES + LEAKAGE[target])
+    candidatas = [c for c in d.columns if c not in excluir and d[c].notna().mean() > 0.5]
+    y = d[target].astype(int)
+
+    # Lineal: |correlación de Pearson| con el target (punto-biserial), solo variables numéricas u ordinales
+    lineales = []
+    for c in candidatas:
+        if c in NOMINALES:
+            continue
+        r = d[[c, target]].dropna().corr().iloc[0, 1]
+        if pd.notna(r):
+            lineales.append({"feature": c, "score": abs(r), "r": r})
+    lin = pd.DataFrame(lineales).sort_values("score", ascending=False).reset_index(drop=True)
+
+    # No lineal: información mutua (detecta cualquier tipo de dependencia, incluso no monótona o por categorías)
+    X = d[candidatas].astype(float)
+    X = X.fillna(X.median())
+    discretas = [c not in CONTINUAS for c in candidatas]
+    mi = mutual_info_classif(X, y, discrete_features=np.array(discretas), random_state=0)
+    nl = pd.DataFrame({"feature": candidatas, "score": mi}).sort_values("score", ascending=False).reset_index(drop=True)
+
+    top_lin = lin["feature"].head(5).tolist()
+    top_nl = [f for f in nl["feature"] if f not in top_lin][:5]
+    return lin, nl, top_lin, top_nl, len(d)
+
+
+@st.cache_data(show_spinner="Validando las features con modelos...")
+def validar_features(anio, target, top_lin, top_nl):
+    from sklearn.ensemble import HistGradientBoostingClassifier
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.metrics import roc_auc_score
+    from sklearn.model_selection import train_test_split
+    from sklearn.pipeline import make_pipeline
+    from sklearn.preprocessing import StandardScaler
+
+    m = cargar_micro()
+    d = m[(m["anio"] == anio) & m[target].notna()]
+    excluir = set(NO_FEATURES + LEAKAGE[target])
+    todas = [c for c in d.columns if c not in excluir and d[c].notna().mean() > 0.5]
+    y = d[target].astype(int)
+    filas = []
+    for nombre, cols in [("5 lineales", list(top_lin)), ("10 seleccionadas", list(top_lin) + list(top_nl)),
+                         (f"Todas ({len(todas)})", todas)]:
+        X = d[cols].astype(float)
+        X = X.fillna(X.median())
+        Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.3, random_state=0, stratify=y)
+        log = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000)).fit(Xtr, ytr)
+        hgb = HistGradientBoostingClassifier(max_iter=200, learning_rate=0.08, random_state=0).fit(Xtr, ytr)
+        filas.append({"Features": nombre,
+                      "AUC regresión logística": round(roc_auc_score(yte, log.predict_proba(Xte)[:, 1]), 3),
+                      "AUC gradient boosting": round(roc_auc_score(yte, hgb.predict_proba(Xte)[:, 1]), 3)})
+    return pd.DataFrame(filas)
+
+
+with tab_feat:
+    micro = cargar_micro()
+    if micro is None:
+        st.info("Faltan los microdatos limpios en `data/micro/` (enfr_2005_limpio.csv … enfr_2018_limpio.csv).")
+    else:
+        st.markdown(
+            f"Calculado en vivo sobre el **dataset limpio** (salida del ETL): **{len(micro):,}** personas de "
+            f"{micro['anio'].nunique()} ediciones. Histogramas y frecuencias ponderados con el factor de expansión."
+            .replace(",", ".")
+        )
+
+        # --- distribuciones (histogramas)
+        st.subheader("Distribuciones de las variables continuas")
+        h1, h2, h3 = st.columns(3)
+        var_h = h1.selectbox("Variable", CONTINUAS, format_func=ETIQUETAS.get, key="var_h")
+        anio_h = h2.selectbox("Año", anios, index=len(anios) - 1, key="anio_h")
+        sep_h = h3.selectbox("Separar por", ["(nada)", "hta", "diabetes", "colesterol_alto", "mujer"],
+                             format_func=lambda c: c if c == "(nada)" else ETIQUETAS.get(c, c), key="sep_h")
+        dh = micro[(micro["anio"] == anio_h) & micro[var_h].notna()].copy()
+        color = None
+        if sep_h != "(nada)":
+            dh = dh[dh[sep_h].notna()]
+            mapa = {0: "Varón", 1: "Mujer"} if sep_h == "mujer" else {0: "No", 1: "Sí"}
+            dh["grupo"] = dh[sep_h].astype(int).map(mapa)
+            color = "grupo"
+        fig = px.histogram(
+            dh, x=var_h, y="peso_rel", histfunc="sum", histnorm="percent", nbins=40, color=color,
+            barmode="overlay", opacity=0.65 if color else 0.9,
+            labels={var_h: ETIQUETAS[var_h], "grupo": ETIQUETAS.get(sep_h, "")},
+        )
+        fig.update_layout(height=400, yaxis_title="% de la población", bargap=0.03)
+        if var_h == "imc":
+            fig.add_vline(x=25, line_dash="dot", line_color="#f59e0b", annotation_text="Sobrepeso")
+            fig.add_vline(x=30, line_dash="dash", line_color="#dc2626", annotation_text="Obesidad")
+        st.plotly_chart(fig, use_container_width=True)
+        s = dh[var_h]
+        st.caption(
+            f"n = {len(s):,} · media {s.mean():.1f} · mediana {s.median():.1f} · desvío {s.std():.1f} · "
+            f"asimetría {s.skew():.2f}".replace(",", ".")
+            + (" (asimetría > 0: cola hacia valores altos)" if s.skew() > 0.3 else "")
+        )
+
+        # --- frecuencias (categóricas)
+        st.subheader("Diagramas de frecuencia")
+        f1, f2 = st.columns(2)
+        var_f = f1.selectbox("Variable", list(CATEGORICAS_FREC), format_func=ETIQUETAS.get, key="var_f")
+        anio_f = f2.selectbox("Año", anios, index=len(anios) - 1, key="anio_f")
+        df_ = micro[(micro["anio"] == anio_f) & micro[var_f].notna()]
+        frec = df_.groupby(var_f)["peso_rel"].sum()
+        frec = (frec / frec.sum() * 100).reset_index(name="pct")
+        mapa_f = CATEGORICAS_FREC[var_f]
+        frec["categoria"] = frec[var_f].astype(int).map(mapa_f) if mapa_f else frec[var_f].astype(int).astype(str)
+        frec["n"] = df_.groupby(var_f).size().values
+        fig = px.bar(frec, x="categoria", y="pct", text="pct", hover_data={"n": True},
+                     labels={"categoria": ETIQUETAS[var_f], "pct": "% de la población"})
+        fig.update_traces(texttemplate="%{text:.1f}%", textposition="outside", marker_color="#2563eb")
+        fig.update_layout(height=380, xaxis_type="category")
+        st.plotly_chart(fig, use_container_width=True)
+        if mapa_f is None:
+            st.caption("Códigos INDEC (ver diccionario de variables).")
+
+        # --- selección de features
+        st.subheader("Selección de features (5 lineales + 5 no lineales)")
+        s1, s2 = st.columns(2)
+        target = s1.selectbox("Target", list(LEAKAGE), format_func=ETIQUETAS.get, key="target_fs")
+        anio_fs = s2.selectbox("Año", anios, index=len(anios) - 1, key="anio_fs")
+        lin, nl, top_lin, top_nl, n_fs = seleccionar_features(anio_fs, target)
+
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown("**Lineales: |correlación| con el target**")
+            g = lin.head(10).copy()
+            g["Seleccionada"] = g["feature"].isin(top_lin).map({True: "Sí", False: "No"})
+            g["nombre"] = g["feature"].map(lambda c: ETIQUETAS.get(c, c))
+            fig = px.bar(g.iloc[::-1], x="score", y="nombre", orientation="h", color="Seleccionada",
+                         color_discrete_map={"Sí": "#2563eb", "No": "#cbd5e1"}, hover_data={"r": ":.3f"},
+                         labels={"score": "|r|", "nombre": ""})
+            fig.update_layout(height=380, showlegend=False)
+            st.plotly_chart(fig, use_container_width=True)
+        with c2:
+            st.markdown("**No lineales: información mutua**")
+            g = nl.head(12).copy()
+            g["Seleccionada"] = g["feature"].isin(top_nl).map({True: "Sí", False: "No"})
+            g["nombre"] = g["feature"].map(lambda c: ETIQUETAS.get(c, c))
+            fig = px.bar(g.iloc[::-1], x="score", y="nombre", orientation="h", color="Seleccionada",
+                         color_discrete_map={"Sí": "#7c3aed", "No": "#cbd5e1"},
+                         labels={"score": "Información mutua", "nombre": ""})
+            fig.update_layout(height=380, showlegend=False)
+            st.plotly_chart(fig, use_container_width=True)
+
+        tabla_fs = pd.DataFrame({
+            "Tipo": ["Lineal"] * len(top_lin) + ["No lineal"] * len(top_nl),
+            "Feature": [ETIQUETAS.get(c, c) for c in top_lin + top_nl],
+            "Variable": top_lin + top_nl,
+        })
+        n_txt = f"{n_fs:,}".replace(",", ".")
+        st.markdown(f"**Las 10 features seleccionadas para predecir {ETIQUETAS[target].lower()}** "
+                    f"({anio_fs}, n = {n_txt})")
+        st.dataframe(tabla_fs, hide_index=True, use_container_width=True)
+        st.markdown(
+            "**Cómo se eligieron:**\n"
+            "- **Lineales:** las 5 con mayor correlación absoluta con el target. Miden cuánto sube o baja el target "
+            "en línea recta con la variable. Las nominales (provincia, región, tabaco, actividad) quedan afuera porque "
+            "su código numérico no tiene orden.\n"
+            "- **No lineales:** las 5 con mayor **información mutua** que no estaban entre las lineales. La información "
+            "mutua detecta cualquier relación, aunque no sea en línea recta (por ejemplo, un efecto que solo aparece "
+            "en ciertas categorías o rangos).\n"
+            "- Se excluyen las variables que **delatan el target** (leakage): para hipertensión, 'se midió la presión'; "
+            "para obesidad, IMC, peso y sobrepeso; además de identificadores, pesos y targets compuestos."
+        )
+
+        if st.checkbox("Validar la selección con modelos (tarda unos segundos)", key="validar_fs"):
+            val = validar_features(anio_fs, target, tuple(top_lin), tuple(top_nl))
+            st.dataframe(val, hide_index=True, use_container_width=True)
+            st.caption("AUC sobre un 30% de test. Si las 10 features rinden parecido a todas, la selección conserva "
+                       "casi toda la información con menos variables.")
 
 # ---------------------------------------------------------------- datos
 with tab_datos:
