@@ -118,7 +118,7 @@ with tab_evol:
     st.plotly_chart(fig, use_container_width=True)
     st.info(
         "La obesidad es la condición que más creció en el período; hipertensión y colesterol se mantienen altos. "
-        "Ojo: son diagnósticos autorreportados, así que quien nunca se controló figura como 'sin diagnóstico'."
+        "Son diagnósticos autorreportados, así que quien nunca se controló figura como 'sin diagnóstico'."
     )
 
 # ---------------------------------------------------------------- por grupo

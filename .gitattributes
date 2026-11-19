@@ -1,0 +1,2 @@
+# Dataset crudo: se guarda exactamente como lo publica INDEC (sin convertir saltos de línea)
+data/crudo/*.txt -text

@@ -18,6 +18,7 @@ cobertura, tabaco, región y provincia.
 ```
 app.py                     dashboard de Streamlit
 data/
+  crudo/                   dataset crudo: .txt originales de la base usuario ENFR (INDEC) 2005, 2009, 2013 y 2018
   enfr_eda.csv             prevalencias por indicador, año y corte (salida del EDA)
   enfr_descriptivas.csv    media, varianza, desvío y cuartiles de edad, IMC, peso y talla
   enfr_correlacion.csv     matriz de correlación
