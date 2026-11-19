@@ -1,0 +1,769 @@
+indicador,anio,corte_tipo,corte_valor,n,prevalencia,prevalencia_pct,fuente,actualizado
+colesterol_alto,2005,cobertura,Con cobertura,17920,0.2923,29.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,cobertura,Con cobertura,16999,0.2991,29.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,cobertura,Con cobertura,16453,0.3014,30.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,cobertura,Con cobertura,16110,0.3063,30.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,cobertura,Sin cobertura,4865,0.2391,23.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,cobertura,Sin cobertura,3216,0.258,25.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,cobertura,Sin cobertura,3880,0.2952,29.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,cobertura,Sin cobertura,4329,0.2417,24.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,grupo_etario,18-24,1360,0.1192,11.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,grupo_etario,18-24,1390,0.1308,13.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,grupo_etario,18-24,1402,0.1564,15.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,grupo_etario,18-24,1298,0.1548,15.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,grupo_etario,25-34,3383,0.1534,15.3,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,grupo_etario,25-34,3340,0.1648,16.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,grupo_etario,25-34,3424,0.1649,16.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,grupo_etario,25-34,3099,0.1699,17.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,grupo_etario,35-49,6693,0.2197,22.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,grupo_etario,35-49,5763,0.242,24.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,grupo_etario,35-49,5693,0.2701,27.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,grupo_etario,35-49,5614,0.2511,25.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,grupo_etario,50-64,6247,0.3725,37.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,grupo_etario,50-64,5531,0.3911,39.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,grupo_etario,50-64,5277,0.3988,39.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,grupo_etario,50-64,5324,0.3894,38.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,grupo_etario,65+,5279,0.3803,38.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,grupo_etario,65+,4929,0.3985,39.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,grupo_etario,65+,4660,0.3851,38.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,grupo_etario,65+,5104,0.4025,40.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Buenos Aires,2183,0.2522,25.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Buenos Aires,3654,0.2941,29.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Buenos Aires,3719,0.3049,30.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Buenos Aires,4283,0.2823,28.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,CABA,1199,0.3242,32.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,CABA,915,0.2818,28.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,CABA,624,0.2791,27.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,CABA,1236,0.2962,29.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Catamarca,778,0.3489,34.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Catamarca,666,0.3723,37.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Catamarca,475,0.3354,33.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Catamarca,533,0.3481,34.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Chaco,967,0.2801,28.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Chaco,724,0.2636,26.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Chaco,495,0.314,31.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Chaco,571,0.3328,33.3,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Chubut,890,0.2758,27.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Chubut,671,0.2762,27.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Chubut,884,0.2837,28.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Chubut,656,0.2134,21.3,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Corrientes,781,0.3021,30.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Corrientes,580,0.3201,32.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Corrientes,616,0.3206,32.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Corrientes,661,0.3185,31.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Córdoba,1054,0.2895,29.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Córdoba,1359,0.2793,27.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Córdoba,1305,0.3106,31.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Córdoba,1465,0.2739,27.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Entre Ríos,904,0.2987,29.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Entre Ríos,762,0.2525,25.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Entre Ríos,881,0.2918,29.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Entre Ríos,1133,0.2892,28.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Formosa,784,0.2516,25.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Formosa,646,0.2466,24.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Formosa,593,0.3074,30.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Formosa,548,0.2571,25.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Jujuy,767,0.3297,33.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Jujuy,697,0.3678,36.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Jujuy,461,0.3567,35.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Jujuy,578,0.3636,36.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,La Pampa,1005,0.3022,30.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,La Pampa,828,0.2964,29.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,La Pampa,565,0.3314,33.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,La Pampa,408,0.3222,32.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,La Rioja,727,0.3639,36.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,La Rioja,592,0.3569,35.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,La Rioja,556,0.3274,32.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,La Rioja,415,0.3273,32.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Mendoza,982,0.2644,26.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Mendoza,678,0.3144,31.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Mendoza,870,0.2649,26.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Mendoza,735,0.327,32.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Misiones,866,0.2672,26.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Misiones,547,0.267,26.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Misiones,484,0.3478,34.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Misiones,692,0.3161,31.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Neuquén,1029,0.2954,29.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Neuquén,663,0.291,29.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Neuquén,607,0.3415,34.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Neuquén,546,0.3121,31.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Río Negro,872,0.3116,31.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Río Negro,771,0.2929,29.3,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Río Negro,1159,0.2753,27.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Río Negro,1076,0.2339,23.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Salta,919,0.29,29.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Salta,723,0.367,36.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Salta,698,0.3549,35.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Salta,741,0.3877,38.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,San Juan,898,0.2804,28.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,San Juan,615,0.2758,27.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,San Juan,619,0.2996,30.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,San Juan,458,0.3243,32.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,San Luis,868,0.2607,26.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,San Luis,746,0.3314,33.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,San Luis,648,0.2184,21.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,San Luis,681,0.3533,35.3,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Santa Cruz,816,0.378,37.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Santa Cruz,775,0.3365,33.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Santa Cruz,629,0.328,32.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Santa Cruz,397,0.3722,37.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Santa Fe,1126,0.2721,27.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Santa Fe,1358,0.2549,25.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Santa Fe,1473,0.2509,25.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Santa Fe,1396,0.2574,25.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Santiago del Estero,890,0.2829,28.3,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Santiago del Estero,503,0.3401,34.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Santiago del Estero,552,0.2865,28.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Santiago del Estero,345,0.2935,29.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Tierra del Fuego,840,0.3099,31.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Tierra del Fuego,706,0.3087,30.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Tierra del Fuego,742,0.2609,26.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Tierra del Fuego,258,0.32,32.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,provincia,Tucumán,817,0.3762,37.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,provincia,Tucumán,774,0.3504,35.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,provincia,Tucumán,801,0.3399,34.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,provincia,Tucumán,627,0.3376,33.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,quintil_ingreso,Q1,3946,0.258,25.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,quintil_ingreso,Q1,3731,0.3013,30.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,quintil_ingreso,Q1,3260,0.3017,30.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,quintil_ingreso,Q1,2977,0.2904,29.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,quintil_ingreso,Q2,4549,0.296,29.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,quintil_ingreso,Q2,4047,0.3085,30.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,quintil_ingreso,Q2,3671,0.3234,32.3,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,quintil_ingreso,Q2,3791,0.3085,30.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,quintil_ingreso,Q3,4397,0.2833,28.3,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,quintil_ingreso,Q3,4069,0.2966,29.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,quintil_ingreso,Q3,4117,0.3125,31.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,quintil_ingreso,Q3,4071,0.2665,26.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,quintil_ingreso,Q4,4754,0.2868,28.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,quintil_ingreso,Q4,4303,0.2851,28.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,quintil_ingreso,Q4,4166,0.2708,27.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,quintil_ingreso,Q4,4616,0.2955,29.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,quintil_ingreso,Q5,5204,0.2745,27.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,quintil_ingreso,Q5,4714,0.2756,27.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,quintil_ingreso,Q5,5186,0.291,29.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,quintil_ingreso,Q5,4984,0.2981,29.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,region,Cuyo,2748,0.2676,26.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,region,Cuyo,2039,0.3078,30.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,region,Cuyo,2137,0.2654,26.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,region,Cuyo,1874,0.3307,33.1,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,region,GBA,2027,0.2605,26.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,region,GBA,2646,0.2947,29.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,region,GBA,2039,0.2946,29.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,region,GBA,2843,0.2869,28.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,region,NEA,3398,0.2799,28.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,region,NEA,2497,0.2783,27.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,region,NEA,2188,0.3241,32.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,region,NEA,2472,0.3145,31.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,region,NOA,4898,0.3329,33.3,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,region,NOA,3955,0.3578,35.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,region,NOA,3543,0.3375,33.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,region,NOA,3239,0.3484,34.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,region,Pampeana,5444,0.2903,29.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,region,Pampeana,6230,0.2744,27.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,region,Pampeana,6528,0.2956,29.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,region,Pampeana,7078,0.2734,27.3,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,region,Patagonia,4447,0.3064,30.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,region,Patagonia,3586,0.2948,29.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,region,Patagonia,4021,0.3002,30.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,region,Patagonia,2933,0.2762,27.6,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,sexo,Mujer,14077,0.2793,27.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,sexo,Mujer,12866,0.2878,28.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,sexo,Mujer,12280,0.2997,30.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,sexo,Mujer,12295,0.2931,29.3,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,sexo,Varón,8885,0.2794,27.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,sexo,Varón,8087,0.2982,29.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,sexo,Varón,8176,0.2975,29.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,sexo,Varón,8144,0.2901,29.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,tabaco,Ex fumador,4618,0.3404,34.0,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,tabaco,Ex fumador,4378,0.3473,34.7,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,tabaco,Ex fumador,4167,0.3433,34.3,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,tabaco,Ex fumador,4571,0.3416,34.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,tabaco,Fumador actual,5871,0.2339,23.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,tabaco,Fumador actual,4805,0.2626,26.3,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,tabaco,Fumador actual,4446,0.2852,28.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,tabaco,Fumador actual,3874,0.2724,27.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,tabaco,Nunca fumó,12473,0.2753,27.5,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,tabaco,Nunca fumó,11770,0.2836,28.4,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,tabaco,Nunca fumó,11843,0.2878,28.8,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,tabaco,Nunca fumó,11994,0.2789,27.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2005,total,Total país,22962,0.2794,27.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2009,total,Total país,20953,0.2922,29.2,ENFR - INDEC,2026-11-17
+colesterol_alto,2013,total,Total país,20456,0.2988,29.9,ENFR - INDEC,2026-11-17
+colesterol_alto,2018,total,Total país,20439,0.2917,29.2,ENFR - INDEC,2026-11-17
+diabetes,2005,cobertura,Con cobertura,27103,0.0909,9.1,ENFR - INDEC,2026-11-17
+diabetes,2009,cobertura,Con cobertura,24350,0.1057,10.6,ENFR - INDEC,2026-11-17
+diabetes,2013,cobertura,Con cobertura,22716,0.1099,11.0,ENFR - INDEC,2026-11-17
+diabetes,2018,cobertura,Con cobertura,20252,0.137,13.7,ENFR - INDEC,2026-11-17
+diabetes,2005,cobertura,Sin cobertura,13624,0.0751,7.5,ENFR - INDEC,2026-11-17
+diabetes,2009,cobertura,Sin cobertura,8348,0.0739,7.4,ENFR - INDEC,2026-11-17
+diabetes,2013,cobertura,Sin cobertura,9217,0.0716,7.2,ENFR - INDEC,2026-11-17
+diabetes,2018,cobertura,Sin cobertura,8837,0.1081,10.8,ENFR - INDEC,2026-11-17
+diabetes,2005,grupo_etario,18-24,5928,0.0229,2.3,ENFR - INDEC,2026-11-17
+diabetes,2009,grupo_etario,18-24,4685,0.0362,3.6,ENFR - INDEC,2026-11-17
+diabetes,2013,grupo_etario,18-24,4324,0.0292,2.9,ENFR - INDEC,2026-11-17
+diabetes,2018,grupo_etario,18-24,3400,0.0587,5.9,ENFR - INDEC,2026-11-17
+diabetes,2005,grupo_etario,25-34,9020,0.0412,4.1,ENFR - INDEC,2026-11-17
+diabetes,2009,grupo_etario,25-34,7588,0.0431,4.3,ENFR - INDEC,2026-11-17
+diabetes,2013,grupo_etario,25-34,7001,0.0491,4.9,ENFR - INDEC,2026-11-17
+diabetes,2018,grupo_etario,25-34,5606,0.0627,6.3,ENFR - INDEC,2026-11-17
+diabetes,2005,grupo_etario,35-49,11666,0.0572,5.7,ENFR - INDEC,2026-11-17
+diabetes,2009,grupo_etario,35-49,9534,0.0791,7.9,ENFR - INDEC,2026-11-17
+diabetes,2013,grupo_etario,35-49,8973,0.084,8.4,ENFR - INDEC,2026-11-17
+diabetes,2018,grupo_etario,35-49,8010,0.1195,12.0,ENFR - INDEC,2026-11-17
+diabetes,2005,grupo_etario,50-64,8233,0.1442,14.4,ENFR - INDEC,2026-11-17
+diabetes,2009,grupo_etario,50-64,7039,0.1512,15.1,ENFR - INDEC,2026-11-17
+diabetes,2013,grupo_etario,50-64,6574,0.1472,14.7,ENFR - INDEC,2026-11-17
+diabetes,2018,grupo_etario,50-64,6385,0.1935,19.4,ENFR - INDEC,2026-11-17
+diabetes,2005,grupo_etario,65+,6372,0.1827,18.3,ENFR - INDEC,2026-11-17
+diabetes,2009,grupo_etario,65+,5737,0.1902,19.0,ENFR - INDEC,2026-11-17
+diabetes,2013,grupo_etario,65+,5360,0.2034,20.3,ENFR - INDEC,2026-11-17
+diabetes,2018,grupo_etario,65+,5688,0.2141,21.4,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Buenos Aires,3412,0.0873,8.7,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Buenos Aires,5157,0.0989,9.9,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Buenos Aires,5172,0.0979,9.8,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Buenos Aires,5540,0.1322,13.2,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,CABA,1507,0.0805,8.0,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,CABA,1140,0.074,7.4,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,CABA,750,0.0828,8.3,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,CABA,1370,0.0884,8.8,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Catamarca,1559,0.0888,8.9,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Catamarca,1269,0.0939,9.4,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Catamarca,854,0.1294,12.9,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Catamarca,859,0.1155,11.6,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Chaco,1796,0.0875,8.8,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Chaco,1259,0.0883,8.8,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Chaco,887,0.0967,9.7,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Chaco,1016,0.1039,10.4,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Chubut,1569,0.0945,9.4,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Chubut,1121,0.12,12.0,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Chubut,1374,0.0995,10.0,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Chubut,941,0.1249,12.5,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Corrientes,1717,0.079,7.9,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Corrientes,1141,0.0954,9.5,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Corrientes,1099,0.077,7.7,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Corrientes,1061,0.1326,13.3,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Córdoba,1668,0.1027,10.3,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Córdoba,2081,0.1014,10.1,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Córdoba,2031,0.1306,13.1,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Córdoba,1979,0.137,13.7,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Entre Ríos,1655,0.0809,8.1,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Entre Ríos,1323,0.1034,10.3,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Entre Ríos,1378,0.078,7.8,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Entre Ríos,1604,0.108,10.8,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Formosa,1656,0.083,8.3,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Formosa,1265,0.0843,8.4,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Formosa,1083,0.0761,7.6,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Formosa,997,0.1215,12.2,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Jujuy,1766,0.041,4.1,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Jujuy,1488,0.0993,9.9,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Jujuy,1003,0.0746,7.5,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Jujuy,989,0.0889,8.9,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,La Pampa,1525,0.0745,7.4,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,La Pampa,1182,0.1079,10.8,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,La Pampa,1024,0.0884,8.8,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,La Pampa,610,0.1491,14.9,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,La Rioja,1742,0.0942,9.4,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,La Rioja,1301,0.1294,12.9,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,La Rioja,1048,0.0916,9.2,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,La Rioja,734,0.1528,15.3,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Mendoza,1646,0.0666,6.7,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Mendoza,1102,0.0964,9.6,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Mendoza,1312,0.0893,8.9,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Mendoza,982,0.127,12.7,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Misiones,1741,0.08,8.0,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Misiones,1176,0.087,8.7,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Misiones,922,0.0954,9.5,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Misiones,1148,0.137,13.7,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Neuquén,1766,0.0921,9.2,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Neuquén,1009,0.0787,7.9,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Neuquén,908,0.1216,12.2,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Neuquén,744,0.1399,14.0,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Río Negro,1582,0.0998,10.0,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Río Negro,1311,0.1066,10.7,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Río Negro,1665,0.0859,8.6,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Río Negro,1433,0.1287,12.9,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Salta,1806,0.0425,4.2,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Salta,1335,0.085,8.5,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Salta,1247,0.1096,11.0,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Salta,1279,0.1079,10.8,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,San Juan,1686,0.0932,9.3,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,San Juan,1093,0.1193,11.9,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,San Juan,982,0.1128,11.3,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,San Juan,652,0.1593,15.9,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,San Luis,1646,0.0982,9.8,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,San Luis,1285,0.1053,10.5,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,San Luis,1031,0.1044,10.4,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,San Luis,935,0.175,17.5,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Santa Cruz,1422,0.0835,8.4,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Santa Cruz,1268,0.1035,10.4,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Santa Cruz,967,0.1016,10.2,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Santa Cruz,551,0.1431,14.3,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Santa Fe,1738,0.087,8.7,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Santa Fe,1912,0.0871,8.7,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Santa Fe,2073,0.0909,9.1,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Santa Fe,1766,0.1357,13.6,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Santiago del Estero,1794,0.093,9.3,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Santiago del Estero,968,0.1562,15.6,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Santiago del Estero,1049,0.1253,12.5,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Santiago del Estero,631,0.1372,13.7,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Tierra del Fuego,1224,0.0952,9.5,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Tierra del Fuego,1027,0.1235,12.4,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Tierra del Fuego,1006,0.0986,9.9,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Tierra del Fuego,321,0.1588,15.9,ENFR - INDEC,2026-11-17
+diabetes,2005,provincia,Tucumán,1596,0.0697,7.0,ENFR - INDEC,2026-11-17
+diabetes,2009,provincia,Tucumán,1370,0.0995,10.0,ENFR - INDEC,2026-11-17
+diabetes,2013,provincia,Tucumán,1367,0.0949,9.5,ENFR - INDEC,2026-11-17
+diabetes,2018,provincia,Tucumán,947,0.1332,13.3,ENFR - INDEC,2026-11-17
+diabetes,2005,quintil_ingreso,Q1,10405,0.0933,9.3,ENFR - INDEC,2026-11-17
+diabetes,2009,quintil_ingreso,Q1,8711,0.1008,10.1,ENFR - INDEC,2026-11-17
+diabetes,2013,quintil_ingreso,Q1,7077,0.1013,10.1,ENFR - INDEC,2026-11-17
+diabetes,2018,quintil_ingreso,Q1,5728,0.133,13.3,ENFR - INDEC,2026-11-17
+diabetes,2005,quintil_ingreso,Q2,8859,0.0966,9.7,ENFR - INDEC,2026-11-17
+diabetes,2009,quintil_ingreso,Q2,7007,0.0959,9.6,ENFR - INDEC,2026-11-17
+diabetes,2013,quintil_ingreso,Q2,6268,0.0941,9.4,ENFR - INDEC,2026-11-17
+diabetes,2018,quintil_ingreso,Q2,5916,0.1383,13.8,ENFR - INDEC,2026-11-17
+diabetes,2005,quintil_ingreso,Q3,7599,0.0839,8.4,ENFR - INDEC,2026-11-17
+diabetes,2009,quintil_ingreso,Q3,6256,0.1149,11.5,ENFR - INDEC,2026-11-17
+diabetes,2013,quintil_ingreso,Q3,6222,0.0992,9.9,ENFR - INDEC,2026-11-17
+diabetes,2018,quintil_ingreso,Q3,5644,0.1374,13.7,ENFR - INDEC,2026-11-17
+diabetes,2005,quintil_ingreso,Q4,7246,0.0762,7.6,ENFR - INDEC,2026-11-17
+diabetes,2009,quintil_ingreso,Q4,6239,0.0886,8.9,ENFR - INDEC,2026-11-17
+diabetes,2013,quintil_ingreso,Q4,5919,0.1042,10.4,ENFR - INDEC,2026-11-17
+diabetes,2018,quintil_ingreso,Q4,5970,0.113,11.3,ENFR - INDEC,2026-11-17
+diabetes,2005,quintil_ingreso,Q5,6856,0.0692,6.9,ENFR - INDEC,2026-11-17
+diabetes,2009,quintil_ingreso,Q5,6178,0.081,8.1,ENFR - INDEC,2026-11-17
+diabetes,2013,quintil_ingreso,Q5,6646,0.091,9.1,ENFR - INDEC,2026-11-17
+diabetes,2018,quintil_ingreso,Q5,5831,0.1166,11.7,ENFR - INDEC,2026-11-17
+diabetes,2005,region,Cuyo,4978,0.078,7.8,ENFR - INDEC,2026-11-17
+diabetes,2009,region,Cuyo,3480,0.1036,10.4,ENFR - INDEC,2026-11-17
+diabetes,2013,region,Cuyo,3325,0.0973,9.7,ENFR - INDEC,2026-11-17
+diabetes,2018,region,Cuyo,2569,0.1426,14.3,ENFR - INDEC,2026-11-17
+diabetes,2005,region,GBA,2861,0.0833,8.3,ENFR - INDEC,2026-11-17
+diabetes,2009,region,GBA,3709,0.0918,9.2,ENFR - INDEC,2026-11-17
+diabetes,2013,region,GBA,2857,0.0929,9.3,ENFR - INDEC,2026-11-17
+diabetes,2018,region,GBA,3553,0.1232,12.3,ENFR - INDEC,2026-11-17
+diabetes,2005,region,NEA,6910,0.0823,8.2,ENFR - INDEC,2026-11-17
+diabetes,2009,region,NEA,4841,0.0895,9.0,ENFR - INDEC,2026-11-17
+diabetes,2013,region,NEA,3991,0.0879,8.8,ENFR - INDEC,2026-11-17
+diabetes,2018,region,NEA,4222,0.1239,12.4,ENFR - INDEC,2026-11-17
+diabetes,2005,region,NOA,10263,0.065,6.5,ENFR - INDEC,2026-11-17
+diabetes,2009,region,NOA,7731,0.1054,10.5,ENFR - INDEC,2026-11-17
+diabetes,2013,region,NOA,6568,0.1024,10.2,ENFR - INDEC,2026-11-17
+diabetes,2018,region,NOA,5439,0.1209,12.1,ENFR - INDEC,2026-11-17
+diabetes,2005,region,Pampeana,8644,0.0929,9.3,ENFR - INDEC,2026-11-17
+diabetes,2009,region,Pampeana,9086,0.0976,9.8,ENFR - INDEC,2026-11-17
+diabetes,2013,region,Pampeana,9571,0.1041,10.4,ENFR - INDEC,2026-11-17
+diabetes,2018,region,Pampeana,9316,0.1322,13.2,ENFR - INDEC,2026-11-17
+diabetes,2005,region,Patagonia,7563,0.0943,9.4,ENFR - INDEC,2026-11-17
+diabetes,2009,region,Patagonia,5736,0.1032,10.3,ENFR - INDEC,2026-11-17
+diabetes,2013,region,Patagonia,5920,0.1015,10.2,ENFR - INDEC,2026-11-17
+diabetes,2018,region,Patagonia,3990,0.1349,13.5,ENFR - INDEC,2026-11-17
+diabetes,2005,sexo,Mujer,23504,0.0887,8.9,ENFR - INDEC,2026-11-17
+diabetes,2009,sexo,Mujer,19648,0.1022,10.2,ENFR - INDEC,2026-11-17
+diabetes,2013,sexo,Mujer,17991,0.1043,10.4,ENFR - INDEC,2026-11-17
+diabetes,2018,sexo,Mujer,16573,0.1373,13.7,ENFR - INDEC,2026-11-17
+diabetes,2005,sexo,Varón,17715,0.0804,8.0,ENFR - INDEC,2026-11-17
+diabetes,2009,sexo,Varón,14935,0.0897,9.0,ENFR - INDEC,2026-11-17
+diabetes,2013,sexo,Varón,14241,0.0909,9.1,ENFR - INDEC,2026-11-17
+diabetes,2018,sexo,Varón,12516,0.117,11.7,ENFR - INDEC,2026-11-17
+diabetes,2005,tabaco,Ex fumador,6767,0.1235,12.4,ENFR - INDEC,2026-11-17
+diabetes,2009,tabaco,Ex fumador,6059,0.1329,13.3,ENFR - INDEC,2026-11-17
+diabetes,2013,tabaco,Ex fumador,5647,0.1475,14.8,ENFR - INDEC,2026-11-17
+diabetes,2018,tabaco,Ex fumador,5758,0.1726,17.3,ENFR - INDEC,2026-11-17
+diabetes,2005,tabaco,Fumador actual,12527,0.0548,5.5,ENFR - INDEC,2026-11-17
+diabetes,2009,tabaco,Fumador actual,9163,0.0736,7.4,ENFR - INDEC,2026-11-17
+diabetes,2013,tabaco,Fumador actual,7881,0.077,7.7,ENFR - INDEC,2026-11-17
+diabetes,2018,tabaco,Fumador actual,6204,0.1025,10.2,ENFR - INDEC,2026-11-17
+diabetes,2005,tabaco,Nunca fumó,21925,0.0888,8.9,ENFR - INDEC,2026-11-17
+diabetes,2009,tabaco,Nunca fumó,19361,0.0958,9.6,ENFR - INDEC,2026-11-17
+diabetes,2013,tabaco,Nunca fumó,18704,0.0919,9.2,ENFR - INDEC,2026-11-17
+diabetes,2018,tabaco,Nunca fumó,17127,0.122,12.2,ENFR - INDEC,2026-11-17
+diabetes,2005,total,Total país,41219,0.0848,8.5,ENFR - INDEC,2026-11-17
+diabetes,2009,total,Total país,34583,0.0964,9.6,ENFR - INDEC,2026-11-17
+diabetes,2013,total,Total país,32232,0.098,9.8,ENFR - INDEC,2026-11-17
+diabetes,2018,total,Total país,29089,0.1277,12.8,ENFR - INDEC,2026-11-17
+hta,2005,cobertura,Con cobertura,25070,0.3545,35.4,ENFR - INDEC,2026-11-17
+hta,2009,cobertura,Con cobertura,22460,0.3598,36.0,ENFR - INDEC,2026-11-17
+hta,2013,cobertura,Con cobertura,20850,0.3501,35.0,ENFR - INDEC,2026-11-17
+hta,2018,cobertura,Con cobertura,19342,0.3713,37.1,ENFR - INDEC,2026-11-17
+hta,2005,cobertura,Sin cobertura,11238,0.3304,33.0,ENFR - INDEC,2026-11-17
+hta,2009,cobertura,Sin cobertura,6837,0.3202,32.0,ENFR - INDEC,2026-11-17
+hta,2013,cobertura,Sin cobertura,7465,0.329,32.9,ENFR - INDEC,2026-11-17
+hta,2018,cobertura,Sin cobertura,7647,0.2966,29.7,ENFR - INDEC,2026-11-17
+hta,2005,grupo_etario,18-24,4376,0.1389,13.9,ENFR - INDEC,2026-11-17
+hta,2009,grupo_etario,18-24,3474,0.1416,14.2,ENFR - INDEC,2026-11-17
+hta,2013,grupo_etario,18-24,3211,0.1299,13.0,ENFR - INDEC,2026-11-17
+hta,2018,grupo_etario,18-24,2775,0.1498,15.0,ENFR - INDEC,2026-11-17
+hta,2005,grupo_etario,25-34,7629,0.2134,21.3,ENFR - INDEC,2026-11-17
+hta,2009,grupo_etario,25-34,6495,0.2017,20.2,ENFR - INDEC,2026-11-17
+hta,2013,grupo_etario,25-34,5922,0.1983,19.8,ENFR - INDEC,2026-11-17
+hta,2018,grupo_etario,25-34,4960,0.2089,20.9,ENFR - INDEC,2026-11-17
+hta,2005,grupo_etario,35-49,10620,0.3015,30.2,ENFR - INDEC,2026-11-17
+hta,2009,grupo_etario,35-49,8556,0.2895,29.0,ENFR - INDEC,2026-11-17
+hta,2013,grupo_etario,35-49,8023,0.2859,28.6,ENFR - INDEC,2026-11-17
+hta,2018,grupo_etario,35-49,7483,0.2923,29.2,ENFR - INDEC,2026-11-17
+hta,2005,grupo_etario,50-64,7863,0.4735,47.3,ENFR - INDEC,2026-11-17
+hta,2009,grupo_etario,50-64,6671,0.4716,47.2,ENFR - INDEC,2026-11-17
+hta,2013,grupo_etario,50-64,6216,0.4777,47.8,ENFR - INDEC,2026-11-17
+hta,2018,grupo_etario,50-64,6187,0.4753,47.5,ENFR - INDEC,2026-11-17
+hta,2005,grupo_etario,65+,6239,0.5884,58.8,ENFR - INDEC,2026-11-17
+hta,2009,grupo_etario,65+,5596,0.63,63.0,ENFR - INDEC,2026-11-17
+hta,2013,grupo_etario,65+,5194,0.6235,62.4,ENFR - INDEC,2026-11-17
+hta,2018,grupo_etario,65+,5584,0.619,61.9,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Buenos Aires,3079,0.3498,35.0,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Buenos Aires,4728,0.3561,35.6,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Buenos Aires,4757,0.3466,34.7,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Buenos Aires,5214,0.3562,35.6,ENFR - INDEC,2026-11-17
+hta,2005,provincia,CABA,1435,0.2991,29.9,ENFR - INDEC,2026-11-17
+hta,2009,provincia,CABA,1076,0.2926,29.3,ENFR - INDEC,2026-11-17
+hta,2013,provincia,CABA,711,0.2872,28.7,ENFR - INDEC,2026-11-17
+hta,2018,provincia,CABA,1332,0.2676,26.8,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Catamarca,1374,0.3673,36.7,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Catamarca,1108,0.4045,40.4,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Catamarca,743,0.346,34.6,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Catamarca,779,0.3617,36.2,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Chaco,1586,0.3927,39.3,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Chaco,1116,0.3714,37.1,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Chaco,745,0.4259,42.6,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Chaco,892,0.3721,37.2,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Chubut,1421,0.2999,30.0,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Chubut,965,0.3455,34.6,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Chubut,1163,0.3259,32.6,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Chubut,896,0.3047,30.5,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Corrientes,1454,0.3538,35.4,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Corrientes,1004,0.365,36.5,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Corrientes,961,0.3712,37.1,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Corrientes,960,0.4067,40.7,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Córdoba,1551,0.3565,35.6,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Córdoba,1878,0.3594,35.9,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Córdoba,1850,0.3646,36.5,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Córdoba,1852,0.3456,34.6,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Entre Ríos,1485,0.3496,35.0,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Entre Ríos,1131,0.3587,35.9,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Entre Ríos,1263,0.358,35.8,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Entre Ríos,1494,0.3978,39.8,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Formosa,1389,0.3746,37.5,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Formosa,1033,0.3938,39.4,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Formosa,904,0.3776,37.8,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Formosa,835,0.5273,52.7,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Jujuy,1547,0.3101,31.0,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Jujuy,1215,0.3075,30.8,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Jujuy,865,0.355,35.5,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Jujuy,912,0.2678,26.8,ENFR - INDEC,2026-11-17
+hta,2005,provincia,La Pampa,1395,0.3502,35.0,ENFR - INDEC,2026-11-17
+hta,2009,provincia,La Pampa,1104,0.3404,34.0,ENFR - INDEC,2026-11-17
+hta,2013,provincia,La Pampa,774,0.3648,36.5,ENFR - INDEC,2026-11-17
+hta,2018,provincia,La Pampa,513,0.364,36.4,ENFR - INDEC,2026-11-17
+hta,2005,provincia,La Rioja,1510,0.4148,41.5,ENFR - INDEC,2026-11-17
+hta,2009,provincia,La Rioja,1073,0.3098,31.0,ENFR - INDEC,2026-11-17
+hta,2013,provincia,La Rioja,940,0.3202,32.0,ENFR - INDEC,2026-11-17
+hta,2018,provincia,La Rioja,672,0.3401,34.0,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Mendoza,1521,0.3599,36.0,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Mendoza,1004,0.3803,38.0,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Mendoza,1200,0.3023,30.2,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Mendoza,934,0.3503,35.0,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Misiones,1476,0.3487,34.9,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Misiones,992,0.3611,36.1,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Misiones,783,0.3914,39.1,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Misiones,1064,0.3713,37.1,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Neuquén,1581,0.3546,35.5,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Neuquén,935,0.3321,33.2,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Neuquén,829,0.352,35.2,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Neuquén,713,0.3921,39.2,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Río Negro,1447,0.3747,37.5,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Río Negro,1192,0.3281,32.8,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Río Negro,1516,0.2928,29.3,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Río Negro,1362,0.3139,31.4,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Salta,1561,0.2809,28.1,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Salta,1200,0.3148,31.5,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Salta,1049,0.3561,35.6,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Salta,1166,0.2847,28.5,ENFR - INDEC,2026-11-17
+hta,2005,provincia,San Juan,1499,0.3872,38.7,ENFR - INDEC,2026-11-17
+hta,2009,provincia,San Juan,991,0.3622,36.2,ENFR - INDEC,2026-11-17
+hta,2013,provincia,San Juan,886,0.3572,35.7,ENFR - INDEC,2026-11-17
+hta,2018,provincia,San Juan,613,0.3279,32.8,ENFR - INDEC,2026-11-17
+hta,2005,provincia,San Luis,1430,0.318,31.8,ENFR - INDEC,2026-11-17
+hta,2009,provincia,San Luis,1167,0.3473,34.7,ENFR - INDEC,2026-11-17
+hta,2013,provincia,San Luis,962,0.2817,28.2,ENFR - INDEC,2026-11-17
+hta,2018,provincia,San Luis,865,0.4159,41.6,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Santa Cruz,1277,0.3692,36.9,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Santa Cruz,1125,0.319,31.9,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Santa Cruz,886,0.3462,34.6,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Santa Cruz,512,0.3354,33.5,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Santa Fe,1607,0.3512,35.1,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Santa Fe,1734,0.3351,33.5,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Santa Fe,1868,0.3392,33.9,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Santa Fe,1675,0.3622,36.2,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Santiago del Estero,1555,0.365,36.5,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Santiago del Estero,826,0.3738,37.4,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Santiago del Estero,812,0.3664,36.6,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Santiago del Estero,570,0.3852,38.5,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Tierra del Fuego,1135,0.3591,35.9,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Tierra del Fuego,957,0.3182,31.8,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Tierra del Fuego,934,0.2844,28.4,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Tierra del Fuego,303,0.3419,34.2,ENFR - INDEC,2026-11-17
+hta,2005,provincia,Tucumán,1412,0.3947,39.5,ENFR - INDEC,2026-11-17
+hta,2009,provincia,Tucumán,1238,0.3872,38.7,ENFR - INDEC,2026-11-17
+hta,2013,provincia,Tucumán,1165,0.3732,37.3,ENFR - INDEC,2026-11-17
+hta,2018,provincia,Tucumán,861,0.3685,36.8,ENFR - INDEC,2026-11-17
+hta,2005,quintil_ingreso,Q1,8740,0.3763,37.6,ENFR - INDEC,2026-11-17
+hta,2009,quintil_ingreso,Q1,7233,0.3845,38.4,ENFR - INDEC,2026-11-17
+hta,2013,quintil_ingreso,Q1,5858,0.3891,38.9,ENFR - INDEC,2026-11-17
+hta,2018,quintil_ingreso,Q1,5018,0.3698,37.0,ENFR - INDEC,2026-11-17
+hta,2005,quintil_ingreso,Q2,7824,0.3872,38.7,ENFR - INDEC,2026-11-17
+hta,2009,quintil_ingreso,Q2,6228,0.3782,37.8,ENFR - INDEC,2026-11-17
+hta,2013,quintil_ingreso,Q2,5485,0.3507,35.1,ENFR - INDEC,2026-11-17
+hta,2018,quintil_ingreso,Q2,5410,0.3667,36.7,ENFR - INDEC,2026-11-17
+hta,2005,quintil_ingreso,Q3,6814,0.354,35.4,ENFR - INDEC,2026-11-17
+hta,2009,quintil_ingreso,Q3,5659,0.3631,36.3,ENFR - INDEC,2026-11-17
+hta,2013,quintil_ingreso,Q3,5602,0.3565,35.6,ENFR - INDEC,2026-11-17
+hta,2018,quintil_ingreso,Q3,5275,0.3665,36.6,ENFR - INDEC,2026-11-17
+hta,2005,quintil_ingreso,Q4,6654,0.3312,33.1,ENFR - INDEC,2026-11-17
+hta,2009,quintil_ingreso,Q4,5731,0.3297,33.0,ENFR - INDEC,2026-11-17
+hta,2013,quintil_ingreso,Q4,5367,0.3281,32.8,ENFR - INDEC,2026-11-17
+hta,2018,quintil_ingreso,Q4,5655,0.3561,35.6,ENFR - INDEC,2026-11-17
+hta,2005,quintil_ingreso,Q5,6477,0.273,27.3,ENFR - INDEC,2026-11-17
+hta,2009,quintil_ingreso,Q5,5780,0.2844,28.4,ENFR - INDEC,2026-11-17
+hta,2013,quintil_ingreso,Q5,6170,0.2908,29.1,ENFR - INDEC,2026-11-17
+hta,2018,quintil_ingreso,Q5,5631,0.2894,28.9,ENFR - INDEC,2026-11-17
+hta,2005,region,Cuyo,4450,0.3606,36.1,ENFR - INDEC,2026-11-17
+hta,2009,region,Cuyo,3162,0.3705,37.0,ENFR - INDEC,2026-11-17
+hta,2013,region,Cuyo,3048,0.3118,31.2,ENFR - INDEC,2026-11-17
+hta,2018,region,Cuyo,2412,0.3555,35.6,ENFR - INDEC,2026-11-17
+hta,2005,region,GBA,2628,0.3376,33.8,ENFR - INDEC,2026-11-17
+hta,2009,region,GBA,3391,0.348,34.8,ENFR - INDEC,2026-11-17
+hta,2013,region,GBA,2634,0.3276,32.8,ENFR - INDEC,2026-11-17
+hta,2018,region,GBA,3379,0.3409,34.1,ENFR - INDEC,2026-11-17
+hta,2005,region,NEA,5905,0.367,36.7,ENFR - INDEC,2026-11-17
+hta,2009,region,NEA,4145,0.3699,37.0,ENFR - INDEC,2026-11-17
+hta,2013,region,NEA,3393,0.3939,39.4,ENFR - INDEC,2026-11-17
+hta,2018,region,NEA,3751,0.4007,40.1,ENFR - INDEC,2026-11-17
+hta,2005,region,NOA,8959,0.3499,35.0,ENFR - INDEC,2026-11-17
+hta,2009,region,NOA,6660,0.3508,35.1,ENFR - INDEC,2026-11-17
+hta,2013,region,NOA,5574,0.3591,35.9,ENFR - INDEC,2026-11-17
+hta,2018,region,NOA,4960,0.331,33.1,ENFR - INDEC,2026-11-17
+hta,2005,region,Pampeana,7924,0.3496,35.0,ENFR - INDEC,2026-11-17
+hta,2009,region,Pampeana,8260,0.3419,34.2,ENFR - INDEC,2026-11-17
+hta,2013,region,Pampeana,8589,0.3555,35.6,ENFR - INDEC,2026-11-17
+hta,2018,region,Pampeana,8701,0.3536,35.4,ENFR - INDEC,2026-11-17
+hta,2005,region,Patagonia,6861,0.3493,34.9,ENFR - INDEC,2026-11-17
+hta,2009,region,Patagonia,5174,0.3314,33.1,ENFR - INDEC,2026-11-17
+hta,2013,region,Patagonia,5328,0.323,32.3,ENFR - INDEC,2026-11-17
+hta,2018,region,Patagonia,3786,0.3368,33.7,ENFR - INDEC,2026-11-17
+hta,2005,sexo,Mujer,21962,0.3696,37.0,ENFR - INDEC,2026-11-17
+hta,2009,sexo,Mujer,18198,0.3592,35.9,ENFR - INDEC,2026-11-17
+hta,2013,sexo,Mujer,16589,0.3652,36.5,ENFR - INDEC,2026-11-17
+hta,2018,sexo,Mujer,15739,0.3606,36.1,ENFR - INDEC,2026-11-17
+hta,2005,sexo,Varón,14765,0.3185,31.8,ENFR - INDEC,2026-11-17
+hta,2009,sexo,Varón,12594,0.3348,33.5,ENFR - INDEC,2026-11-17
+hta,2013,sexo,Varón,11977,0.3165,31.6,ENFR - INDEC,2026-11-17
+hta,2018,sexo,Varón,11250,0.3353,33.5,ENFR - INDEC,2026-11-17
+hta,2005,tabaco,Ex fumador,6382,0.4247,42.5,ENFR - INDEC,2026-11-17
+hta,2009,tabaco,Ex fumador,5699,0.431,43.1,ENFR - INDEC,2026-11-17
+hta,2013,tabaco,Ex fumador,5356,0.421,42.1,ENFR - INDEC,2026-11-17
+hta,2018,tabaco,Ex fumador,5562,0.4442,44.4,ENFR - INDEC,2026-11-17
+hta,2005,tabaco,Fumador actual,10742,0.2983,29.8,ENFR - INDEC,2026-11-17
+hta,2009,tabaco,Fumador actual,7909,0.2917,29.2,ENFR - INDEC,2026-11-17
+hta,2013,tabaco,Fumador actual,6687,0.293,29.3,ENFR - INDEC,2026-11-17
+hta,2018,tabaco,Fumador actual,5548,0.3033,30.3,ENFR - INDEC,2026-11-17
+hta,2005,tabaco,Nunca fumó,19603,0.3448,34.5,ENFR - INDEC,2026-11-17
+hta,2009,tabaco,Nunca fumó,17184,0.347,34.7,ENFR - INDEC,2026-11-17
+hta,2013,tabaco,Nunca fumó,16523,0.3389,33.9,ENFR - INDEC,2026-11-17
+hta,2018,tabaco,Nunca fumó,15879,0.3317,33.2,ENFR - INDEC,2026-11-17
+hta,2005,total,Total país,36727,0.3467,34.7,ENFR - INDEC,2026-11-17
+hta,2009,total,Total país,30792,0.3483,34.8,ENFR - INDEC,2026-11-17
+hta,2013,total,Total país,28566,0.3433,34.3,ENFR - INDEC,2026-11-17
+hta,2018,total,Total país,26989,0.3489,34.9,ENFR - INDEC,2026-11-17
+obesidad,2005,cobertura,Con cobertura,25277,0.146,14.6,ENFR - INDEC,2026-11-17
+obesidad,2009,cobertura,Con cobertura,23072,0.1751,17.5,ENFR - INDEC,2026-11-17
+obesidad,2013,cobertura,Con cobertura,21548,0.2087,20.9,ENFR - INDEC,2026-11-17
+obesidad,2018,cobertura,Con cobertura,19017,0.2496,25.0,ENFR - INDEC,2026-11-17
+obesidad,2005,cobertura,Sin cobertura,12201,0.1468,14.7,ENFR - INDEC,2026-11-17
+obesidad,2009,cobertura,Sin cobertura,7658,0.1912,19.1,ENFR - INDEC,2026-11-17
+obesidad,2013,cobertura,Sin cobertura,8447,0.2036,20.4,ENFR - INDEC,2026-11-17
+obesidad,2018,cobertura,Sin cobertura,7976,0.2607,26.1,ENFR - INDEC,2026-11-17
+obesidad,2005,grupo_etario,18-24,5472,0.0379,3.8,ENFR - INDEC,2026-11-17
+obesidad,2009,grupo_etario,18-24,4399,0.064,6.4,ENFR - INDEC,2026-11-17
+obesidad,2013,grupo_etario,18-24,4013,0.0774,7.7,ENFR - INDEC,2026-11-17
+obesidad,2018,grupo_etario,18-24,3114,0.1187,11.9,ENFR - INDEC,2026-11-17
+obesidad,2005,grupo_etario,25-34,8459,0.1039,10.4,ENFR - INDEC,2026-11-17
+obesidad,2009,grupo_etario,25-34,7202,0.1282,12.8,ENFR - INDEC,2026-11-17
+obesidad,2013,grupo_etario,25-34,6635,0.1581,15.8,ENFR - INDEC,2026-11-17
+obesidad,2018,grupo_etario,25-34,5253,0.2104,21.0,ENFR - INDEC,2026-11-17
+obesidad,2005,grupo_etario,35-49,10932,0.1681,16.8,ENFR - INDEC,2026-11-17
+obesidad,2009,grupo_etario,35-49,9041,0.2111,21.1,ENFR - INDEC,2026-11-17
+obesidad,2013,grupo_etario,35-49,8529,0.2425,24.2,ENFR - INDEC,2026-11-17
+obesidad,2018,grupo_etario,35-49,7539,0.2938,29.4,ENFR - INDEC,2026-11-17
+obesidad,2005,grupo_etario,50-64,7575,0.2283,22.8,ENFR - INDEC,2026-11-17
+obesidad,2009,grupo_etario,50-64,6604,0.273,27.3,ENFR - INDEC,2026-11-17
+obesidad,2013,grupo_etario,50-64,6231,0.2956,29.6,ENFR - INDEC,2026-11-17
+obesidad,2018,grupo_etario,50-64,5983,0.3248,32.5,ENFR - INDEC,2026-11-17
+obesidad,2005,grupo_etario,65+,5488,0.1768,17.7,ENFR - INDEC,2026-11-17
+obesidad,2009,grupo_etario,65+,5191,0.2008,20.1,ENFR - INDEC,2026-11-17
+obesidad,2013,grupo_etario,65+,4867,0.2421,24.2,ENFR - INDEC,2026-11-17
+obesidad,2018,grupo_etario,65+,5104,0.2766,27.7,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Buenos Aires,3209,0.1424,14.2,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Buenos Aires,4940,0.1881,18.8,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Buenos Aires,4894,0.2109,21.1,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Buenos Aires,5243,0.255,25.5,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,CABA,1431,0.1135,11.4,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,CABA,1107,0.1351,13.5,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,CABA,725,0.1596,16.0,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,CABA,1340,0.1698,17.0,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Catamarca,1472,0.1864,18.6,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Catamarca,1156,0.2318,23.2,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Catamarca,761,0.2288,22.9,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Catamarca,783,0.2933,29.3,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Chaco,1652,0.1465,14.6,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Chaco,1130,0.1641,16.4,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Chaco,874,0.2113,21.1,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Chaco,889,0.1998,20.0,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Chubut,1490,0.163,16.3,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Chubut,1049,0.2183,21.8,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Chubut,1326,0.2473,24.7,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Chubut,907,0.2664,26.6,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Corrientes,1484,0.1564,15.6,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Corrientes,992,0.1786,17.9,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Corrientes,927,0.1935,19.4,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Corrientes,935,0.2409,24.1,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Córdoba,1519,0.1425,14.2,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Córdoba,2035,0.1596,16.0,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Córdoba,1934,0.2131,21.3,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Córdoba,1839,0.2454,24.5,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Entre Ríos,1447,0.1357,13.6,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Entre Ríos,1237,0.1591,15.9,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Entre Ríos,1320,0.1858,18.6,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Entre Ríos,1441,0.2504,25.0,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Formosa,1443,0.1781,17.8,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Formosa,1028,0.1961,19.6,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Formosa,987,0.1916,19.2,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Formosa,865,0.2575,25.8,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Jujuy,1552,0.1466,14.7,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Jujuy,1413,0.177,17.7,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Jujuy,880,0.2334,23.3,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Jujuy,922,0.3102,31.0,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,La Pampa,1428,0.1544,15.4,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,La Pampa,1132,0.1729,17.3,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,La Pampa,946,0.1647,16.5,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,La Pampa,592,0.2558,25.6,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,La Rioja,1626,0.1691,16.9,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,La Rioja,1224,0.211,21.1,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,La Rioja,960,0.2776,27.8,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,La Rioja,703,0.2809,28.1,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Mendoza,1584,0.1613,16.1,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Mendoza,1069,0.2067,20.7,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Mendoza,1299,0.2047,20.5,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Mendoza,961,0.2506,25.1,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Misiones,1629,0.1229,12.3,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Misiones,1050,0.1389,13.9,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Misiones,897,0.204,20.4,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Misiones,1051,0.2573,25.7,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Neuquén,1692,0.157,15.7,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Neuquén,975,0.1818,18.2,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Neuquén,837,0.223,22.3,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Neuquén,686,0.28,28.0,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Río Negro,1406,0.1728,17.3,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Río Negro,1241,0.1829,18.3,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Río Negro,1585,0.2007,20.1,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Río Negro,1360,0.2998,30.0,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Salta,1613,0.1374,13.7,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Salta,1278,0.1633,16.3,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Salta,1163,0.1846,18.5,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Salta,1149,0.264,26.4,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,San Juan,1526,0.1782,17.8,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,San Juan,1074,0.1773,17.7,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,San Juan,931,0.2114,21.1,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,San Juan,620,0.3445,34.4,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,San Luis,1540,0.1535,15.4,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,San Luis,1242,0.1702,17.0,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,San Luis,1024,0.1746,17.5,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,San Luis,874,0.2384,23.8,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Santa Cruz,1312,0.2122,21.2,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Santa Cruz,1213,0.2354,23.5,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Santa Cruz,887,0.2546,25.5,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Santa Cruz,519,0.3402,34.0,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Santa Fe,1594,0.1654,16.5,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Santa Fe,1805,0.2005,20.0,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Santa Fe,1930,0.2448,24.5,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Santa Fe,1676,0.2823,28.2,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Santiago del Estero,1645,0.1623,16.2,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Santiago del Estero,834,0.1965,19.7,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Santiago del Estero,922,0.1961,19.6,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Santiago del Estero,524,0.2985,29.8,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Tierra del Fuego,1201,0.2164,21.6,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Tierra del Fuego,1004,0.2091,20.9,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Tierra del Fuego,985,0.2291,22.9,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Tierra del Fuego,293,0.2608,26.1,ENFR - INDEC,2026-11-17
+obesidad,2005,provincia,Tucumán,1431,0.172,17.2,ENFR - INDEC,2026-11-17
+obesidad,2009,provincia,Tucumán,1209,0.1962,19.6,ENFR - INDEC,2026-11-17
+obesidad,2013,provincia,Tucumán,1281,0.2158,21.6,ENFR - INDEC,2026-11-17
+obesidad,2018,provincia,Tucumán,821,0.2686,26.9,ENFR - INDEC,2026-11-17
+obesidad,2005,quintil_ingreso,Q1,9002,0.1606,16.1,ENFR - INDEC,2026-11-17
+obesidad,2009,quintil_ingreso,Q1,7758,0.1958,19.6,ENFR - INDEC,2026-11-17
+obesidad,2013,quintil_ingreso,Q1,6365,0.2134,21.3,ENFR - INDEC,2026-11-17
+obesidad,2018,quintil_ingreso,Q1,5031,0.2755,27.6,ENFR - INDEC,2026-11-17
+obesidad,2005,quintil_ingreso,Q2,8014,0.1546,15.5,ENFR - INDEC,2026-11-17
+obesidad,2009,quintil_ingreso,Q2,6486,0.1974,19.7,ENFR - INDEC,2026-11-17
+obesidad,2013,quintil_ingreso,Q2,5809,0.2221,22.2,ENFR - INDEC,2026-11-17
+obesidad,2018,quintil_ingreso,Q2,5347,0.2759,27.6,ENFR - INDEC,2026-11-17
+obesidad,2005,quintil_ingreso,Q3,7116,0.1578,15.8,ENFR - INDEC,2026-11-17
+obesidad,2009,quintil_ingreso,Q3,5975,0.1888,18.9,ENFR - INDEC,2026-11-17
+obesidad,2013,quintil_ingreso,Q3,5840,0.215,21.5,ENFR - INDEC,2026-11-17
+obesidad,2018,quintil_ingreso,Q3,5297,0.2811,28.1,ENFR - INDEC,2026-11-17
+obesidad,2005,quintil_ingreso,Q4,6917,0.1317,13.2,ENFR - INDEC,2026-11-17
+obesidad,2009,quintil_ingreso,Q4,6019,0.1702,17.0,ENFR - INDEC,2026-11-17
+obesidad,2013,quintil_ingreso,Q4,5676,0.2003,20.0,ENFR - INDEC,2026-11-17
+obesidad,2018,quintil_ingreso,Q4,5691,0.2407,24.1,ENFR - INDEC,2026-11-17
+obesidad,2005,quintil_ingreso,Q5,6655,0.1187,11.9,ENFR - INDEC,2026-11-17
+obesidad,2009,quintil_ingreso,Q5,6030,0.1446,14.5,ENFR - INDEC,2026-11-17
+obesidad,2013,quintil_ingreso,Q5,6492,0.1875,18.8,ENFR - INDEC,2026-11-17
+obesidad,2018,quintil_ingreso,Q5,5627,0.1965,19.7,ENFR - INDEC,2026-11-17
+obesidad,2005,region,Cuyo,4650,0.1642,16.4,ENFR - INDEC,2026-11-17
+obesidad,2009,region,Cuyo,3385,0.1934,19.3,ENFR - INDEC,2026-11-17
+obesidad,2013,region,Cuyo,3254,0.2015,20.2,ENFR - INDEC,2026-11-17
+obesidad,2018,region,Cuyo,2455,0.2707,27.1,ENFR - INDEC,2026-11-17
+obesidad,2005,region,GBA,2698,0.1329,13.3,ENFR - INDEC,2026-11-17
+obesidad,2009,region,GBA,3586,0.1794,17.9,ENFR - INDEC,2026-11-17
+obesidad,2013,region,GBA,2697,0.2039,20.4,ENFR - INDEC,2026-11-17
+obesidad,2018,region,GBA,3382,0.2419,24.2,ENFR - INDEC,2026-11-17
+obesidad,2005,region,NEA,6208,0.1471,14.7,ENFR - INDEC,2026-11-17
+obesidad,2009,region,NEA,4200,0.1663,16.6,ENFR - INDEC,2026-11-17
+obesidad,2013,region,NEA,3685,0.202,20.2,ENFR - INDEC,2026-11-17
+obesidad,2018,region,NEA,3740,0.2359,23.6,ENFR - INDEC,2026-11-17
+obesidad,2005,region,NOA,9339,0.1594,15.9,ENFR - INDEC,2026-11-17
+obesidad,2009,region,NOA,7114,0.188,18.8,ENFR - INDEC,2026-11-17
+obesidad,2013,region,NOA,5967,0.2124,21.2,ENFR - INDEC,2026-11-17
+obesidad,2018,region,NOA,4902,0.2806,28.1,ENFR - INDEC,2026-11-17
+obesidad,2005,region,Pampeana,7930,0.1496,15.0,ENFR - INDEC,2026-11-17
+obesidad,2009,region,Pampeana,8670,0.1754,17.5,ENFR - INDEC,2026-11-17
+obesidad,2013,region,Pampeana,9052,0.2102,21.0,ENFR - INDEC,2026-11-17
+obesidad,2018,region,Pampeana,8749,0.2519,25.2,ENFR - INDEC,2026-11-17
+obesidad,2005,region,Patagonia,7101,0.1736,17.4,ENFR - INDEC,2026-11-17
+obesidad,2009,region,Patagonia,5482,0.1991,19.9,ENFR - INDEC,2026-11-17
+obesidad,2013,region,Patagonia,5620,0.2273,22.7,ENFR - INDEC,2026-11-17
+obesidad,2018,region,Patagonia,3765,0.2898,29.0,ENFR - INDEC,2026-11-17
+obesidad,2005,sexo,Mujer,21018,0.1383,13.8,ENFR - INDEC,2026-11-17
+obesidad,2009,sexo,Mujer,18091,0.1704,17.0,ENFR - INDEC,2026-11-17
+obesidad,2013,sexo,Mujer,16655,0.188,18.8,ENFR - INDEC,2026-11-17
+obesidad,2018,sexo,Mujer,15053,0.2412,24.1,ENFR - INDEC,2026-11-17
+obesidad,2005,sexo,Varón,16908,0.1536,15.4,ENFR - INDEC,2026-11-17
+obesidad,2009,sexo,Varón,14346,0.1901,19.0,ENFR - INDEC,2026-11-17
+obesidad,2013,sexo,Varón,13620,0.2292,22.9,ENFR - INDEC,2026-11-17
+obesidad,2018,sexo,Varón,11940,0.2656,26.6,ENFR - INDEC,2026-11-17
+obesidad,2005,tabaco,Ex fumador,6379,0.2071,20.7,ENFR - INDEC,2026-11-17
+obesidad,2009,tabaco,Ex fumador,5805,0.2435,24.3,ENFR - INDEC,2026-11-17
+obesidad,2013,tabaco,Ex fumador,5389,0.268,26.8,ENFR - INDEC,2026-11-17
+obesidad,2018,tabaco,Ex fumador,5462,0.3259,32.6,ENFR - INDEC,2026-11-17
+obesidad,2005,tabaco,Fumador actual,11722,0.1194,11.9,ENFR - INDEC,2026-11-17
+obesidad,2009,tabaco,Fumador actual,8715,0.1547,15.5,ENFR - INDEC,2026-11-17
+obesidad,2013,tabaco,Fumador actual,7534,0.1857,18.6,ENFR - INDEC,2026-11-17
+obesidad,2018,tabaco,Fumador actual,5815,0.2396,24.0,ENFR - INDEC,2026-11-17
+obesidad,2005,tabaco,Nunca fumó,19825,0.1397,14.0,ENFR - INDEC,2026-11-17
+obesidad,2009,tabaco,Nunca fumó,17917,0.1712,17.1,ENFR - INDEC,2026-11-17
+obesidad,2013,tabaco,Nunca fumó,17352,0.1986,19.9,ENFR - INDEC,2026-11-17
+obesidad,2018,tabaco,Nunca fumó,15716,0.2327,23.3,ENFR - INDEC,2026-11-17
+obesidad,2005,total,Total país,37926,0.1458,14.6,ENFR - INDEC,2026-11-17
+obesidad,2009,total,Total país,32437,0.1798,18.0,ENFR - INDEC,2026-11-17
+obesidad,2013,total,Total país,30275,0.2078,20.8,ENFR - INDEC,2026-11-17
+obesidad,2018,total,Total país,26993,0.2531,25.3,ENFR - INDEC,2026-11-17
