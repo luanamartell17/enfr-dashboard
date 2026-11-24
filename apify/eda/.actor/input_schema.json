@@ -1,0 +1,38 @@
+{
+    "title": "ENFR EDA – entrada",
+    "type": "object",
+    "schemaVersion": 1,
+    "description": "El dataset limpio debe estar en un Key-Value Store de Apify: puede ser el store del run del Actor ETL o uno donde n8n subió el CSV.",
+    "properties": {
+        "kvStoreId": {
+            "title": "ID del Key-Value Store con el dataset limpio",
+            "type": "string",
+            "description": "Para encadenar con el Actor ETL usar defaultKeyValueStoreId de ese run.",
+            "editor": "textfield"
+        },
+        "claveDataset": {
+            "title": "Clave del dataset",
+            "type": "string",
+            "description": "Nombre del registro dentro del store (CSV o CSV.gz).",
+            "default": "enfr_armonizado.csv",
+            "editor": "textfield"
+        },
+        "anio": {
+            "title": "Edición a analizar",
+            "type": "integer",
+            "description": "Año de la ENFR sobre el que se calcula el EDA.",
+            "default": 2018,
+            "minimum": 2005,
+            "maximum": 2018
+        },
+        "afBajo": {
+            "title": "Código de actividad física baja",
+            "type": "integer",
+            "description": "Valor de actividad_fisica que se toma como 'baja' en el odds ratio de sedentarismo. Verificar con el diccionario de INDEC.",
+            "default": 3,
+            "minimum": 1,
+            "maximum": 3
+        }
+    },
+    "required": ["kvStoreId"]
+}

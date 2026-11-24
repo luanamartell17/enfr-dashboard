@@ -1,0 +1,10 @@
+{
+    "kvStoreId": "PEGAR_ID_DEL_STORE",
+    "archivos": [
+        {"anio": 2005, "clave": "ENFR-2005_Base_Usuario.txt"},
+        {"anio": 2009, "clave": "ENFR-2009_Base_Usuario.txt"},
+        {"anio": 2013, "clave": "ENFR2013_baseusuario.txt"},
+        {"anio": 2018, "clave": "ENFR_2018_-_Base_usuario.txt"}
+    ],
+    "noMedidoComoNegativo": true
+}

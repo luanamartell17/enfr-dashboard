@@ -1,0 +1,10 @@
+{
+    "actorSpecification": 1,
+    "name": "enfr-eda",
+    "title": "ENFR – EDA estadístico",
+    "description": "Recibe el dataset limpio de la ENFR (salida del Actor ETL) desde un Key-Value Store y devuelve descriptivas, correlación, odds ratios de hipertensión y prevalencia estandarizada por provincia. No usa Google Drive.",
+    "version": "0.1",
+    "buildTag": "latest",
+    "input": "./input_schema.json",
+    "minMemoryMbytes": 1024
+}

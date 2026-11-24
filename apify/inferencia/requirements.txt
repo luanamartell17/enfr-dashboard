@@ -1,0 +1,6 @@
+apify>=3.0,<4.0
+# IMPORTANTE: fijar scikit-learn con la MISMA versión con la que se entrenó el modelo (ver README, sección "Versiones").
+# Si no coincide, el Actor se detiene con un mensaje claro en lugar de dar predicciones dudosas.
+scikit-learn == 1.6.1
+numpy
+pandas

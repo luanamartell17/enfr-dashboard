@@ -1,0 +1,255 @@
+{
+  "name": "ETL ENFR - Publicar EDA al dashboard (v2 - lee Google Sheets)",
+  "nodes": [
+    {
+      "id": "911092fb-a71a-457e-ae0c-fff8639de15a",
+      "name": "Ejecutar manualmente",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        352,
+        -80
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "78eede88-9424-44a1-893a-f03bde76ab56",
+      "name": "Parametros",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        576,
+        0
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "q1",
+              "name": "planilla_id",
+              "value": "1AJWHqLWUf11B0wGciWpN0sxUL3398cYUVSCve4K2A4U",
+              "type": "string"
+            },
+            {
+              "id": "q2",
+              "name": "pestania_origen",
+              "value": "enfr_eda",
+              "type": "string"
+            },
+            {
+              "id": "q3",
+              "name": "pestania_destino",
+              "value": "dashboard",
+              "type": "string"
+            },
+            {
+              "id": "q4",
+              "name": "filas_minimas",
+              "value": "100",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "notes": "Una sola planilla, dos pestanas: origen (los datos subidos) y destino (lo publicado)."
+    },
+    {
+      "id": "a07c806f-2f23-4948-acf7-500290cd01b1",
+      "name": "Leer datos del EDA",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        800,
+        0
+      ],
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $json.planilla_id }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $json.pestania_origen }}",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JpqcER9NETTftn7u",
+          "name": "Google Sheets account"
+        }
+      },
+      "notes": "Lee la pestana donde quedaron las 768 filas del EDA."
+    },
+    {
+      "id": "e20406e0-1612-4dad-896c-f9e52525a0fb",
+      "name": "Validar y reparar",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Valida y repara los datos que vienen de Google Sheets.\n//\n// Por que la reparacion: al subir el CSV, Sheets en configuracion regional\n// argentina lee el punto como separador de miles, asi que 0.2923 se\n// convierte en 2923. La columna prevalencia_pct (un decimal) no sufre ese\n// problema, asi que se reconstruye la prevalencia a partir de ella.\n\nconst COLUMNAS = ['indicador', 'anio', 'corte_tipo', 'corte_valor', 'n', 'prevalencia_pct'];\nconst minimas = parseInt($('Parametros').first().json.filas_minimas, 10) || 100;\n\nconst filas = $input.all().map(i => i.json);\n\nif (filas.length < minimas) {\n  throw new Error(`Llegaron ${filas.length} filas y se esperaban al menos ${minimas}. Revisar la pestana de origen.`);\n}\n\nconst faltan = COLUMNAS.filter(c => !(c in filas[0]));\nif (faltan.length) {\n  throw new Error('Faltan columnas en la planilla de origen: ' + faltan.join(', '));\n}\n\n// Convierte un numero que puede venir con formato local (1.234,5 o 1234.5)\nfunction aNumero(v) {\n  if (typeof v === 'number') return v;\n  if (v === null || v === undefined || v === '') return NaN;\n  let s = String(v).trim();\n  if (s.includes(',')) s = s.replace(/\\./g, '').replace(',', '.');\n  return Number(s);\n}\n\nconst limpias = [];\nconst reparadas = [];\nconst descartadas = [];\n\nfor (const f of filas) {\n  const pct = aNumero(f.prevalencia_pct);\n  const n = aNumero(f.n);\n  const anio = aNumero(f.anio);\n  let prev = aNumero(f.prevalencia);\n\n  // Si la prevalencia no quedo entre 0 y 1, se reconstruye desde el porcentaje\n  if (!(prev >= 0 && prev <= 1)) {\n    if (pct >= 0 && pct <= 100) {\n      prev = pct / 100;\n      reparadas.push(f.indicador + ' / ' + f.corte_valor + ' / ' + f.anio);\n    } else {\n      descartadas.push({ fila: f, motivo: 'prevalencia y porcentaje invalidos' });\n      continue;\n    }\n  }\n\n  const problema =\n    !isFinite(n) || n < 30 ? 'muestra menor a 30'\n    : !isFinite(anio) || anio < 2000 || anio > 2100 ? 'anio invalido'\n    : !String(f.indicador || '').trim() ? 'indicador vacio'\n    : null;\n\n  if (problema) {\n    descartadas.push({ fila: f, motivo: problema });\n    continue;\n  }\n\n  limpias.push({\n    json: {\n      indicador: String(f.indicador).trim(),\n      anio: Math.round(anio),\n      corte_tipo: String(f.corte_tipo || '').trim(),\n      corte_valor: String(f.corte_valor || '').trim(),\n      n: Math.round(n),\n      prevalencia: Math.round(prev * 10000) / 10000,\n      prevalencia_pct: Math.round(prev * 1000) / 10,\n      fuente: f.fuente || 'ENFR - INDEC',\n      actualizado: new Date().toISOString().slice(0, 10)\n    }\n  });\n}\n\nif (!limpias.length) {\n  throw new Error('Ninguna fila paso el control de calidad.');\n}\n\nconsole.log(`Validadas ${limpias.length} filas | reparadas ${reparadas.length} | descartadas ${descartadas.length}`);\nif (descartadas.length) {\n  console.log('Descartadas:', JSON.stringify(descartadas.slice(0, 10), null, 2));\n}\n\nreturn limpias;"
+      },
+      "notes": "Repara los decimales que rompe la conversion a Sheets y frena si los datos vienen mal."
+    },
+    {
+      "id": "fbe43dc4-3c16-4fff-af3e-0ea7ad7d5f3e",
+      "name": "Publicar al dashboard",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1280,
+        -80
+      ],
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $('Parametros').first().json.planilla_id }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "={{ $('Parametros').first().json.pestania_destino }}",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "indicador",
+            "anio",
+            "corte_tipo",
+            "corte_valor"
+          ],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JpqcER9NETTftn7u",
+          "name": "Google Sheets account"
+        }
+      },
+      "notes": "Escribe en la pestana dashboard, ya con los numeros corregidos."
+    },
+    {
+      "id": "d00fa227-9582-4b23-a0ae-4a34936f5395",
+      "name": "Resumen del ETL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        128
+      ],
+      "parameters": {
+        "jsCode": "// Resumen para la weekly y para el informe del capstone.\n\nconst filas = $input.all().map(i => i.json);\n\nconst porIndicador = {};\nfor (const f of filas) {\n  if (!porIndicador[f.indicador]) porIndicador[f.indicador] = 0;\n  porIndicador[f.indicador] += 1;\n}\n\nconst anios = filas.map(f => f.anio);\nconst tipos = [...new Set(filas.map(f => f.corte_tipo))];\n\n// Ranking de provincias con mayor hipertension en el ultimo anio\nconst htaProv = filas.filter(f => f.indicador === 'hta' && f.corte_tipo === 'provincia');\nconst ultimo = htaProv.length ? Math.max(...htaProv.map(f => f.anio)) : null;\nconst top5 = htaProv\n  .filter(f => f.anio === ultimo)\n  .sort((a, b) => b.prevalencia - a.prevalencia)\n  .slice(0, 5)\n  .map(f => `${f.corte_valor} ${f.prevalencia_pct}%`);\n\n// Evolucion del total pais\nconst total = filas.filter(f => f.corte_tipo === 'total');\nconst evolucion = {};\nfor (const f of total) {\n  if (!evolucion[f.indicador]) evolucion[f.indicador] = {};\n  evolucion[f.indicador][f.anio] = f.prevalencia_pct;\n}\n\nreturn [{\n  json: {\n    filas_publicadas: filas.length,\n    filas_por_indicador: porIndicador,\n    cortes_disponibles: tipos,\n    anio_min: Math.min(...anios),\n    anio_max: Math.max(...anios),\n    top5_provincias_hta: top5,\n    anio_del_ranking: ultimo,\n    evolucion_total_pais: evolucion,\n    corrido_el: new Date().toISOString()\n  }\n}];"
+      },
+      "notes": "Ranking de provincias y evolucion por anio, listos para el pitch."
+    },
+    {
+      "id": "73db27dc-9e46-4950-abdb-efad62e79a49",
+      "name": "Viernes 15hs",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        352,
+        96
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                5
+              ],
+              "triggerAtHour": 15
+            }
+          ]
+        }
+      },
+      "notes": "Dos horas antes de la weekly."
+    }
+  ],
+  "connections": {
+    "Ejecutar manualmente": {
+      "main": [
+        [
+          {
+            "node": "Parametros",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parametros": {
+      "main": [
+        [
+          {
+            "node": "Leer datos del EDA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer datos del EDA": {
+      "main": [
+        [
+          {
+            "node": "Validar y reparar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar y reparar": {
+      "main": [
+        [
+          {
+            "node": "Publicar al dashboard",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Resumen del ETL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Viernes 15hs": {
+      "main": [
+        [
+          {
+            "node": "Parametros",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}

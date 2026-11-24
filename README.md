@@ -7,10 +7,13 @@ cobertura, tabaco, región y provincia.
 ## Pipeline
 
 ```
-.txt crudos ENFR (Google Drive)
-  → n8n: ETL (script Python) → CSV limpios en Drive
-  → n8n: EDA (script Python) → enfr_eda.csv / pestaña "dashboard" en Google Sheets
-  → Streamlit (este repo) lee esos datos y los muestra
+.txt crudos ENFR (Google Drive, ENFR_pipeline/01_crudo)
+  → n8n: los sube a Apify y corre los Actores
+      → Actor ETL  → dataset limpio
+      → Actor EDA  → descriptivas, correlación, odds ratio, estandarizada
+      → Actor de inferencia → riesgo de hipertensión por persona (2018)
+  → n8n: guarda todo en Drive (ENFR_pipeline/02_resultados) y actualiza data/ en este repo
+  → Streamlit (este repo) se republica solo y muestra los datos nuevos
 ```
 
 ## Estructura
@@ -27,7 +30,15 @@ data/
   micro/                   dataset limpio (salida del ETL): una fila por persona, un archivo por año
 notebooks/
   ENFR_EDA_estadistica.ipynb  cálculo de descriptivas, correlación, odds ratio y estandarización
+n8n/
+  pipeline_enfr.json       flujo principal: Drive → Actores de Apify (ETL, EDA, inferencia) → Drive + GitHub → dashboard
+  CONTRATO_ACTORES.md      qué recibe y devuelve cada Actor dentro del flujo
+  workflow_enfr.json       flujo anterior (publica la planilla del EDA en Google Sheets)
+apify/
+  etl/  eda/  inferencia/  código fuente de los 3 Actores de Apify (ver apify/README.md)
 ```
+
+Los workflows se importan en n8n con **⋯ → Import from file**.
 
 ## Datos
 

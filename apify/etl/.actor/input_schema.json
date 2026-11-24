@@ -1,0 +1,28 @@
+{
+    "title": "ENFR ETL – entrada",
+    "type": "object",
+    "schemaVersion": 1,
+    "description": "Los .txt crudos deben estar en un Key-Value Store de Apify (n8n los sube antes de ejecutar el Actor).",
+    "properties": {
+        "kvStoreId": {
+            "title": "ID del Key-Value Store con los .txt",
+            "type": "string",
+            "description": "ID del Key-Value Store donde n8n subió los archivos crudos de la ENFR.",
+            "editor": "textfield"
+        },
+        "archivos": {
+            "title": "Archivos (opcional)",
+            "type": "array",
+            "description": "Lista de {\"anio\": 2009, \"clave\": \"nombre_en_el_store.txt\"}. Si se deja vacío se usan todas las claves que terminan en .txt y el año se detecta por el nombre (debe contener 2005, 2009, 2013 o 2018).",
+            "editor": "json",
+            "prefill": []
+        },
+        "noMedidoComoNegativo": {
+            "title": "'No medido' cuenta como 'sin la condición'",
+            "type": "boolean",
+            "description": "Afecta solo a los targets compuestos (n_condiciones, riesgo_cardiometabolico). Activo = diagnóstico autorreportado (recomendado).",
+            "default": true
+        }
+    },
+    "required": ["kvStoreId"]
+}

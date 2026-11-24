@@ -1,0 +1,32 @@
+{
+    "title": "Riesgo de hipertensión – entrada",
+    "type": "object",
+    "schemaVersion": 1,
+    "description": "Lista de personas encuestadas. Obligatorios por persona: edad y mujer (1 mujer, 0 varón). El resto es opcional: cuantos más datos, mejor la estimación.",
+    "properties": {
+        "registros": {
+            "title": "Registros de encuesta",
+            "type": "array",
+            "description": "Una persona por objeto. Campos: edad, mujer, peso_kg, talla_cm, tabaco (1 actual, 2 ex, 3 nunca), diabetes (1/0), colesterol_alto (1/0), quintil_ingreso (1-5), etc. Opcional: 'id' (se devuelve tal cual para poder cruzar resultados).",
+            "editor": "json",
+            "prefill": [
+                {"id": "ej-1", "edad": 58, "mujer": 0, "peso_kg": 98, "talla_cm": 172, "tabaco": 1, "diabetes": 1},
+                {"id": "ej-2", "edad": 28, "mujer": 1, "peso_kg": 58, "talla_cm": 163, "tabaco": 3}
+            ]
+        },
+        "umbral": {
+            "title": "Umbral de alerta (0 a 1)",
+            "type": "number",
+            "description": "Se marca alerta si la probabilidad es mayor o igual a este valor. Si se deja vacío se usa el umbral guardado con el modelo.",
+            "minimum": 0,
+            "maximum": 1
+        },
+        "incluirEntrada": {
+            "title": "Incluir datos de entrada en la salida",
+            "type": "boolean",
+            "description": "Si está activo, cada resultado devuelve también el registro original recibido.",
+            "default": false
+        }
+    },
+    "required": ["registros"]
+}

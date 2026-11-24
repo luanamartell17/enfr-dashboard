@@ -1,0 +1,10 @@
+{
+    "actorSpecification": 1,
+    "name": "enfr-etl",
+    "title": "ENFR – ETL (limpieza y armonización)",
+    "description": "Recibe los .txt crudos de la ENFR (2005, 2009, 2013, 2018) desde un Key-Value Store y devuelve el dataset limpio y armonizado en CSV, más reportes de calidad. No usa Google Drive.",
+    "version": "0.1",
+    "buildTag": "latest",
+    "input": "./input_schema.json",
+    "minMemoryMbytes": 2048
+}
