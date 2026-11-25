@@ -31,7 +31,7 @@ Streamlit (https://generative-s.streamlit.app) se actualiza solo con cada commit
 - **Espera:** n8n arranca cada Actor de forma asíncrona y consulta su estado cada 20-30 s hasta `SUCCEEDED`.
   Si termina en `FAILED`, `ABORTED` o `TIMED-OUT`, el flujo se detiene con el link al log del run.
 - **Inferencia opcional:** el modelo no corre en el flujo: el Actor `hta-predict` lo usa la página
-  https://generative-s.netlify.app por API. El paso queda preparado en el workflow; mientras el parámetro
+  https://generative-s.vercel.app por API. El paso queda preparado en el workflow; mientras el parámetro
   `actor_inferencia` diga `PEGAR_...`, se saltea y el flujo publica igual los resultados del ETL y del EDA.
 - **`enfr_eda.csv`** (prevalencias por año y grupo, que usan las pestañas Evolución, Por grupo y Provincias) no lo
   genera ningún Actor: el dashboard sigue usando el de `data/` del repo. Si en algún momento un Actor lo publica con

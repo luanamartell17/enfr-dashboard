@@ -16,11 +16,11 @@ cobertura, tabaco, región y provincia.
 
 Modelo (aparte del flujo):
   entrenamiento.py → modelo_hta_logreg.pkl (regresión logística, ENFR 2005-2018)
-  → Actor de inferencia en Apify → la página https://generative-s.netlify.app lo consulta por API
+  → Actor de inferencia en Apify → la página https://generative-s.vercel.app lo consulta por API
 ```
 
 - Dashboard: https://generative-s.streamlit.app
-- Página de predicción: https://generative-s.netlify.app
+- Página de predicción: https://generative-s.vercel.app (código en `web/`)
 - Actor de inferencia: https://console.apify.com/actors/bhqxlvFcUopkQ2xfE
 
 ## Modelo
@@ -49,6 +49,7 @@ n8n/
 apify/
   etl/  eda/  inferencia/  código fuente de los 3 Actores de Apify (ver apify/README.md)
   inferencia/entrenamiento/entrenamiento.py  entrenamiento del modelo que usa el Actor de inferencia
+web/                       página web (https://generative-s.vercel.app): EDA + predicción con el Actor de inferencia
 ```
 
 Los workflows se importan en n8n con **⋯ → Import from file**.

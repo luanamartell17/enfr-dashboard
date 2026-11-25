@@ -19,7 +19,7 @@ n8n: resultados → Drive 02_resultados y GitHub data/ → dashboard Streamlit
 
 Inferencia (fuera del flujo de n8n):
   entrenamiento.py → models/modelo_hta_logreg.pkl.b64 → Actor hta-predict
-  la página https://generative-s.netlify.app le manda {registros: [...]} por la API de Apify
+  la página https://generative-s.vercel.app le manda {registros: [...]} por la API de Apify
 ```
 
 Ejemplo de salida del Actor de inferencia (30 casos, incluye datos faltantes y errores): `data/inferencia/dataset_hta-predict_inferencias.json`.

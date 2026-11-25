@@ -1,0 +1,294 @@
+/* ==========================================================================
+   ENFR Dashboard - Modern Clinical & Analytical Executive Stylesheet
+   ========================================================================== */
+
+:root {
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --primary-light: #e0f2fe;
+  --secondary: #0f766e;
+  --secondary-light: #ccfbf1;
+  --accent: #6366f1;
+  
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-sidebar: #0f172a;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  
+  --risk-low: #10b981;
+  --risk-low-bg: #ecfdf5;
+  --risk-med: #f59e0b;
+  --risk-med-bg: #fffbeb;
+  --risk-high: #ef4444;
+  --risk-high-bg: #fef2f2;
+
+  --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --card-shadow-hover: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+}
+
+.dark {
+  --bg-main: #0b1120;
+  --bg-card: #1e293b;
+  --bg-sidebar: #020617;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+  
+  --risk-low-bg: rgba(16, 185, 129, 0.15);
+  --risk-med-bg: rgba(245, 158, 11, 0.15);
+  --risk-high-bg: rgba(239, 68, 68, 0.15);
+
+  --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+  --card-shadow-hover: 0 10px 20px -3px rgb(0 0 0 / 0.4);
+}
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition: background-color 0.25s ease, color 0.25s ease;
+  min-height: 100vh;
+}
+
+/* Card Styling */
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--card-shadow);
+  border-radius: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--card-shadow-hover);
+  border-color: var(--primary);
+}
+
+/* Nav Tabs */
+.nav-tab-btn {
+  position: relative;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.nav-tab-btn.active {
+  color: #0284c7;
+  border-bottom: 2px solid #0284c7;
+  font-weight: 600;
+}
+
+.dark .nav-tab-btn.active {
+  color: #38bdf8;
+  border-bottom-color: #38bdf8;
+}
+
+/* Sub Tabs */
+.sub-tab-btn {
+  transition: all 0.2s ease;
+}
+
+.sub-tab-btn.active {
+  background-color: #0284c7;
+  color: #ffffff;
+}
+
+.dark .sub-tab-btn.active {
+  background-color: #0284c7;
+  color: #ffffff;
+}
+
+/* Risk Gauges & Meters */
+.gauge-container {
+  position: relative;
+  width: 220px;
+  height: 110px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.gauge-meter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 18px solid #e2e8f0;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  transform: rotate(-45deg);
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Custom Range Input */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #e2e8f0;
+  border-radius: 8px;
+  height: 6px;
+  outline: none;
+}
+
+.dark input[type="range"] {
+  background: #334155;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #0284c7;
+  cursor: pointer;
+  box-shadow: 0 0 2px 2px rgba(2, 132, 199, 0.3);
+  transition: transform 0.1s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Pulse Animation for Live Inferencing */
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 0.4; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.pulse-badge {
+  animation: pulse-ring 2s infinite ease-in-out;
+}
+
+/* Toast Notification Styles */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  min-width: 300px;
+  max-width: 440px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  animation: slideIn 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOut {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+/* Plotly Responsive Container Overrides */
+.js-plotly-plot .plotly .modebar {
+  top: 6px !important;
+  right: 8px !important;
+}
+
+/* Mobile & Touchscreen Refinements */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 640px) {
+  .stat-card {
+    border-radius: 0.875rem;
+  }
+
+  .js-plotly-plot .plotly .modebar {
+    display: none !important;
+  }
+
+  .js-plotly-plot, .plot-container {
+    max-width: 100% !important;
+  }
+
+  /* Responsive Toasts on mobile */
+  #toast-container {
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    align-items: stretch;
+  }
+
+  .toast {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    font-size: 0.8125rem;
+    padding: 10px 14px;
+    box-sizing: border-box;
+  }
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  header, nav, #toast-container, .no-print {
+    display: none !important;
+  }
+  .stat-card {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    break-inside: avoid;
+  }
+}

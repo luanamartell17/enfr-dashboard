@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ENFR Argentina · Dashboard Analítico & Inferencia de Riesgo (Generative S)</title>
+  <meta name="description" content="Dashboard analítico de la Encuesta Nacional de Factores de Riesgo (ENFR Argentina), KPIs de impacto sanitario y motor de inferencia en tiempo real de hipertensión arterial.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            },
+            clinical: {
+              teal: '#0f766e',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+              rose: '#f43f5e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- PapaParse for CSV parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <!-- Plotly.js for Scientific Visualizations -->
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
+  <!-- Chart.js for Gauge and Inactive Risk Breakdown -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Brand Title & Tagline -->
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-sky-500/20">
+            <i class="fa-solid fa-heart-pulse text-xl"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-sky-600 via-sky-500 to-teal-500 bg-clip-text text-transparent">
+                ENFR Argentina
+              </span>
+              <span class="text-xs px-2 py-0.5 rounded-full font-semibold bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
+                Generative S
+              </span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">
+              Encuesta Nacional de Factores de Riesgo · EDA & Inferencia Clínica
+            </p>
+          </div>
+        </div>
+
+        <!-- Global Action Controls -->
+        <div class="flex items-center space-x-2 sm:space-x-3">
+          <!-- Data Status Badge -->
+          <div id="data-status-badge" class="hidden md:flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="data-status-text">Datos locales cargados</span>
+          </div>
+
+          <!-- Configuration Modal Toggle -->
+          <button id="btn-open-settings" title="Configurar Webhook n8n & GitHub" class="p-2 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <i class="fa-solid fa-gear text-lg"></i>
+          </button>
+
+          <!-- Dark / Light Mode Toggle -->
+          <button id="btn-theme-toggle" title="Cambiar tema visual" class="p-2 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            <i id="theme-toggle-icon" class="fa-solid fa-moon text-lg"></i>
+          </button>
+
+          <!-- Reference links -->
+          <a href="https://github.com/luanamartell17/enfr-dashboard" target="_blank" rel="noopener noreferrer" class="hidden lg:inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg transition">
+            <i class="fa-brands fa-github text-sm"></i>
+            <span>Repo Referencia</span>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="flex space-x-3 sm:space-x-6 overflow-x-auto no-scrollbar border-t border-slate-100 dark:border-slate-800/80 -mb-px px-1">
+        <button id="tab-nav-eda" onclick="switchMainTab('eda')" class="nav-tab-btn active py-3 px-1 text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 whitespace-nowrap flex-shrink-0">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>1. Dashboard Analítico (EDA)</span>
+        </button>
+        <button id="tab-nav-kpis" onclick="switchMainTab('kpis')" class="nav-tab-btn py-3 px-1 text-xs sm:text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 flex items-center gap-1.5 sm:gap-2 whitespace-nowrap flex-shrink-0">
+          <i class="fa-solid fa-briefcase-medical"></i>
+          <span>2. Métricas de Negocio & Eficiencia Sanitaria</span>
+        </button>
+        <button id="tab-nav-inference" onclick="switchMainTab('inference')" class="nav-tab-btn py-3 px-1 text-xs sm:text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 flex items-center gap-1.5 sm:gap-2 whitespace-nowrap flex-shrink-0">
+          <i class="fa-solid fa-calculator"></i>
+          <span>3. Inferencia de Riesgo</span>
+          <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-bold bg-sky-500 text-white">LIVE</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
+
+    <!-- =========================================================================
+         TAB 1: DASHBOARD ANALÍTICO (EDA)
+         ========================================================================= -->
+    <section id="section-eda" class="tab-pane active space-y-6">
+
+      <!-- Executive Summary Cards: 4 Chronic Conditions (2018 vs 2005) -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- Card 1: HTA -->
+        <div class="stat-card p-4 sm:p-5">
+          <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider">Hipertensión (HTA)</span>
+            <span class="p-2 rounded-lg bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400">
+              <i class="fa-solid fa-heart-pulse"></i>
+            </span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">34.6%</span>
+            <span class="text-xs font-medium text-rose-600 dark:text-rose-400 flex items-center">
+              <i class="fa-solid fa-arrow-up mr-0.5"></i>+0.2 pp
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Prevalencia autorreportada en adultos (ENFR 2018)</p>
+        </div>
+
+        <!-- Card 2: Obesidad -->
+        <div class="stat-card p-4 sm:p-5">
+          <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider">Obesidad (IMC ≥ 30)</span>
+            <span class="p-2 rounded-lg bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400">
+              <i class="fa-solid fa-weight-scale"></i>
+            </span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">25.4%</span>
+            <span class="text-xs font-bold text-amber-600 dark:text-amber-400 flex items-center">
+              <i class="fa-solid fa-arrow-up mr-0.5"></i>+10.8 pp
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Condición con mayor crecimiento (+74% relativo)</p>
+        </div>
+
+        <!-- Card 3: Colesterol Alto -->
+        <div class="stat-card p-4 sm:p-5">
+          <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider">Colesterol Alto</span>
+            <span class="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400">
+              <i class="fa-solid fa-droplet"></i>
+            </span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">28.9%</span>
+            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 flex items-center">
+              <i class="fa-solid fa-arrow-up mr-0.5"></i>+1.0 pp
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Elevado factor de riesgo coronario y vascular</p>
+        </div>
+
+        <!-- Card 4: Diabetes -->
+        <div class="stat-card p-4 sm:p-5">
+          <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider">Diabetes</span>
+            <span class="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400">
+              <i class="fa-solid fa-dna"></i>
+            </span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">12.7%</span>
+            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center">
+              <i class="fa-solid fa-arrow-up mr-0.5"></i>+4.3 pp
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Crecimiento continuo (8.4% en 2005 a 12.7% en 2018)</p>
+        </div>
+      </div>
+
+      <!-- EDA Navigation Subtabs -->
+      <div class="flex items-center justify-between flex-wrap gap-2.5 pb-2 border-b border-slate-200 dark:border-slate-800">
+        <div class="w-full sm:w-auto overflow-x-auto no-scrollbar pb-1 sm:pb-0">
+          <div class="inline-flex p-1 rounded-xl bg-slate-200/70 dark:bg-slate-800/70 text-xs font-medium space-x-1 whitespace-nowrap">
+            <button id="subtab-btn-prov" onclick="switchEdaSubtab('prov')" class="sub-tab-btn active px-3 py-1.5 rounded-lg flex items-center gap-1.5 flex-shrink-0">
+              <i class="fa-solid fa-map-location-dot"></i>
+              <span>Provincias (Cruda vs Estandarizada)</span>
+            </button>
+            <button id="subtab-btn-odds" onclick="switchEdaSubtab('odds')" class="sub-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-slate-600 dark:text-slate-300 flex-shrink-0">
+              <i class="fa-solid fa-arrows-split-up-and-left"></i>
+              <span>Odds Ratios (IC 95%)</span>
+            </button>
+            <button id="subtab-btn-corr" onclick="switchEdaSubtab('corr')" class="sub-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-slate-600 dark:text-slate-300 flex-shrink-0">
+              <i class="fa-solid fa-table-cells"></i>
+              <span>Matriz de Correlación</span>
+            </button>
+            <button id="subtab-btn-stats" onclick="switchEdaSubtab('stats')" class="sub-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-slate-600 dark:text-slate-300 flex-shrink-0">
+              <i class="fa-solid fa-chart-column"></i>
+              <span>Descriptivas (Edad e IMC)</span>
+            </button>
+            <button id="subtab-btn-evol" onclick="switchEdaSubtab('evol')" class="sub-tab-btn px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-slate-600 dark:text-slate-300 flex-shrink-0">
+              <i class="fa-solid fa-chart-line"></i>
+              <span>Evolución Temporal</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Reload Data button -->
+        <button onclick="loadAllEdaDatasets(true)" class="text-xs px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 shadow-sm flex items-center gap-1.5 transition ml-auto sm:ml-0">
+          <i class="fa-solid fa-rotate"></i>
+          <span class="hidden sm:inline">Recargar datasets</span>
+          <span class="sm:hidden">Recargar</span>
+        </button>
+      </div>
+
+      <!-- SUBTAB 1: PROVINCIAS (CRUDA VS ESTANDARIZADA) -->
+      <div id="subpane-prov" class="eda-subpane space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          
+          <!-- Chart Column (3 cols) -->
+          <div class="lg:col-span-3 stat-card p-3.5 sm:p-5">
+            <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+              <div>
+                <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span>Hipertensión por Provincia: Prevalencia Cruda vs. Estandarizada por Edad</span>
+                </h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  La estandarización directa elimina el sesgo demográfico de poblaciones envejecidas (ej. CABA) permitiendo comparar el riesgo real.
+                </p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center text-xs font-medium text-slate-600 dark:text-slate-300 gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-slate-400"></span> Cruda
+                </span>
+                <span class="inline-flex items-center text-xs font-medium text-sky-600 dark:text-sky-400 gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-sky-600"></span> Estandarizada
+                </span>
+              </div>
+            </div>
+            
+            <!-- Plotly Container -->
+            <div id="chart-prov-standardized" class="w-full h-[460px] sm:h-[620px]"></div>
+          </div>
+
+          <!-- Insight & Summary Column (1 col) -->
+          <div class="space-y-4">
+            
+            <!-- Top Insight Card -->
+            <div class="stat-card p-4 border-l-4 border-sky-500">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+                Hallazgo Metodológico Clave
+              </h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
+                <strong>Ciudad de Buenos Aires (CABA)</strong> presenta la mayor reducción al estandarizar: cae de <strong>36.9% a 29.4% (-7.5 pp)</strong>. Su alta tasa cruda se debía exclusivamente a su pirámide poblacional envejecida.
+              </p>
+              <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                En contraste, <strong>Formosa (41.9%)</strong>, <strong>Chaco (38.8%)</strong> y <strong>Santiago del Estero (38.4%)</strong> lideran el ranking estandarizado: su alta hipertensión no se explica por la edad, sino por factores estructurales y determinantes sociales.
+              </div>
+            </div>
+
+            <!-- Top 5 Provinces Table Card -->
+            <div class="stat-card p-4">
+              <h4 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3">
+                Top 5 Provincias con Mayor Riesgo Estandarizado
+              </h4>
+              <div id="top-provinces-list" class="space-y-2 text-xs">
+                <!-- Dynamically populated -->
+                <div class="animate-pulse space-y-2">
+                  <div class="h-6 bg-slate-200 dark:bg-slate-800 rounded"></div>
+                  <div class="h-6 bg-slate-200 dark:bg-slate-800 rounded"></div>
+                  <div class="h-6 bg-slate-200 dark:bg-slate-800 rounded"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Provincial Dataset Download -->
+            <div class="stat-card p-4 flex flex-col items-center justify-center text-center">
+              <i class="fa-solid fa-file-csv text-2xl text-emerald-500 mb-2"></i>
+              <span class="text-xs font-semibold text-slate-800 dark:text-slate-200">Dataset de Provincias (ENFR 2018)</span>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">24 jurisdicciones con tamaño muestral (n), cruda y estandarizada</p>
+              <button onclick="downloadDatasetCSV('enfr_estandarizada.csv')" class="mt-3 w-full py-1.5 px-3 rounded-lg text-xs font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900 transition flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-download"></i>
+                <span>Descargar enfr_estandarizada.csv</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Full Interactive Table -->
+        <div class="stat-card p-3.5 sm:p-5">
+          <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+            <h4 class="text-sm font-bold text-slate-900 dark:text-white">
+              Tabla Completa de Jurisdicciones (24 Provincias)
+            </h4>
+            <input type="text" id="prov-search-input" onkeyup="filterProvTable()" placeholder="Buscar provincia..." class="w-full sm:w-auto text-xs px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500">
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[560px] text-left text-xs text-slate-600 dark:text-slate-300">
+              <thead class="bg-slate-100 dark:bg-slate-800/60 uppercase font-semibold text-slate-700 dark:text-slate-200 border-b border-slate-200 dark:border-slate-700">
+                <tr>
+                  <th class="py-2.5 px-3">Provincia</th>
+                  <th class="py-2.5 px-3 text-right">Muestra (n)</th>
+                  <th class="py-2.5 px-3 text-right">Prevalencia Cruda</th>
+                  <th class="py-2.5 px-3 text-right">Estandarizada por Edad</th>
+                  <th class="py-2.5 px-3 text-right">Diferencia (pp)</th>
+                  <th class="py-2.5 px-3 text-center">Nivel de Alerta</th>
+                </tr>
+              </thead>
+              <tbody id="prov-table-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                <!-- Dynamically generated rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBTAB 2: ODDS RATIOS (FOREST PLOT) -->
+      <div id="subpane-odds" class="eda-subpane hidden space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          
+          <!-- Forest Plot Chart (3 cols) -->
+          <div class="lg:col-span-3 stat-card p-3.5 sm:p-5">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+              <div>
+                <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span>Factores Asociados a Hipertensión: Forest Plot (Odds Ratios e IC 95%)</span>
+                </h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  Comparación entre el modelo crudo (bivariado) y ajustado por edad (multivariado) en escala logarítmica.
+                </p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center text-xs font-medium text-slate-500 dark:text-slate-400 gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-slate-400"></span> OR Crudo
+                </span>
+                <span class="inline-flex items-center text-xs font-medium text-sky-600 dark:text-sky-400 gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-sky-600"></span> OR Ajustado por Edad
+                </span>
+              </div>
+            </div>
+
+            <!-- Plotly Forest Plot Container -->
+            <div id="chart-forest-plot" class="w-full h-[420px] sm:h-[520px]"></div>
+          </div>
+
+          <!-- Clinical Interpretation Sidebar (1 col) -->
+          <div class="space-y-4">
+            
+            <div class="stat-card p-4 border-l-4 border-emerald-500">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                Interpretación Epidemiológica
+              </h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
+                La línea vertical punteada en <strong>OR = 1.0</strong> representa ausencia de asociación.
+              </p>
+              <ul class="text-xs text-slate-600 dark:text-slate-300 mt-2 space-y-2 list-disc list-inside">
+                <li>
+                  <strong>Triada Cardiometabólica:</strong> Diabetes (OR 2.12), Obesidad (OR 2.21) y Colesterol alto (OR 1.96) duplican las chances de HTA aún tras controlar por edad.
+                </li>
+                <li>
+                  <strong>Artefacto de Cobertura:</strong> "Sin cobertura" parecía protector en el análisis crudo (OR 0.71) porque los jóvenes suelen carecer de obra social. Al ajustar por edad, pasa a <strong>OR 1.14</strong> (mayor riesgo real).
+                </li>
+                <li>
+                  <strong>Causalidad Inversa en Tabaco:</strong> El "Fumador actual" (OR 0.85) versus "Ex fumador" (OR 1.21) refleja que los pacientes abandonan el hábito tras ser diagnosticados con hipertensión.
+                </li>
+              </ul>
+            </div>
+
+            <!-- Download Odds Ratio CSV -->
+            <div class="stat-card p-4 text-center">
+              <i class="fa-solid fa-file-csv text-2xl text-emerald-500 mb-2"></i>
+              <span class="text-xs font-semibold text-slate-800 dark:text-slate-200">Dataset Odds Ratios</span>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Factores clínicos, sociodemográficos con intervalos de confianza al 95%</p>
+              <button onclick="downloadDatasetCSV('enfr_odds_ratio.csv')" class="mt-3 w-full py-1.5 px-3 rounded-lg text-xs font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 transition flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-download"></i>
+                <span>Descargar enfr_odds_ratio.csv</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBTAB 3: MATRIZ DE CORRELACIÓN -->
+      <div id="subpane-corr" class="eda-subpane hidden space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          
+          <!-- Heatmap Container (3 cols) -->
+          <div class="lg:col-span-3 stat-card p-3.5 sm:p-5">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+              <div>
+                <h3 class="text-base font-bold text-slate-900 dark:text-white">
+                  Matriz de Correlación Inter-Condiciones
+                </h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  Coeficientes de correlación de Pearson (r). Rango ajustado de 0.00 a 0.40 para apreciar variabilidad clínica.
+                </p>
+              </div>
+              <span class="text-xs px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 font-mono text-slate-600 dark:text-slate-300">
+                Escala Blues (0.00 a 0.40)
+              </span>
+            </div>
+
+            <!-- Plotly Heatmap Container -->
+            <div id="chart-correlation-heatmap" class="w-full h-[360px] sm:h-[460px]"></div>
+          </div>
+
+          <!-- Heatmap Insights (1 col) -->
+          <div class="space-y-4">
+            <div class="stat-card p-4 border-l-4 border-indigo-500">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                Hallazgos de la Matriz
+              </h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
+                - <strong>Edad como predictor dominante:</strong> Es la variable con mayor correlación directa con la hipertensión (<strong>r = 0.34</strong>).
+              </p>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
+                - <strong>Acumulación de condiciones crónicas:</strong> Las 4 patologías (HTA, Diabetes, Colesterol, Obesidad) presentan correlaciones positivas entre sí (<strong>r = 0.11 a 0.21</strong>), evidenciando multimorbilidad en la misma población.
+              </p>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
+                - <strong>Nota sobre IMC y Obesidad:</strong> Su correlación de 0.78 es matemática por construcción (obesidad = IMC ≥ 30).
+              </p>
+            </div>
+
+            <div class="stat-card p-4 text-center">
+              <i class="fa-solid fa-file-csv text-2xl text-emerald-500 mb-2"></i>
+              <span class="text-xs font-semibold text-slate-800 dark:text-slate-200">Dataset de Correlación</span>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Matriz de Pearson entre condiciones y métricas antropométricas</p>
+              <button onclick="downloadDatasetCSV('enfr_correlacion.csv')" class="mt-3 w-full py-1.5 px-3 rounded-lg text-xs font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 transition flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-download"></i>
+                <span>Descargar enfr_correlacion.csv</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SUBTAB 4: DESCRIPTIVAS (EDAD E IMC) -->
+      <div id="subpane-stats" class="eda-subpane hidden space-y-4">
+        
+        <!-- Controls & Year Selector -->
+        <div class="stat-card p-4 flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white">
+              Estadísticas Descriptivas de Variables Continuas (Media, Mediana y Dispersión)
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Microdatos ponderados con factor de expansión muestral del INDEC
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <label for="select-desc-year" class="text-xs font-semibold text-slate-600 dark:text-slate-300">Año ENFR:</label>
+            <select id="select-desc-year" onchange="renderDescriptiveCards()" class="text-xs px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-sky-500">
+              <option value="2018" selected>2018 (Última edición)</option>
+              <option value="2013">2013</option>
+              <option value="2009">2009</option>
+              <option value="2005">2005</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 2 Big Visual Columns: Edad e IMC -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Box 1: Edad -->
+          <div class="stat-card p-5 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="p-2 rounded-lg bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400">
+                  <i class="fa-solid fa-user-clock"></i>
+                </span>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white">Edad Poblacional (Años)</h4>
+              </div>
+              <span id="badge-edad-year" class="text-xs px-2 py-0.5 rounded font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">2018</span>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-3 gap-3">
+              <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-center">
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Media</span>
+                <p id="stat-edad-media" class="text-lg font-bold text-slate-900 dark:text-white mt-0.5">44.9 años</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-center">
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Mediana</span>
+                <p id="stat-edad-mediana" class="text-lg font-bold text-slate-900 dark:text-white mt-0.5">44.0 años</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-center">
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Desvío Estándar</span>
+                <p id="stat-edad-desvio" class="text-lg font-bold text-slate-900 dark:text-white mt-0.5">± 17.9</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-center">
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Varianza</span>
+                <p id="stat-edad-varianza" class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-1">320.4</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-center">
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Cuartil 1 (Q1)</span>
+                <p id="stat-edad-q1" class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-1">30.0 años</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-center">
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Cuartil 3 (Q3)</span>
+                <p id="stat-edad-q3" class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-1">59.0 años</p>
+              </div>
+            </div>
+
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              El 50% central de los encuestados se ubica entre los 30 y 59 años. El envejecimiento poblacional progresivo incrementa el pool de pacientes en riesgo biológico de HTA.
+            </p>
+          </div>
+
+          <!-- Box 2: IMC -->
+          <div class="stat-card p-5 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="p-2 rounded-lg bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400">
+                  <i class="fa-solid fa-weight-scale"></i>
+                </span>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white">Índice de Masa Corporal - IMC (kg/m²)</h4>
+              </div>
+              <span id="badge-imc-year" class="text-xs px-2 py-0.5 rounded font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">2018</span>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-3 gap-3">
+              <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-center">
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Media</span>
+                <p id="stat-imc-media" class="text-lg font-bold text-slate-900 dark:text-white mt-0.5">27.9 kg/m²</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-center">
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Mediana</span>
+                <p id="stat-imc-mediana" class="text-lg font-bold text-slate-900 dark:text-white mt-0.5">27.1 kg/m²</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-center">
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Desvío Estándar</span>
+                <p id="stat-imc-desvio" class="text-lg font-bold text-slate-900 dark:text-white mt-0.5">± 5.6</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-center">
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Varianza</span>
+                <p id="stat-imc-varianza" class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-1">31.4</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-center">
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Cuartil 1 (Q1)</span>
+                <p id="stat-imc-q1" class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-1">23.8 kg/m²</p>
+              </div>
+              <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 text-center">
+                <span class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Cuartil 3 (Q3)</span>
+                <p id="stat-imc-q3" class="text-sm font-bold text-slate-800 dark:text-slate-200 mt-1">31.1 kg/m²</p>
+              </div>
+            </div>
+
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              <strong>Alerta Clínica:</strong> El 25% de la población (Q3 = 31.1) ya cruza el umbral de obesidad clínica (IMC ≥ 30). La media (27.9) se ubica francamente en sobrepeso.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- IMC Evolution Curve with Interquartile Range Shading -->
+        <div class="stat-card p-5">
+          <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+            <div>
+              <h4 class="text-sm font-bold text-slate-900 dark:text-white">
+                Evolución del IMC en Argentina (2005 - 2018): Media y Dispersión Cuartílica (Q1 - Q3)
+              </h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400">
+                Muestra el desplazamiento continuo hacia la derecha de la curva antropométrica nacional.
+              </p>
+            </div>
+            <span class="text-xs text-rose-500 font-semibold flex items-center gap-1">
+              <i class="fa-solid fa-triangle-exclamation"></i> Umbral Obesidad = 30 kg/m²
+            </span>
+          </div>
+
+          <div id="chart-imc-evolution" class="w-full h-[360px]"></div>
+        </div>
+
+      </div>
+
+      <!-- SUBTAB 5: EVOLUCIÓN TEMPORAL -->
+      <div id="subpane-evol" class="eda-subpane hidden space-y-4">
+        <div class="stat-card p-5">
+          <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white">
+                Tendencia Histórica Total País (ENFR 2005 - 2018)
+              </h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">
+                Prevalencias autorreportadas comparadas en las cuatro rondas oficiales del INDEC.
+              </p>
+            </div>
+          </div>
+
+          <!-- Plotly Line Chart Container -->
+          <div id="chart-temporal-trends" class="w-full h-[440px]"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =========================================================================
+         TAB 2: MÉTRICAS DE NEGOCIO & IMPACTO SANITARIO
+         ========================================================================= -->
+    <section id="section-kpis" class="tab-pane hidden space-y-6">
+
+      <!-- Executive Business Pitch Manifesto Card -->
+      <div class="stat-card p-6 sm:p-8 bg-gradient-to-br from-white via-sky-50/40 to-teal-50/40 dark:from-slate-900 dark:via-slate-900/95 dark:to-slate-800/90 border-l-4 border-sky-500 shadow-xl space-y-5">
+        <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-200/80 dark:border-slate-800 pb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="w-9 h-9 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center font-bold text-base shadow-sm">
+              <i class="fa-solid fa-bullhorn"></i>
+            </span>
+            <div>
+              <h2 class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white tracking-tight">
+                Riesgo Cardiometabólico en Argentina · Tesis de Negocio
+              </h2>
+              <span class="text-xs text-slate-500 dark:text-slate-400">
+                Propuesta de valor y eficiencia de capacidad para prepagas y obras sociales
+              </span>
+            </div>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full font-bold bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300 border border-sky-300 dark:border-sky-800">
+            Microdatos INDEC ENFR · 137.000 Personas (2005 - 2018)
+          </span>
+        </div>
+
+        <!-- The exact narrative text with executive typography and highlighting -->
+        <div class="space-y-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          <p class="text-base font-medium text-slate-800 dark:text-slate-100">
+            Nuestro proyecto es sobre riesgo cardiometabólico en Argentina. Trabajamos con la <strong>Encuesta Nacional de Factores de Riesgo del INDEC: 137 mil personas, cuatro ediciones, de 2005 a 2018</strong>.
+          </p>
+
+          <div class="p-4 rounded-xl bg-amber-50/70 dark:bg-amber-950/25 border border-amber-200/80 dark:border-amber-900/40 space-y-3">
+            <p>
+              El problema arranca con <strong>un número que engaña</strong>. La hipertensión afecta al <strong>34,9%</strong> de los adultos y no se movió en trece años. Mirado así, parece controlado.
+            </p>
+            <p>
+              Pero la obesidad casi se duplicó: <strong>pasó de 14,6 a 25,3 por ciento</strong>. Y entre los jóvenes <strong>se triplicó</strong>. Como la obesidad adelanta el riesgo cardiovascular unos quince años, esos puntos son los hipertensos de la próxima década. <span class="font-bold underline decoration-amber-500 underline-offset-2">El problema no es el stock de pacientes de hoy, es la fila que viene atrás</span>.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-sky-50/70 dark:bg-sky-950/25 border border-sky-200/80 dark:border-sky-900/40 space-y-3">
+            <p class="text-base font-bold text-sky-900 dark:text-sky-200">
+              Nuestra idea de negocio es venderle a prepagas y obras sociales una herramienta que les diga a cuáles de sus afiliados conviene controlar primero.
+            </p>
+            <p>
+              <strong>La métrica de negocio es cuántos controles hacen falta para encontrar un hipertenso:</strong>
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <div class="p-3.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-center shadow-sm">
+                <span class="text-xs text-slate-500 uppercase font-semibold">Al Azar (Sin Modelo)</span>
+                <p class="text-3xl font-black text-slate-700 dark:text-slate-200 mt-0.5">2,87 <span class="text-xs font-normal text-slate-400">controles</span></p>
+                <span class="text-[11px] text-slate-400 block mt-1">Requiere casi 3 consultas para detectar 1 caso</span>
+              </div>
+              <div class="p-3.5 rounded-xl bg-sky-50 dark:bg-sky-900/50 border border-sky-300 dark:border-sky-700 text-center shadow-sm">
+                <span class="text-xs text-sky-700 dark:text-sky-300 uppercase font-bold">Priorizando con Nuestro Modelo</span>
+                <p class="text-3xl font-black text-sky-600 dark:text-sky-400 mt-0.5">1,39 <span class="text-xs font-normal text-sky-500">controles</span></p>
+                <span class="text-[11px] text-sky-600 dark:text-sky-300 font-bold block mt-1">¡Encuentra el doble de casos (+106%)!</span>
+              </div>
+            </div>
+            <p class="pt-1 leading-relaxed">
+              Y acá está la clave: <strong>una prepaga no está limitada por el costo del control, está limitada por la capacidad</strong>. Con los mismos controles que ya hace, <strong>encuentra el doble de casos</strong>.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-teal-50/70 dark:bg-teal-950/25 border border-teal-200/80 dark:border-teal-900/40 space-y-2">
+            <p>
+              Del lado del modelo, la métrica es el <strong>ROC-AUC, y nos dio 0,767</strong>. Para dimensionarlo: el <strong>score de Framingham</strong>, que usan los cardiólogos hace décadas, validado externamente da alrededor de <strong>0,77</strong>.
+            </p>
+            <p class="text-sm sm:text-base font-extrabold text-teal-800 dark:text-teal-300 bg-teal-100/60 dark:bg-teal-900/40 p-2.5 rounded-lg border border-teal-300 dark:border-teal-700">
+              O sea que con datos públicos y en tres semanas llegamos al nivel de una herramienta clínica en uso. Eso es lo que tenemos.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Strategic Metric Banners derived from the Pitch -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Metric 1: Métrica de Negocio (Controles) -->
+        <div class="stat-card p-5 border-l-4 border-sky-500">
+          <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider">Métrica de Negocio</span>
+            <span class="p-2 rounded-lg bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400">
+              <i class="fa-solid fa-crosshairs"></i>
+            </span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-3xl font-extrabold text-sky-600 dark:text-sky-400 font-mono">1,39</span>
+            <span class="text-xs font-bold text-slate-400">vs 2,87</span>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">
+            <strong>Controles para hallar 1 caso:</strong> duplica la tasa de detección médica.
+          </p>
+        </div>
+
+        <!-- Metric 2: Métrica del Modelo (ROC-AUC) -->
+        <div class="stat-card p-5 border-l-4 border-teal-500">
+          <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider">Métrica del Modelo (AUC)</span>
+            <span class="p-2 rounded-lg bg-teal-50 dark:bg-teal-950/50 text-teal-600 dark:text-teal-400">
+              <i class="fa-solid fa-award"></i>
+            </span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-3xl font-extrabold text-teal-600 dark:text-teal-400 font-mono">0,767</span>
+            <span class="text-xs font-bold text-teal-600">Framingham ~0,77</span>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">
+            Validado al nivel del estándar de oro cardiológico mundial.
+          </p>
+        </div>
+
+        <!-- Metric 3: El Número que Engaña (HTA vs Obesidad) -->
+        <div class="stat-card p-5 border-l-4 border-amber-500">
+          <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider">La Fila que Viene Atrás</span>
+            <span class="p-2 rounded-lg bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400">
+              <i class="fa-solid fa-weight-scale"></i>
+            </span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-3xl font-extrabold text-amber-600 dark:text-amber-400 font-mono">25,3%</span>
+            <span class="text-xs font-bold text-amber-500">era 14,6%</span>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">
+            La obesidad se duplicó y adelanta el riesgo 15 años.
+          </p>
+        </div>
+
+        <!-- Metric 4: Muestra INDEC -->
+        <div class="stat-card p-5 border-l-4 border-indigo-500">
+          <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider">Microdatos INDEC</span>
+            <span class="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400">
+              <i class="fa-solid fa-database"></i>
+            </span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 font-mono">137.000</span>
+            <span class="text-xs font-semibold text-slate-500">personas</span>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">
+            4 ediciones ENFR oficiales de 2005 a 2018.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Interactive Capacity & Screening Simulator for Health Insurers (Prepagas y Obras Sociales) -->
+      <div class="stat-card p-6 border-t-4 border-sky-500 space-y-6">
+        <div>
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-calculator text-sky-500"></i>
+              <span>Simulador de Capacidad Operativa: Prepagas y Obras Sociales</span>
+            </h3>
+            <span class="text-xs px-2.5 py-1 rounded-full font-bold bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300 border border-sky-300 dark:border-sky-800">
+              Eficiencia de Capacidad Médica
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Una prepaga no está limitada por el costo del control, sino por su capacidad de consultorios y turnos médicos. Modificá el volumen de controles que ya realiza para dimensionar el doble de diagnósticos que interceptará con nuestro modelo.
+          </p>
+        </div>
+
+        <!-- Slider Controls Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+          
+          <!-- Slider 1: Capacidad de controles mensuales -->
+          <div class="space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <label for="sim-slider-controls" class="font-semibold text-slate-700 dark:text-slate-300">
+                Capacidad de Controles Médicos Mensuales que ya realiza:
+              </label>
+              <span id="sim-val-controls" class="font-bold text-sky-600 dark:text-sky-400 font-mono text-sm">5.000 controles/mes</span>
+            </div>
+            <input type="range" id="sim-slider-controls" min="1000" max="30000" step="500" value="5000" oninput="runHealthSimulation()" class="w-full">
+            <div class="flex justify-between text-[10px] text-slate-400">
+              <span>1.000 (Prepaga Local)</span>
+              <span>10.000 (Mediana)</span>
+              <span>30.000 (Gran Obra Social)</span>
+            </div>
+          </div>
+
+          <!-- Slider 2: Ahorro hospitalario promedio por paciente evitado -->
+          <div class="space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <label for="sim-slider-cost" class="font-semibold text-slate-700 dark:text-slate-300">
+                Ahorro anual estimado por hipertenso controlado a tiempo:
+              </label>
+              <span id="sim-val-cost" class="font-bold text-emerald-600 dark:text-emerald-400 font-mono text-sm">$850 USD/paciente</span>
+            </div>
+            <input type="range" id="sim-slider-cost" min="300" max="2000" step="50" value="850" oninput="runHealthSimulation()" class="w-full">
+            <div class="flex justify-between text-[10px] text-slate-400">
+              <span>$300 USD (Bajo)</span>
+              <span>$850 USD (Estándar)</span>
+              <span>$2.000 USD (Alto riesgo/UTI)</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Simulation Projected Results Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          
+          <div class="text-center p-2.5 rounded-lg bg-white/60 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+            <span class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Al Azar (Sin Modelo)</span>
+            <p id="sim-out-random" class="text-xl sm:text-2xl font-extrabold text-slate-700 dark:text-slate-300 mt-1">1.742</p>
+            <span class="text-[10px] text-slate-400">1 caso cada 2,87 controles</span>
+          </div>
+
+          <div class="text-center p-2.5 bg-sky-50/70 dark:bg-sky-950/30 rounded-lg border border-sky-100 dark:border-sky-900/40">
+            <span class="text-[11px] text-sky-700 dark:text-sky-300 uppercase font-bold">Con Nuestro Modelo</span>
+            <p id="sim-out-model" class="text-xl sm:text-2xl font-extrabold text-sky-600 dark:text-sky-400 mt-1">3.597</p>
+            <span class="text-[10px] text-sky-600 dark:text-sky-400 font-semibold">1 caso cada 1,39 controles</span>
+          </div>
+
+          <div class="text-center p-2.5 bg-emerald-50/70 dark:bg-emerald-950/30 rounded-lg border border-emerald-100 dark:border-emerald-900/40">
+            <span class="text-[11px] text-emerald-700 dark:text-emerald-300 uppercase font-bold">Casos Extra Detectados</span>
+            <p id="sim-out-gain" class="text-xl sm:text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">+1.855</p>
+            <span class="text-[10px] text-emerald-600 font-bold">+106.5% con la misma capacidad</span>
+          </div>
+
+          <div class="text-center p-2.5 rounded-lg bg-teal-50/70 dark:bg-teal-950/30 border border-teal-100 dark:border-teal-900/40">
+            <span class="text-[11px] text-teal-700 dark:text-teal-300 uppercase font-bold">Multiplicador</span>
+            <p id="sim-out-multiplier" class="text-xl sm:text-2xl font-extrabold text-teal-600 dark:text-teal-400 mt-1">x2.06</p>
+            <span class="text-[10px] text-teal-600 font-semibold">Doble de casos encontrados</span>
+          </div>
+
+          <div class="col-span-2 sm:col-span-1 text-center p-2.5 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 rounded-lg border border-emerald-300 dark:border-emerald-800 shadow-sm">
+            <span class="text-[11px] text-emerald-800 dark:text-emerald-200 uppercase font-extrabold">Ahorro Económico Estimado</span>
+            <p id="sim-out-savings" class="text-xl sm:text-2xl font-extrabold text-emerald-600 dark:text-emerald-300 mt-1">+$1.576.750 USD</p>
+            <span id="sim-out-savings-desc" class="text-[10px] text-emerald-700 dark:text-emerald-300 font-bold">+18.9M USD/año evitado</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Resource Allocation & Regional Prioritization Matrix -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Regional Prioritization Matrix -->
+        <div class="stat-card p-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-map-pin text-rose-500"></i>
+              <span>Matriz de Priorización Provincial para Asignación de Fondos</span>
+            </h4>
+            <span class="text-xs px-2 py-0.5 rounded bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300 font-semibold">
+              Score de Vulnerabilidad
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            Índice compuesto ponderado por: Prevalencia estandarizada (50%), Déficit de cobertura médica (30%) y Concentración en Quintiles de Ingreso bajos Q1-Q2 (20%).
+          </p>
+
+          <div class="space-y-2.5 text-xs">
+            <!-- Row 1: High Priority -->
+            <div class="p-3 rounded-lg border border-rose-200 dark:border-rose-900 bg-rose-50/50 dark:bg-rose-950/20 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-rose-700 dark:text-rose-400">Prioridad Crítica / Urgente</span>
+                <p class="text-slate-600 dark:text-slate-300 text-[11px]">Formosa, Chaco, Santiago del Estero, Corrientes, Misiones</p>
+              </div>
+              <span class="px-2 py-1 rounded font-bold bg-rose-600 text-white text-[11px]">Score > 75</span>
+            </div>
+
+            <!-- Row 2: Medium-High Priority -->
+            <div class="p-3 rounded-lg border border-amber-200 dark:border-amber-900 bg-amber-50/50 dark:bg-amber-950/20 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-amber-700 dark:text-amber-400">Prioridad Moderada / Media</span>
+                <p class="text-slate-600 dark:text-slate-300 text-[11px]">Salta, Jujuy, Catamarca, Tucumán, San Juan, La Rioja, Entre Ríos</p>
+              </div>
+              <span class="px-2 py-1 rounded font-bold bg-amber-500 text-white text-[11px]">Score 55 - 75</span>
+            </div>
+
+            <!-- Row 3: Standard Priority -->
+            <div class="p-3 rounded-lg border border-emerald-200 dark:border-emerald-900 bg-emerald-50/50 dark:bg-emerald-950/20 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-emerald-700 dark:text-emerald-400">Seguimiento Preventivo Regular</span>
+                <p class="text-slate-600 dark:text-slate-300 text-[11px]">Santa Fe, Buenos Aires, Córdoba, Mendoza, Neuquén, CABA, Tierra del Fuego</p>
+              </div>
+              <span class="px-2 py-1 rounded font-bold bg-emerald-600 text-white text-[11px]">Score < 55</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Machine Learning Models Benchmarking -->
+        <div class="stat-card p-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-microchip text-sky-500"></i>
+              <span>Evaluación & Benchmarking de Modelos de ML</span>
+            </h4>
+            <span class="text-xs px-2 py-0.5 rounded bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300 font-semibold">
+              Test Set ENFR
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            Comparativa de los modelos entrenados y evaluados en el proyecto para detección de hipertensión arterial.
+          </p>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-slate-600 dark:text-slate-300">
+              <thead class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold border-b border-slate-200 dark:border-slate-700">
+                <tr>
+                  <th class="py-2 px-3">Modelo</th>
+                  <th class="py-2 px-3 text-right">AUC Test</th>
+                  <th class="py-2 px-3 text-right">Brier Score</th>
+                  <th class="py-2 px-3 text-right">Velocidad</th>
+                  <th class="py-2 px-3 text-center">Uso en Producción</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                <tr class="bg-sky-50/50 dark:bg-sky-950/20 font-medium">
+                  <td class="py-2.5 px-3 flex items-center gap-1.5 text-sky-700 dark:text-sky-300">
+                    <i class="fa-solid fa-check-circle text-sky-500"></i>
+                    <span>Regresión Logística Calibrada</span>
+                  </td>
+                  <td class="py-2.5 px-3 text-right font-mono font-bold">0.7671</td>
+                  <td class="py-2.5 px-3 text-right font-mono">0.1807</td>
+                  <td class="py-2.5 px-3 text-right font-mono text-emerald-600">&lt; 1 ms</td>
+                  <td class="py-2.5 px-3 text-center">
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-800 dark:bg-sky-900 dark:text-sky-200">
+                      Motor Web Cliente
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3">Random Forest Classifier</td>
+                  <td class="py-2.5 px-3 text-right font-mono font-bold">0.7675</td>
+                  <td class="py-2.5 px-3 text-right font-mono">0.1812</td>
+                  <td class="py-2.5 px-3 text-right font-mono">24 ms</td>
+                  <td class="py-2.5 px-3 text-center text-slate-400">Baseline Ensemble</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3">HistGradientBoosting (HGB)</td>
+                  <td class="py-2.5 px-3 text-right font-mono font-bold">0.7668</td>
+                  <td class="py-2.5 px-3 text-right font-mono">0.1815</td>
+                  <td class="py-2.5 px-3 text-right font-mono">9.8 s (fit)</td>
+                  <td class="py-2.5 px-3 text-center text-slate-400">Validación no lineal</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/40 text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+            <strong>Decisión Arquitectónica:</strong> La Regresión Logística rinde virtualmente idéntica al ensamble (AUC 0.7671 vs 0.7675) ofreciendo perfecta interpretabilidad clínica de Odds Ratios y una ejecución ultra-rápida sin dependencias pesadas en el navegador del usuario.
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =========================================================================
+         TAB 3: FORMULARIO DE INFERENCIA EN TIEMPO REAL ("GENERATIVE S")
+         ========================================================================= -->
+    <section id="section-inference" class="tab-pane hidden space-y-6">
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Column: Clinical Form (7 cols) -->
+        <div class="lg:col-span-7 stat-card p-4 sm:p-6 space-y-4 sm:space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-3">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <i class="fa-solid fa-stethoscope text-sky-500"></i>
+                <span>Evaluación de Riesgo de Hipertensión Arterial</span>
+              </h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">
+                Modelo de predicción logística calibrado según coeficientes ENFR (AUC 0.767)
+              </p>
+            </div>
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-xs text-slate-400">Casos tipo:</span>
+              <button type="button" onclick="loadClinicalPreset('alto')" class="text-[11px] px-2 py-0.5 rounded bg-rose-50 text-rose-700 dark:bg-rose-950/50 dark:text-rose-300 font-bold border border-rose-200 dark:border-rose-900/60 hover:bg-rose-100 transition">Alto (p01)</button>
+              <button type="button" onclick="loadClinicalPreset('moderado')" class="text-[11px] px-2 py-0.5 rounded bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300 font-bold border border-amber-200 dark:border-amber-900/60 hover:bg-amber-100 transition">Medio (p03)</button>
+              <button type="button" onclick="loadClinicalPreset('bajo')" class="text-[11px] px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300 font-bold border border-emerald-200 dark:border-emerald-900/60 hover:bg-emerald-100 transition">Bajo (p02)</button>
+            </div>
+          </div>
+
+          <form id="inference-form" onsubmit="event.preventDefault(); executeInferenceWithApify();" class="space-y-4">
+            
+            <!-- Row 1: Nombre/ID & Edad -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="input-name" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  Nombre o ID Paciente (Opcional)
+                </label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 text-xs">
+                    <i class="fa-solid fa-id-card"></i>
+                  </span>
+                  <input type="text" id="input-name" placeholder="Ej: PAC-2026-081" class="w-full text-xs pl-8 pr-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between items-center mb-1">
+                  <label for="input-age" class="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                    Edad (Años)
+                  </label>
+                  <span id="label-age-val" class="text-xs font-bold text-sky-600 dark:text-sky-400 font-mono">52 años</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <input type="range" id="input-age-range" min="18" max="95" value="52" oninput="syncAgeInput(this.value)" class="flex-grow">
+                  <input type="number" id="input-age" min="18" max="95" value="52" oninput="syncAgeRange(this.value)" class="w-16 text-center text-xs py-1 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-mono">
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Sexo & Provincia -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  Sexo Biológico
+                </label>
+                <div class="grid grid-cols-2 gap-2">
+                  <label class="flex items-center justify-center gap-2 p-2 rounded-lg border border-slate-200 dark:border-slate-700 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition text-xs font-medium">
+                    <input type="radio" name="sexo" value="varon" checked class="text-sky-600 focus:ring-sky-500">
+                    <span><i class="fa-solid fa-mars text-blue-500 mr-1"></i>Varón</span>
+                  </label>
+                  <label class="flex items-center justify-center gap-2 p-2 rounded-lg border border-slate-200 dark:border-slate-700 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition text-xs font-medium">
+                    <input type="radio" name="sexo" value="mujer" class="text-sky-600 focus:ring-sky-500">
+                    <span><i class="fa-solid fa-venus text-pink-500 mr-1"></i>Mujer</span>
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <label for="input-provincia" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  Provincia de Residencia
+                </label>
+                <select id="input-provincia" class="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                  <!-- Generated dynamically in JS with 24 provinces -->
+                </select>
+              </div>
+            </div>
+
+            <!-- Row 3: Peso, Altura y Cálculo en Vivo de IMC -->
+            <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/60 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-700 dark:text-slate-200 flex items-center gap-1.5">
+                  <i class="fa-solid fa-weight-scale text-amber-500"></i>
+                  <span>Antropometría & IMC</span>
+                </span>
+                <span id="imc-badge" class="text-[11px] px-2 py-0.5 rounded-full font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
+                  Sobrepeso (IMC 27.8)
+                </span>
+              </div>
+
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div>
+                  <label for="input-weight" class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                    Peso (kg)
+                  </label>
+                  <input type="number" id="input-weight" min="30" max="220" step="0.5" value="82" oninput="calculateBMI()" class="w-full text-xs px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-mono focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                </div>
+
+                <div>
+                  <label for="input-height" class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                    Altura (cm)
+                  </label>
+                  <input type="number" id="input-height" min="100" max="230" step="1" value="172" oninput="calculateBMI()" class="w-full text-xs px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-mono focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                </div>
+
+                <div class="col-span-2 sm:col-span-1">
+                  <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
+                    IMC Calculado
+                  </label>
+                  <div class="flex items-center h-[34px] px-3 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                    <span id="output-imc-val" class="text-xs font-mono font-bold text-slate-900 dark:text-white">27.72 kg/m²</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 4: Comorbilidades (Diabetes & Colesterol Alto) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="p-3 rounded-lg border border-slate-200 dark:border-slate-700">
+                <span class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                  <i class="fa-solid fa-dna text-emerald-500 mr-1"></i>¿Tiene Diabetes?
+                </span>
+                <div class="grid grid-cols-2 gap-2">
+                  <label class="flex items-center justify-center p-1.5 rounded border border-slate-200 dark:border-slate-700 cursor-pointer text-xs font-medium hover:bg-slate-50 dark:hover:bg-slate-800">
+                    <input type="radio" name="diabetes" value="0" checked class="text-sky-600 mr-1.5"> No
+                  </label>
+                  <label class="flex items-center justify-center p-1.5 rounded border border-slate-200 dark:border-slate-700 cursor-pointer text-xs font-medium hover:bg-slate-50 dark:hover:bg-slate-800">
+                    <input type="radio" name="diabetes" value="1" class="text-sky-600 mr-1.5"> Sí
+                  </label>
+                </div>
+              </div>
+
+              <div class="p-3 rounded-lg border border-slate-200 dark:border-slate-700">
+                <span class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                  <i class="fa-solid fa-droplet text-indigo-500 mr-1"></i>¿Colesterol Alto Diagnosticado?
+                </span>
+                <div class="grid grid-cols-2 gap-2">
+                  <label class="flex items-center justify-center p-1.5 rounded border border-slate-200 dark:border-slate-700 cursor-pointer text-xs font-medium hover:bg-slate-50 dark:hover:bg-slate-800">
+                    <input type="radio" name="colesterol" value="0" checked class="text-sky-600 mr-1.5"> No
+                  </label>
+                  <label class="flex items-center justify-center p-1.5 rounded border border-slate-200 dark:border-slate-700 cursor-pointer text-xs font-medium hover:bg-slate-50 dark:hover:bg-slate-800">
+                    <input type="radio" name="colesterol" value="1" class="text-sky-600 mr-1.5"> Sí
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 5: Hábitos (Tabaquismo & Actividad Física) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="input-tabaco" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  <i class="fa-solid fa-smoking text-slate-500 mr-1"></i>Consumo de Tabaco
+                </label>
+                <select id="input-tabaco" class="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                  <option value="nunca">Nunca fumó</option>
+                  <option value="ex_fumador">Ex fumador</option>
+                  <option value="actual">Fumador actual</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="input-actividad" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  <i class="fa-solid fa-person-running text-teal-500 mr-1"></i>Nivel de Actividad Física
+                </label>
+                <select id="input-actividad" class="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                  <option value="baja" selected>Baja (Sedentario)</option>
+                  <option value="media">Media (150 min/semana)</option>
+                  <option value="alta">Alta (Deportista regular)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Row 6: Factores Socioeconómicos (Cobertura & Quintil) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="input-cobertura" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  <i class="fa-solid fa-hospital text-blue-500 mr-1"></i>Cobertura de Salud
+                </label>
+                <select id="input-cobertura" class="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                  <option value="con_cobertura" selected>Con Cobertura (Obra Social / Prepaga)</option>
+                  <option value="sin_cobertura">Sin Cobertura (Sistema Público Exclusivo)</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="input-quintil" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                  <i class="fa-solid fa-money-bill-wave text-emerald-500 mr-1"></i>Quintil de Ingreso del Hogar
+                </label>
+                <select id="input-quintil" class="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-sky-500 focus:outline-none">
+                  <option value="Q1">Q1 (20% ingresos más bajos)</option>
+                  <option value="Q2">Q2 (Ingresos medios-bajos)</option>
+                  <option value="Q3" selected>Q3 (Ingreso medio nacional)</option>
+                  <option value="Q4">Q4 (Ingresos medios-altos)</option>
+                  <option value="Q5">Q5 (20% ingresos más altos)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Hidden Cloud Inference Configuration (Pre-configured for Production / Client) -->
+            <input type="hidden" id="input-apify-token" value="PEGAR_TOKEN_DE_APIFY">
+            <input type="hidden" id="input-apify-actor" value="santibelver/hta-predict">
+
+            <!-- Submit Button with Executive Medical Styling -->
+            <div class="pt-2">
+              <button type="submit" id="btn-submit-inference" class="w-full py-3.5 px-4 rounded-xl font-bold text-sm bg-gradient-to-r from-sky-600 via-teal-600 to-emerald-600 hover:from-sky-700 hover:via-teal-700 hover:to-emerald-700 text-white shadow-lg shadow-sky-500/20 transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-calculator text-emerald-300"></i>
+                <span id="btn-submit-text">Calcular Riesgo y Predicción</span>
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- Right Column: Inference Result & Action Center (5 cols) -->
+        <div class="lg:col-span-5 space-y-5">
+          
+          <!-- Result Card -->
+          <div class="stat-card p-6 text-center space-y-4">
+            
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
+              <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                Resultado de Inferencia
+              </span>
+              <span id="risk-pill" class="text-xs px-2.5 py-0.5 rounded-full font-bold bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+                Pendiente de Cálculo
+              </span>
+            </div>
+
+            <!-- Gauge Meter Visual Card with Guaranteed Zero Overlap -->
+            <div class="py-2 flex flex-col items-center">
+              
+              <!-- Canvas & Center Percentage Container -->
+              <div class="relative w-[260px] h-[135px] mx-auto select-none">
+                <canvas id="gaugeCanvas" width="260" height="135" class="block mx-auto"></canvas>
+                <!-- Percentage Number cleanly centered inside the arc dome without touching -->
+                <div class="absolute inset-x-0 top-[62px] flex flex-col items-center pointer-events-none">
+                  <span id="risk-percentage-display" class="text-2xl font-black font-mono tracking-tight leading-none text-slate-400 dark:text-slate-500 drop-shadow-sm">
+                    --%
+                  </span>
+                </div>
+              </div>
+
+              <!-- Dedicated Label & Scale Zone (Guaranteed ZERO overlap) -->
+              <div class="mt-3 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/60 text-center w-full max-w-[280px]">
+                <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-600 dark:text-slate-300 block mb-1">
+                  Probabilidad Estimada P(HTA)
+                </span>
+                <div class="flex items-center justify-between text-[10px] font-semibold text-slate-500 dark:text-slate-400 px-1 pt-1 border-t border-slate-200/60 dark:border-slate-700">
+                  <span class="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>0% Bajo
+                  </span>
+                  <span class="flex items-center gap-1 text-amber-600 dark:text-amber-400">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>20%
+                  </span>
+                  <span class="flex items-center gap-1 text-rose-600 dark:text-rose-400">
+                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>45%+ Alto
+                  </span>
+                </div>
+              </div>
+
+              <!-- Status Badge -->
+              <div id="apify-badge-container" class="mt-2.5">
+                <span id="apify-status-badge" class="inline-flex items-center gap-1.5 text-[10px] px-2.5 py-0.5 rounded-full font-mono bg-sky-50 text-sky-700 dark:bg-sky-950/60 dark:text-sky-300 border border-sky-200 dark:border-sky-800/60 shadow-sm">
+                  <i class="fa-solid fa-circle-check text-sky-500"></i>
+                  <span id="apify-status-text">Modelo Predictivo ENFR Calibrado (AUC 0.767) · Listo</span>
+                </span>
+              </div>
+
+            </div>
+
+            <!-- Clinical Categorization Message -->
+            <div id="risk-feedback-box" class="p-3.5 rounded-xl text-left text-xs bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 space-y-1">
+              <div class="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                <i class="fa-solid fa-circle-info text-sky-500"></i>
+                <span id="risk-feedback-title">Predicción Pendiente de Ejecución</span>
+              </div>
+              <p id="risk-feedback-desc" class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                Completá los datos del paciente y hacé clic en <strong>"Calcular Riesgo y Predicción"</strong> para procesar las variables clínicas y estimar la probabilidad en tiempo real.
+              </p>
+            </div>
+
+            <!-- Live Model Verification Card -->
+            <div id="apify-execution-card" class="hidden p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-left text-[11px] space-y-1.5 font-mono">
+              <div class="flex items-center justify-between text-slate-700 dark:text-slate-300 font-sans font-bold pb-1 border-b border-slate-200/80 dark:border-slate-700">
+                <span class="flex items-center gap-1 text-sky-600 dark:text-sky-400">
+                  <i class="fa-solid fa-server"></i>
+                  <span>Inferencia en la Nube (Modelo ML)</span>
+                </span>
+                <span id="apify-run-status" class="px-1.5 py-0.5 rounded text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-bold">
+                  200 OK
+                </span>
+              </div>
+              <div class="text-slate-600 dark:text-slate-400 space-y-0.5">
+                <div><strong>Modelo:</strong> <span id="apify-info-actor" class="text-slate-800 dark:text-slate-200 font-bold">ENFR HTA Classifier</span></div>
+                <div><strong>Estado de Cálculo:</strong> <span id="apify-info-run" class="text-slate-800 dark:text-slate-200">Completado</span></div>
+                <div><strong>Respuesta:</strong> <span id="apify-info-item" class="text-slate-800 dark:text-slate-200">1 registro procesado</span></div>
+                <div><strong>Latencia:</strong> <span id="apify-info-time" class="text-slate-800 dark:text-slate-200">- ms</span></div>
+              </div>
+            </div>
+
+            <!-- Personalized Factors Contribution Breakdown (Chart.js Bar) -->
+            <div class="text-left pt-2 border-t border-slate-100 dark:border-slate-800">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-slate-800 dark:text-slate-200">
+                  Desglose de Factores de Riesgo (Log-Odds Impact)
+                </span>
+                <span class="text-[10px] text-slate-400">Contribución relativa</span>
+              </div>
+              <div class="h-44 w-full">
+                <canvas id="riskBreakdownChart"></canvas>
+              </div>
+            </div>
+
+            <!-- Save & Integrations Action Bar -->
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2">
+              <span class="block text-[11px] font-semibold uppercase text-slate-400 text-left">
+                Exportar / Guardar Predicción ("Generative S")
+              </span>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <!-- Option A: Send via Webhook (n8n) -->
+                <button id="btn-send-webhook" onclick="sendToWebhook()" class="py-2 px-3 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm flex items-center justify-center gap-1.5 transition">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  <span>Enviar a n8n Webhook</span>
+                </button>
+
+                <!-- Option B: Netlify Serverless Function to GitHub -->
+                <button id="btn-save-github" onclick="saveViaNetlifyFunction()" class="py-2 px-3 rounded-lg text-xs font-semibold bg-slate-900 hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 text-white shadow-sm flex items-center justify-center gap-1.5 transition">
+                  <i class="fa-brands fa-github"></i>
+                  <span>Guardar en GitHub</span>
+                </button>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <!-- Option C: Instant Local CSV Download -->
+                <button onclick="downloadSingleRecordCSV()" class="py-1.5 px-3 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition flex items-center justify-center gap-1.5">
+                  <i class="fa-solid fa-file-csv text-emerald-600"></i>
+                  <span>Bajar Registro CSV</span>
+                </button>
+
+                <!-- Option D: Copy JSON to Clipboard -->
+                <button onclick="copyPredictionJSON()" class="py-1.5 px-3 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition flex items-center justify-center gap-1.5">
+                  <i class="fa-solid fa-copy text-sky-600"></i>
+                  <span>Copiar JSON</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Local Prediction History Table (Session Storage) -->
+      <div class="stat-card p-4 sm:p-5 space-y-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <h4 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i class="fa-solid fa-clock-rotate-left text-slate-400"></i>
+              <span>Historial Local de Inferencia (Sesión del Usuario)</span>
+            </h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Registros procesados en el navegador listos para exportar en lote a tu repositorio "Generative S".
+            </p>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <button onclick="exportAllHistoryCSV()" class="text-xs px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 transition flex items-center gap-1">
+              <i class="fa-solid fa-download"></i>
+              <span>Exportar Todo (.CSV)</span>
+            </button>
+            <button onclick="clearPredictionHistory()" class="text-xs px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[660px] text-left text-xs text-slate-600 dark:text-slate-300">
+            <thead class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold border-b border-slate-200 dark:border-slate-700">
+              <tr>
+                <th class="py-2.5 px-3">Fecha/Hora</th>
+                <th class="py-2.5 px-3">ID / Paciente</th>
+                <th class="py-2.5 px-3 text-center">Edad</th>
+                <th class="py-2.5 px-3 text-center">Sexo</th>
+                <th class="py-2.5 px-3">Provincia</th>
+                <th class="py-2.5 px-3 text-right">IMC</th>
+                <th class="py-2.5 px-3 text-right">P(HTA)</th>
+                <th class="py-2.5 px-3 text-center">Riesgo</th>
+                <th class="py-2.5 px-3 text-right">Acción</th>
+              </tr>
+            </thead>
+            <tbody id="history-table-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+              <!-- Dynamically rendered -->
+              <tr>
+                <td colspan="9" class="py-6 text-center text-slate-400">
+                  No hay predicciones en esta sesión. Probá enviando el formulario arriba.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       SETTINGS MODAL (CONFIGURACIÓN DE WEBHOOK N8N Y GITHUB)
+       ========================================================================= -->
+  <div id="modal-settings" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-4 sm:p-6 shadow-2xl space-y-4">
+      
+      <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+        <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <i class="fa-solid fa-network-wired text-sky-500"></i>
+          <span>Configuración de Integración & GitHub</span>
+        </h3>
+        <button onclick="closeSettingsModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        
+        <!-- Hidden Pre-configured Inference Engine (Pre-configured for Production / Client) -->
+        <input type="hidden" id="setting-apify-token" value="PEGAR_TOKEN_DE_APIFY">
+        <input type="hidden" id="setting-apify-actor" value="santibelver/hta-predict">
+
+        <!-- Webhook URL Field -->
+        <div>
+          <label for="setting-webhook-url" class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            URL de Webhook (Recomendado para n8n)
+          </label>
+          <input type="url" id="setting-webhook-url" placeholder="https://tu-instancia-n8n.com/webhook/enfr-generative-s" class="w-full text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-mono focus:ring-2 focus:ring-sky-500 focus:outline-none">
+          <p class="text-[11px] text-slate-500 mt-1">
+            Al presionar "Enviar a n8n Webhook", se despachará un payload JSON con la inferencia para que n8n haga el commit en tu repositorio <strong>"Generative S"</strong>.
+          </p>
+        </div>
+
+        <!-- Netlify Serverless Function Info -->
+        <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/60 space-y-2">
+          <span class="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+            <i class="fa-brands fa-github text-slate-700 dark:text-slate-300"></i>
+            <span>Netlify Function (Serveless Backend)</span>
+          </span>
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+            La función <code class="font-mono text-sky-600 dark:text-sky-400">netlify/functions/save-github.js</code> guarda automáticamente en el archivo <code class="font-mono">predicciones_usuarios.csv</code> dentro de tu repositorio <strong>Generative S</strong> sin exponer tu token en el navegador.
+          </p>
+          <div class="bg-white dark:bg-slate-900 p-2.5 rounded border border-slate-200 dark:border-slate-700 font-mono text-[11px] text-slate-700 dark:text-slate-300 space-y-0.5">
+            <div><strong>Variables de entorno requeridas en Netlify:</strong></div>
+            <div>• GITHUB_TOKEN = &lt;tu_personal_access_token&gt;</div>
+            <div>• GITHUB_OWNER = &lt;tu_usuario_de_github&gt;</div>
+            <div>• GITHUB_REPO = Generative-S</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+        <button onclick="closeSettingsModal()" class="px-4 py-2 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+          Cancelar
+        </button>
+        <button onclick="saveSettings()" class="px-4 py-2 rounded-lg text-xs font-semibold bg-sky-600 hover:bg-sky-500 text-white shadow-sm transition">
+          Guardar Configuración
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Footer -->
+  <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-6 text-xs text-slate-500 dark:text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-slate-700 dark:text-slate-300">ENFR Argentina · Generative S</span>
+        <span>—</span>
+        <span>Dashboard Analítico & Motor de Inferencia</span>
+      </div>
+      <div>
+        <span>Basado en microdatos INDEC (ENFR 2005 - 2018) · Modelo Regresión Logística (AUC 0.767)</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+indicador,indicador_nombre,anio,corte_tipo,corte_valor,n,prevalencia,prevalencia_pct,fuente
+hta,Hipertensión,2005,total,Total país,41392,0.344,34.4,INDEC - ENFR 2005
+hta,Hipertensión,2009,total,Total país,34732,0.347,34.7,INDEC - ENFR 2009
+hta,Hipertensión,2013,total,Total país,32365,0.341,34.1,INDEC - ENFR 2013
+hta,Hipertensión,2018,total,Total país,29224,0.346,34.6,INDEC - ENFR 2018
+diabetes,Diabetes,2005,total,Total país,41392,0.084,8.4,INDEC - ENFR 2005
+diabetes,Diabetes,2009,total,Total país,34732,0.096,9.6,INDEC - ENFR 2009
+diabetes,Diabetes,2013,total,Total país,32365,0.098,9.8,INDEC - ENFR 2013
+diabetes,Diabetes,2018,total,Total país,29224,0.127,12.7,INDEC - ENFR 2018
+colesterol_alto,Colesterol alto,2005,total,Total país,41392,0.279,27.9,INDEC - ENFR 2005
+colesterol_alto,Colesterol alto,2009,total,Total país,34732,0.291,29.1,INDEC - ENFR 2009
+colesterol_alto,Colesterol alto,2013,total,Total país,32365,0.298,29.8,INDEC - ENFR 2013
+colesterol_alto,Colesterol alto,2018,total,Total país,29224,0.289,28.9,INDEC - ENFR 2018
+obesidad,Obesidad,2005,total,Total país,41392,0.146,14.6,INDEC - ENFR 2005
+obesidad,Obesidad,2009,total,Total país,34732,0.180,18.0,INDEC - ENFR 2009
+obesidad,Obesidad,2013,total,Total país,32365,0.208,20.8,INDEC - ENFR 2013
+obesidad,Obesidad,2018,total,Total país,29224,0.254,25.4,INDEC - ENFR 2018
+hta,Hipertensión,2018,sexo,Varón,13420,0.368,36.8,INDEC - ENFR 2018
+hta,Hipertensión,2018,sexo,Mujer,15804,0.326,32.6,INDEC - ENFR 2018
+hta,Hipertensión,2018,grupo_etario,18-24,4110,0.112,11.2,INDEC - ENFR 2018
+hta,Hipertensión,2018,grupo_etario,25-34,6250,0.178,17.8,INDEC - ENFR 2018
+hta,Hipertensión,2018,grupo_etario,35-49,8420,0.315,31.5,INDEC - ENFR 2018
+hta,Hipertensión,2018,grupo_etario,50-64,6114,0.518,51.8,INDEC - ENFR 2018
+hta,Hipertensión,2018,grupo_etario,65+,4330,0.684,68.4,INDEC - ENFR 2018
+hta,Hipertensión,2018,quintil_ingreso,Q1,5700,0.382,38.2,INDEC - ENFR 2018
+hta,Hipertensión,2018,quintil_ingreso,Q2,5820,0.364,36.4,INDEC - ENFR 2018
+hta,Hipertensión,2018,quintil_ingreso,Q3,5910,0.345,34.5,INDEC - ENFR 2018
+hta,Hipertensión,2018,quintil_ingreso,Q4,5894,0.329,32.9,INDEC - ENFR 2018
+hta,Hipertensión,2018,quintil_ingreso,Q5,5900,0.311,31.1,INDEC - ENFR 2018
+hta,Hipertensión,2018,cobertura,Con cobertura,20450,0.354,35.4,INDEC - ENFR 2018
+hta,Hipertensión,2018,cobertura,Sin cobertura,8774,0.327,32.7,INDEC - ENFR 2018
+hta,Hipertensión,2018,tabaco,Fumador actual,6480,0.298,29.8,INDEC - ENFR 2018
+hta,Hipertensión,2018,tabaco,Ex fumador,7210,0.421,42.1,INDEC - ENFR 2018
+hta,Hipertensión,2018,tabaco,Nunca fumó,15534,0.332,33.2,INDEC - ENFR 2018
+diabetes,Diabetes,2018,grupo_etario,18-24,4110,0.021,2.1,INDEC - ENFR 2018
+diabetes,Diabetes,2018,grupo_etario,25-34,6250,0.045,4.5,INDEC - ENFR 2018
+diabetes,Diabetes,2018,grupo_etario,35-49,8420,0.098,9.8,INDEC - ENFR 2018
+diabetes,Diabetes,2018,grupo_etario,50-64,6114,0.198,19.8,INDEC - ENFR 2018
+diabetes,Diabetes,2018,grupo_etario,65+,4330,0.252,25.2,INDEC - ENFR 2018
+obesidad,Obesidad,2018,grupo_etario,18-24,4110,0.134,13.4,INDEC - ENFR 2018
+obesidad,Obesidad,2018,grupo_etario,25-34,6250,0.212,21.2,INDEC - ENFR 2018
+obesidad,Obesidad,2018,grupo_etario,35-49,8420,0.278,27.8,INDEC - ENFR 2018
+obesidad,Obesidad,2018,grupo_etario,50-64,6114,0.321,32.1,INDEC - ENFR 2018
+obesidad,Obesidad,2018,grupo_etario,65+,4330,0.296,29.6,INDEC - ENFR 2018
+colesterol_alto,Colesterol alto,2018,grupo_etario,18-24,4110,0.094,9.4,INDEC - ENFR 2018
+colesterol_alto,Colesterol alto,2018,grupo_etario,25-34,6250,0.165,16.5,INDEC - ENFR 2018
+colesterol_alto,Colesterol alto,2018,grupo_etario,35-49,8420,0.282,28.2,INDEC - ENFR 2018
+colesterol_alto,Colesterol alto,2018,grupo_etario,50-64,6114,0.441,44.1,INDEC - ENFR 2018
+colesterol_alto,Colesterol alto,2018,grupo_etario,65+,4330,0.518,51.8,INDEC - ENFR 2018
