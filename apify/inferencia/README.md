@@ -5,18 +5,21 @@ Recibe datos de encuesta, arma las features, usa el modelo **previamente entrena
 ## Estructura
 
 ```
-.actor/actor.json          configuración del Actor
-.actor/input_schema.json   formulario / contrato de la entrada
-.actor/Dockerfile          imagen (python 3.12 de Apify)
-src/__main__.py            arranque (python -m src)
-src/main.py                SOLO orquestación del Actor: leer entrada -> llamar módulos -> escribir salida
-src/preprocessing.py       validación de registros y construcción de las 25 features
-src/model.py               carga del .pkl y predicción (verifica versión de scikit-learn)
-src/tooling_business.py    reglas de negocio: umbral, niveles de riesgo, formato de salida, resumen
-models/                    acá va modelo_hta_logreg.pkl  (copiarlo; no se versiona acá)
-ejemplos/input_ejemplo.json   entrada de ejemplo
-tests/test_inferencia.py   pruebas de los módulos (sin Apify)
+.actor/actor.json               configuración del Actor
+.actor/input_schema.json        formulario / contrato de la entrada
+.actor/dataset_schema.json, output_schema.json   formato de la salida
+Dockerfile                      imagen (python de Apify)
+my_actor/__main__.py            arranque (python -m my_actor)
+my_actor/main.py                SOLO orquestación del Actor: leer entrada -> llamar módulos -> escribir salida
+my_actor/preprocessing.py       validación de registros y construcción de las features
+my_actor/model.py               carga del modelo y predicción (verifica versión de scikit-learn)
+my_actor/tooling_business.py    reglas de negocio: umbral, niveles de riesgo, formato de salida, resumen
+models/modelo_hta_logreg.pkl.b64   modelo entrenado (pickle en base64)
+entrenamiento/entrenamiento.py  entrena el modelo y genera el .pkl y el .pkl.b64 (fuera del Actor)
 ```
+
+Entrenar: `python entrenamiento/entrenamiento.py --entrada <carpeta con el dataset limpio> --salida <carpeta> [--comparar]`.
+Con `--comparar` evalúa también Random Forest y Gradient Boosting.
 
 ## Entrada
 

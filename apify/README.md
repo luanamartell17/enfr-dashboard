@@ -7,17 +7,22 @@ Los tres Actores que usa el flujo de n8n (`n8n/pipeline_enfr.json`). En los tres
 |---|---|---|---|
 | `etl/` | `santibelver/etl` | `.txt` crudos de la ENFR → dataset limpio y armonizado (`enfr_armonizado.csv`) + reportes de calidad | `src/ETL.py`, `src/entrada_salida.py`, `src/tooling_business.py` |
 | `eda/` | `santibelver/eda` | dataset limpio → descriptivas, correlación, odds ratio y prevalencia estandarizada | `src/EDA.py`, `src/entrada_salida.py`, `src/tooling_business.py` |
-| `inferencia/` | (pendiente de publicar) | personas → probabilidad de hipertensión con el modelo entrenado | `my_actor/preprocessing.py`, `my_actor/model.py`, `my_actor/tooling_business.py` |
+| `inferencia/` | `santibelver/hta-predict` ([consola](https://console.apify.com/actors/bhqxlvFcUopkQ2xfE)) | personas → probabilidad de hipertensión con el modelo entrenado | `my_actor/preprocessing.py`, `my_actor/model.py`, `my_actor/tooling_business.py`; entrenamiento en `inferencia/entrenamiento/entrenamiento.py` |
 
-## Cómo se encadenan
+## Cómo se usan
 
 ```
 n8n: Drive 01_crudo → key-value store "enfr-crudo"
   → ETL  {kvStoreId: enfr-crudo}
   → EDA  {kvStoreId: store del run del ETL, anio: 2018}
-  → inferencia {registros: personas de 2018 en lotes de 3.000}
 n8n: resultados → Drive 02_resultados y GitHub data/ → dashboard Streamlit
+
+Inferencia (fuera del flujo de n8n):
+  entrenamiento.py → models/modelo_hta_logreg.pkl.b64 → Actor hta-predict
+  la página https://generative-s.netlify.app le manda {registros: [...]} por la API de Apify
 ```
+
+Ejemplo de salida del Actor de inferencia (30 casos, incluye datos faltantes y errores): `data/inferencia/dataset_hta-predict_inferencias.json`.
 
 Detalle de entradas y salidas: `n8n/CONTRATO_ACTORES.md`.
 

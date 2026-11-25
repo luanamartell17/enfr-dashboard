@@ -11,10 +11,23 @@ cobertura, tabaco, región y provincia.
   → n8n: los sube a Apify y corre los Actores
       → Actor ETL  → dataset limpio
       → Actor EDA  → descriptivas, correlación, odds ratio, estandarizada
-      → Actor de inferencia → riesgo de hipertensión por persona (2018)
   → n8n: guarda todo en Drive (ENFR_pipeline/02_resultados) y actualiza data/ en este repo
   → Streamlit (este repo) se republica solo y muestra los datos nuevos
+
+Modelo (aparte del flujo):
+  entrenamiento.py → modelo_hta_logreg.pkl (regresión logística, ENFR 2005-2018)
+  → Actor de inferencia en Apify → la página https://generative-s.netlify.app lo consulta por API
 ```
+
+- Dashboard: https://generative-s.streamlit.app
+- Página de predicción: https://generative-s.netlify.app
+- Actor de inferencia: https://console.apify.com/actors/bhqxlvFcUopkQ2xfE
+
+## Modelo
+
+Regresión logística para predecir hipertensión (autorreportada). Validación: train 2005-2013, test 2018.
+ROC-AUC 0,767 en el test, con umbral de alerta 0,40: recall 0,66 y precisión 0,61. El modelo final se
+reentrena con los 4 años (`apify/inferencia/entrenamiento/entrenamiento.py`).
 
 ## Estructura
 
@@ -28,14 +41,14 @@ data/
   enfr_odds_ratio.csv      odds ratio crudos y ajustados por edad (target: hipertensión)
   enfr_estandarizada.csv   hipertensión por provincia, cruda y estandarizada por edad
   micro/                   dataset limpio (salida del ETL): una fila por persona, un archivo por año
-notebooks/
-  ENFR_EDA_estadistica.ipynb  cálculo de descriptivas, correlación, odds ratio y estandarización
+  inferencia/              resultado del modelo: 30 inferencias del Actor (casos válidos, faltantes y errores)
 n8n/
-  pipeline_enfr.json       flujo principal: Drive → Actores de Apify (ETL, EDA, inferencia) → Drive + GitHub → dashboard
+  pipeline_enfr.json       flujo principal: Drive → Actores de Apify (ETL, EDA) → Drive + GitHub → dashboard
   CONTRATO_ACTORES.md      qué recibe y devuelve cada Actor dentro del flujo
   workflow_enfr.json       flujo anterior (publica la planilla del EDA en Google Sheets)
 apify/
   etl/  eda/  inferencia/  código fuente de los 3 Actores de Apify (ver apify/README.md)
+  inferencia/entrenamiento/entrenamiento.py  entrenamiento del modelo que usa el Actor de inferencia
 ```
 
 Los workflows se importan en n8n con **⋯ → Import from file**.

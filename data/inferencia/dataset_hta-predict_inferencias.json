@@ -1,0 +1,537 @@
+[{
+  "indice": 0,
+  "estado": "ok",
+  "probabilidad_hta": 0.9052,
+  "alerta": 1,
+  "nivel_riesgo": "alto",
+  "n_campos_faltantes": 0,
+  "advertencias": [],
+  "id": "p01-completo-alto-riesgo",
+  "entrada": {
+    "id": "p01-completo-alto-riesgo",
+    "edad": 67,
+    "mujer": 0,
+    "provincia": 34,
+    "region": 4,
+    "nivel_instruccion": 2,
+    "tiene_cobertura": 0,
+    "condicion_actividad": 3,
+    "quintil_ingreso": 1,
+    "cant_componentes": 5,
+    "salud_autopercibida": 4,
+    "tabaco": 1,
+    "actividad_fisica": 3,
+    "alcohol_regular_riesgo": 0,
+    "alcohol_episodico": 0,
+    "fv_promedio_diario": 1,
+    "cumple_5_fyv": 0,
+    "peso_kg": 104,
+    "talla_cm": 168,
+    "colesterol_medido": 1,
+    "colesterol_alto": 1,
+    "diabetes": 1
+  }
+},
+{
+  "indice": 1,
+  "estado": "ok",
+  "probabilidad_hta": 0.0451,
+  "alerta": 0,
+  "nivel_riesgo": "bajo",
+  "n_campos_faltantes": 1,
+  "advertencias": [],
+  "id": "p02-completo-bajo-riesgo",
+  "entrada": {
+    "id": "p02-completo-bajo-riesgo",
+    "edad": 24,
+    "mujer": 1,
+    "provincia": 2,
+    "region": 1,
+    "nivel_instruccion": 6,
+    "tiene_cobertura": 1,
+    "condicion_actividad": 1,
+    "quintil_ingreso": 5,
+    "cant_componentes": 2,
+    "salud_autopercibida": 1,
+    "tabaco": 3,
+    "actividad_fisica": 1,
+    "alcohol_regular_riesgo": 0,
+    "alcohol_episodico": 0,
+    "fv_promedio_diario": 4.5,
+    "cumple_5_fyv": 0,
+    "peso_kg": 56,
+    "talla_cm": 165,
+    "colesterol_medido": 0,
+    "diabetes": 0
+  }
+},
+{
+  "indice": 2,
+  "estado": "ok",
+  "probabilidad_hta": 0.3214,
+  "alerta": 0,
+  "nivel_riesgo": "medio",
+  "n_campos_faltantes": 0,
+  "advertencias": [],
+  "id": "p03-completo-medio",
+  "entrada": {
+    "id": "p03-completo-medio",
+    "edad": 45,
+    "mujer": 0,
+    "provincia": 6,
+    "region": 1,
+    "nivel_instruccion": 4,
+    "tiene_cobertura": 1,
+    "condicion_actividad": 1,
+    "quintil_ingreso": 3,
+    "cant_componentes": 4,
+    "salud_autopercibida": 3,
+    "tabaco": 2,
+    "actividad_fisica": 2,
+    "alcohol_regular_riesgo": 0,
+    "alcohol_episodico": 1,
+    "fv_promedio_diario": 2.5,
+    "cumple_5_fyv": 0,
+    "peso_kg": 88,
+    "talla_cm": 176,
+    "colesterol_medido": 1,
+    "colesterol_alto": 0,
+    "diabetes": 0
+  }
+},
+{
+  "indice": 3,
+  "estado": "ok",
+  "probabilidad_hta": 0.4723,
+  "alerta": 1,
+  "nivel_riesgo": "alto",
+  "n_campos_faltantes": 2,
+  "advertencias": [],
+  "id": "p04-mayor-sana",
+  "entrada": {
+    "id": "p04-mayor-sana",
+    "edad": 78,
+    "mujer": 1,
+    "provincia": 14,
+    "region": 2,
+    "nivel_instruccion": 3,
+    "tiene_cobertura": 1,
+    "condicion_actividad": 3,
+    "quintil_ingreso": 3,
+    "cant_componentes": 1,
+    "salud_autopercibida": 2,
+    "tabaco": 3,
+    "actividad_fisica": 1,
+    "fv_promedio_diario": 5,
+    "cumple_5_fyv": 1,
+    "peso_kg": 62,
+    "talla_cm": 158,
+    "colesterol_medido": 1,
+    "colesterol_alto": 0,
+    "diabetes": 0
+  }
+},
+{
+  "indice": 4,
+  "estado": "ok",
+  "probabilidad_hta": 0.1888,
+  "alerta": 0,
+  "nivel_riesgo": "bajo",
+  "n_campos_faltantes": 22,
+  "advertencias": [],
+  "id": "p05-minimo",
+  "entrada": {
+    "id": "p05-minimo",
+    "edad": 52,
+    "mujer": 1
+  }
+},
+{
+  "indice": 5,
+  "estado": "ok",
+  "probabilidad_hta": 0.0577,
+  "alerta": 0,
+  "nivel_riesgo": "bajo",
+  "n_campos_faltantes": 22,
+  "advertencias": [],
+  "id": "p06-minimo-varon-joven",
+  "entrada": {
+    "id": "p06-minimo-varon-joven",
+    "edad": 19,
+    "mujer": 0
+  }
+},
+{
+  "indice": 6,
+  "estado": "ok",
+  "probabilidad_hta": 0.1676,
+  "alerta": 0,
+  "nivel_riesgo": "bajo",
+  "n_campos_faltantes": 22,
+  "advertencias": [],
+  "id": "p07-nulls",
+  "entrada": {
+    "id": "p07-nulls",
+    "edad": 58,
+    "mujer": 0,
+    "peso_kg": null,
+    "talla_cm": null,
+    "tabaco": null,
+    "diabetes": null,
+    "quintil_ingreso": null,
+    "colesterol_alto": null
+  }
+},
+{
+  "indice": 7,
+  "estado": "ok",
+  "probabilidad_hta": 0.1342,
+  "alerta": 0,
+  "nivel_riesgo": "bajo",
+  "n_campos_faltantes": 20,
+  "advertencias": [],
+  "id": "p08-nulls-parciales",
+  "entrada": {
+    "id": "p08-nulls-parciales",
+    "edad": 36,
+    "mujer": 1,
+    "peso_kg": 70,
+    "talla_cm": null,
+    "tabaco": 3,
+    "actividad_fisica": null,
+    "salud_autopercibida": null
+  }
+},
+{
+  "indice": 8,
+  "estado": "ok",
+  "probabilidad_hta": 0.2726,
+  "alerta": 0,
+  "nivel_riesgo": "medio",
+  "n_campos_faltantes": 20,
+  "advertencias": [],
+  "id": "p09-peso-sin-talla",
+  "entrada": {
+    "id": "p09-peso-sin-talla",
+    "edad": 61,
+    "mujer": 0,
+    "peso_kg": 95,
+    "tabaco": 1
+  }
+},
+{
+  "indice": 9,
+  "estado": "ok",
+  "probabilidad_hta": 0.2391,
+  "alerta": 0,
+  "nivel_riesgo": "bajo",
+  "n_campos_faltantes": 18,
+  "advertencias": [],
+  "id": "p10-imc-directo",
+  "entrada": {
+    "id": "p10-imc-directo",
+    "edad": 50,
+    "mujer": 1,
+    "imc": 33.5,
+    "diabetes": 1
+  }
+},
+{
+  "indice": 10,
+  "estado": "ok",
+  "probabilidad_hta": 0.2316,
+  "alerta": 0,
+  "nivel_riesgo": "bajo",
+  "n_campos_faltantes": 16,
+  "advertencias": [],
+  "id": "p11-strings-numericos",
+  "entrada": {
+    "id": "p11-strings-numericos",
+    "edad": "47",
+    "mujer": "1",
+    "peso_kg": "81.5",
+    "talla_cm": "160",
+    "tabaco": "2"
+  }
+},
+{
+  "indice": 11,
+  "estado": "error",
+  "errores": [
+    "'peso_kg' no es numérico: '90,5'"
+  ],
+  "id": "e10-coma-decimal-no-soportada",
+  "entrada": {
+    "id": "e10-coma-decimal-no-soportada",
+    "edad": "55",
+    "mujer": "0",
+    "peso_kg": "90,5",
+    "talla_cm": "175"
+  }
+},
+{
+  "indice": 12,
+  "estado": "ok",
+  "probabilidad_hta": 0.1737,
+  "alerta": 0,
+  "nivel_riesgo": "bajo",
+  "n_campos_faltantes": 21,
+  "advertencias": [
+    "'talla_cm'=400.0 fuera de rango (120-220): se ignora"
+  ],
+  "id": "p13-talla-absurda",
+  "entrada": {
+    "id": "p13-talla-absurda",
+    "edad": 45,
+    "mujer": 0,
+    "peso_kg": 90,
+    "talla_cm": 400
+  }
+},
+{
+  "indice": 13,
+  "estado": "ok",
+  "probabilidad_hta": 0.1287,
+  "alerta": 0,
+  "nivel_riesgo": "bajo",
+  "n_campos_faltantes": 21,
+  "advertencias": [
+    "'peso_kg'=9.0 fuera de rango (30-250): se ignora"
+  ],
+  "id": "p14-peso-absurdo",
+  "entrada": {
+    "id": "p14-peso-absurdo",
+    "edad": 33,
+    "mujer": 1,
+    "peso_kg": 9,
+    "talla_cm": 160
+  }
+},
+{
+  "indice": 14,
+  "estado": "ok",
+  "probabilidad_hta": 0.7707,
+  "alerta": 1,
+  "nivel_riesgo": "alto",
+  "n_campos_faltantes": 20,
+  "advertencias": [
+    "imc=153.6 fuera de rango: se ignora"
+  ],
+  "id": "p15-imc-imposible",
+  "entrada": {
+    "id": "p15-imc-imposible",
+    "edad": 40,
+    "mujer": 0,
+    "peso_kg": 240,
+    "talla_cm": 125
+  }
+},
+{
+  "indice": 15,
+  "estado": "ok",
+  "probabilidad_hta": 0.2482,
+  "alerta": 0,
+  "nivel_riesgo": "bajo",
+  "n_campos_faltantes": 22,
+  "advertencias": [
+    "'peso_kg'=999.0 fuera de rango (30-250): se ignora",
+    "'talla_cm'=9999.0 fuera de rango (120-220): se ignora"
+  ],
+  "id": "p16-peso-999-nsnc",
+  "entrada": {
+    "id": "p16-peso-999-nsnc",
+    "edad": 63,
+    "mujer": 1,
+    "peso_kg": 999,
+    "talla_cm": 9999
+  }
+},
+{
+  "indice": 16,
+  "estado": "ok",
+  "probabilidad_hta": 0.1096,
+  "alerta": 0,
+  "nivel_riesgo": "bajo",
+  "n_campos_faltantes": 22,
+  "advertencias": [
+    "campo desconocido ignorado: 'peso'",
+    "campo desconocido ignorado: 'altura'",
+    "campo desconocido ignorado: 'fuma'"
+  ],
+  "id": "p17-nombre-campo-mal",
+  "entrada": {
+    "id": "p17-nombre-campo-mal",
+    "edad": 42,
+    "mujer": 0,
+    "peso": 85,
+    "altura": 180,
+    "fuma": 1
+  }
+},
+{
+  "indice": 17,
+  "estado": "error",
+  "errores": [
+    "'edad' fuera de rango (18-110)"
+  ],
+  "id": "e01-menor-de-edad",
+  "entrada": {
+    "id": "e01-menor-de-edad",
+    "edad": 15,
+    "mujer": 1
+  }
+},
+{
+  "indice": 18,
+  "estado": "error",
+  "errores": [
+    "'edad' fuera de rango (18-110)"
+  ],
+  "id": "e02-edad-excesiva",
+  "entrada": {
+    "id": "e02-edad-excesiva",
+    "edad": 150,
+    "mujer": 0
+  }
+},
+{
+  "indice": 19,
+  "estado": "error",
+  "errores": [
+    "falta 'edad' (obligatorio, número)"
+  ],
+  "id": "e03-sin-edad",
+  "entrada": {
+    "id": "e03-sin-edad",
+    "mujer": 1,
+    "peso_kg": 70,
+    "talla_cm": 165
+  }
+},
+{
+  "indice": 20,
+  "estado": "error",
+  "errores": [
+    "'mujer' es obligatorio y debe ser 1 (mujer) o 0 (varón)"
+  ],
+  "id": "e04-sin-mujer",
+  "entrada": {
+    "id": "e04-sin-mujer",
+    "edad": 40,
+    "peso_kg": 80,
+    "talla_cm": 175
+  }
+},
+{
+  "indice": 21,
+  "estado": "error",
+  "errores": [
+    "'mujer' es obligatorio y debe ser 1 (mujer) o 0 (varón)"
+  ],
+  "id": "e05-mujer-invalido",
+  "entrada": {
+    "id": "e05-mujer-invalido",
+    "edad": 40,
+    "mujer": 2
+  }
+},
+{
+  "indice": 22,
+  "estado": "error",
+  "errores": [
+    "falta 'edad' (obligatorio, número)"
+  ],
+  "id": "e06-edad-null",
+  "entrada": {
+    "id": "e06-edad-null",
+    "edad": null,
+    "mujer": 0
+  }
+},
+{
+  "indice": 23,
+  "estado": "error",
+  "errores": [
+    "falta 'edad' (obligatorio, número)",
+    "'edad' no es numérico: 'cuarenta'"
+  ],
+  "id": "e07-edad-texto",
+  "entrada": {
+    "id": "e07-edad-texto",
+    "edad": "cuarenta",
+    "mujer": 1
+  }
+},
+{
+  "indice": 24,
+  "estado": "error",
+  "errores": [
+    "'tabaco' no es numérico: 'si'",
+    "'peso_kg' no es numérico: 'pesado'"
+  ],
+  "id": "e08-campo-no-numerico",
+  "entrada": {
+    "id": "e08-campo-no-numerico",
+    "edad": 30,
+    "mujer": 0,
+    "tabaco": "si",
+    "peso_kg": "pesado"
+  }
+},
+{
+  "indice": 25,
+  "estado": "error",
+  "errores": [
+    "falta 'edad' (obligatorio, número)",
+    "'mujer' es obligatorio y debe ser 1 (mujer) o 0 (varón)"
+  ],
+  "id": "e09-registro-vacio",
+  "entrada": {
+    "id": "e09-registro-vacio"
+  }
+},
+{
+  "indice": 26,
+  "estado": "error",
+  "errores": [
+    "el registro debe ser un objeto JSON (clave: valor)"
+  ],
+  "entrada": "esto no es un objeto"
+},
+{
+  "indice": 27,
+  "estado": "error",
+  "errores": [
+    "el registro debe ser un objeto JSON (clave: valor)"
+  ],
+  "entrada": [
+    1,
+    2,
+    3
+  ]
+},
+{
+  "indice": 28,
+  "estado": "error",
+  "errores": [
+    "el registro debe ser un objeto JSON (clave: valor)"
+  ],
+  "entrada": null
+},
+{
+  "indice": 29,
+  "estado": "ok",
+  "probabilidad_hta": 0.4985,
+  "alerta": 1,
+  "nivel_riesgo": "alto",
+  "n_campos_faltantes": 15,
+  "advertencias": [],
+  "entrada": {
+    "edad": 71,
+    "mujer": 1,
+    "diabetes": 1,
+    "colesterol_alto": 1,
+    "peso_kg": 78,
+    "talla_cm": 152
+  }
+}]
